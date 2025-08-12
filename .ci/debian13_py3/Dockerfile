@@ -5,8 +5,9 @@ RUN /bin/bash -c 'echo "deb http://ftp.de.debian.org/debian trixie main" > /etc/
 RUN apt-get update
 RUN apt-get install -y base-passwd
 RUN apt-get -qq update && apt-get -qq install -y libterm-readline-gnu-perl gnupg2 procps apt-utils curl apt-transport-https gnupg2 ca-certificates wget 
-RUN wget --retry-connrefused http://repos.pni-hdri.de/debian_repo.pub.gpg
-RUN apt-key add debian_repo.pub.gpg
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+RUN curl -s http://repos.pni-hdri.de/debian_repo.pub.gpg  | gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg --import
+RUN chmod 644 /etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 # RUN add-apt-repository "deb http://repos.pni-hdri.de/apt/debian trixie main" -y
 RUN cd /etc/apt/sources.list.d && wget http://repos.pni-hdri.de/trixie-pni-hdri.list
 
