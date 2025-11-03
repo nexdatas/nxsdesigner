@@ -71,6 +71,8 @@ def main():
     suite = unittest.TestSuite()
 
     app = QApplication([])
+    VDSDlg_test.app = app
+    FieldDlg_test.app = app
     NodeDlg_test.app = app
     DefinitionDlg_test.app = app
     AttributeDlg_test.app = app

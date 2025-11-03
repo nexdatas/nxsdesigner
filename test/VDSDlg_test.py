@@ -214,7 +214,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
         self.assertTrue(isinstance(form, NodeDlg))
         self.assertEqual(form.externalApply, None)
@@ -251,7 +251,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -301,7 +301,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -373,7 +373,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -683,7 +683,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -889,7 +889,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -1217,7 +1217,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form = VDSDlg()
@@ -1492,7 +1492,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -1506,7 +1506,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode()
 
@@ -1524,7 +1524,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -1593,7 +1593,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -1607,7 +1607,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode(qdn)
 
@@ -1625,7 +1625,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -1688,7 +1688,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -1702,7 +1702,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode(qdn)
 
@@ -1720,7 +1720,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, [None]*len(dimensions))
 
@@ -1789,7 +1789,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -1802,7 +1802,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode()
 
@@ -1815,7 +1815,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -1849,7 +1849,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -1863,7 +1863,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode()
 
@@ -1876,7 +1876,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -1945,7 +1945,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -1960,7 +1960,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode()
 
@@ -1979,7 +1979,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -2069,7 +2069,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -2084,7 +2084,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode()
 
@@ -2103,7 +2103,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -2193,7 +2193,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -2208,7 +2208,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode()
 
@@ -2227,7 +2227,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -2321,7 +2321,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -2336,7 +2336,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode()
 
@@ -2355,7 +2355,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -2492,7 +2492,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.createGUI()
@@ -2508,7 +2508,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         form.setFromNode()
 
@@ -2527,7 +2527,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -2671,7 +2671,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.setFromNode()
@@ -2847,7 +2847,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.setFromNode()
@@ -3023,7 +3023,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.setFromNode()
@@ -3259,7 +3259,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.setFromNode()
@@ -3374,7 +3374,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -3482,7 +3482,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.setFromNode()
@@ -3597,7 +3597,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -3966,7 +3966,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.setFromNode()
@@ -3999,7 +3999,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 
@@ -4188,7 +4188,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
         self.assertEqual(form.ui.__class__.__name__, "Ui_VDSDlg")
 
         form.setFromNode()
@@ -4221,7 +4221,7 @@ class VDSDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ['attribute', 'datasource', 'doc', 'dimensions',
-             'enumeration', 'strategy'])
+             'enumeration', 'strategy', 'map'])
 
         self.assertEqual(form.dimensions, dimensions)
 

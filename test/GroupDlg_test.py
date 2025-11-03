@@ -186,7 +186,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.view, None)
         self.assertEqual(form.subItems,
                          ["group", "field",
-                          "attribute", "link", "component", "doc"])
+                          "attribute", "link", "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
         self.assertTrue(isinstance(form, NodeDlg))
         self.assertEqual(form.externalApply, None)
@@ -214,7 +214,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.doc, '')
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems, ["group", "field", "attribute",
-                                         "link", "component", "doc"])
+                                         "link", "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -255,7 +255,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.doc, '')
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems, ["group", "field", "attribute",
-                                         "link", "component", "doc"])
+                                         "link", "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -363,7 +363,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.doc, '')
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems, ["group", "field", "attribute",
-                                         "link", "component", "doc"])
+                                         "link", "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -460,7 +460,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.doc, '')
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems, ["group", "field", "attribute",
-                                         "link", "component", "doc"])
+                                         "link", "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -675,7 +675,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -686,7 +686,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         form.setFromNode()
 
@@ -699,7 +699,7 @@ class GroupDlgTest(unittest.TestCase):
                                            u'unit': u'myunits%s' % nn})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -741,7 +741,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -752,7 +752,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         form.setFromNode(qdn)
         self.assertEqual(form.node, qdn)
@@ -767,7 +767,7 @@ class GroupDlgTest(unittest.TestCase):
             {u'shortname': u'mynshort%s' % nn, u'unit': u'myunits%s' % nn})
         self.assertEqual(
             form.subItems,
-            ["group", "field", "attribute", "link", "component", "doc"])
+            ["group", "field", "attribute", "link", "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -809,7 +809,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -820,7 +820,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         form.setFromNode()
 
@@ -830,7 +830,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -860,7 +860,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -871,7 +871,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         form.setFromNode()
 
@@ -881,7 +881,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -923,7 +923,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -934,7 +934,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         form.setFromNode()
 
@@ -949,7 +949,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -1007,7 +1007,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute",
-                          "link", "component", "doc"])
+                          "link", "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -1018,7 +1018,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute",
-                          "link", "component", "doc"])
+                          "link", "component", "doc", "vds"])
 
         form.setFromNode()
 
@@ -1033,7 +1033,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -1091,7 +1091,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -1102,7 +1102,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         form.setFromNode()
 
@@ -1117,7 +1117,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -1178,7 +1178,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -1189,7 +1189,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         form.setFromNode()
 
@@ -1204,7 +1204,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -1309,7 +1309,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -1320,7 +1320,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         form.setFromNode()
 
@@ -1336,7 +1336,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -1424,7 +1424,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.createGUI()
@@ -1436,7 +1436,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute",
-                          "link", "component", "doc"])
+                          "link", "component", "doc", "vds"])
 
         form.setFromNode()
 
@@ -1452,7 +1452,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(
             form.subItems,
-            ["group", "field", "attribute", "link", "component", "doc"])
+            ["group", "field", "attribute", "link", "component", "doc", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.typeLineEdit.text())
@@ -1565,7 +1565,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.setFromNode()
@@ -1676,7 +1676,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute",
-                          "link", "component", "doc"])
+                          "link", "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.setFromNode()
@@ -1787,7 +1787,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc"])
+                          "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.setFromNode()
@@ -1921,7 +1921,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(
             form.subItems,
-            ["group", "field", "attribute", "link", "component", "doc"])
+            ["group", "field", "attribute", "link", "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.setFromNode()
@@ -2059,7 +2059,7 @@ class GroupDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(
             form.subItems,
-            ["group", "field", "attribute", "link", "component", "doc"])
+            ["group", "field", "attribute", "link", "component", "doc", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_GroupDlg")
 
         form.setFromNode()
