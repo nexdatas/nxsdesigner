@@ -56,7 +56,7 @@ class LinkDlg(NodeDlg):
         self.name = u''
         # link target
         self.target = u''
-        # field doc
+        # link doc
         self.doc = u''
 
         # allowed subitems

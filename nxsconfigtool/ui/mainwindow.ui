@@ -88,6 +88,7 @@
     </property>
     <addaction name="actionNewGroupItem"/>
     <addaction name="actionNewFieldItem"/>
+    <addaction name="actionNewVDSItem"/>
     <addaction name="actionNewStrategyItem"/>
     <addaction name="actionNewDataSourceItem"/>
     <addaction name="actionNewAttributeItem"/>
@@ -535,6 +536,11 @@
   <action name="actionNewFieldItem">
    <property name="text">
     <string>Add &amp;Field</string>
+   </property>
+  </action>
+  <action name="actionNewVDSItem">
+   <property name="text">
+    <string>Add &amp;VDS</string>
    </property>
   </action>
   <action name="actionNewStrategyItem">

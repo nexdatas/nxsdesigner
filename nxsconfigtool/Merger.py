@@ -75,7 +75,8 @@ class Merger(QThread):
         self._root = root
         # tags which cannot have the same siblings
         self._singles = ['strategy', 'dimensions', 'definition',
-                         'record', 'device', 'query', 'database']
+                         'record', 'device', 'query', 'database',
+                         'selection', 'map']
 
         # allowed children of the given nodes
         self._children = {
@@ -87,9 +88,18 @@ class Merger(QThread):
             "field": ["attribute", "datasource", "doc", "dimensions",
                       "enumeration", "strategy"],
             "group": ["group", "field", "attribute", "link", "component",
-                      "doc"],
+                      "doc", "vds"],
             "link": ["datasource", "strategy", "doc"],
-            "dim": ["datasource", "strategy", "doc"]
+            "dim": ["datasource", "strategy", "doc"],
+            "vds": ["attribute", "datasource", "doc", "dimensions",
+                    "enumeration", "strategy", "map"],
+            "map": ["dimensions", "selection", "sourceview",
+                    "datasource", "doc", "strategy"],
+            "selection": ["slice", "slab", "doc"],
+            "slab": ["datasource", "strategy", "doc"],
+            "slice": ["datasource", "strategy", "doc"],
+            "sourceview": ["dimensions", "selection", "doc"],
+
         }
 
         # with unique text
@@ -100,7 +110,10 @@ class Merger(QThread):
             "attribute": ["name"],
             "definition": [],
             "dimensions": ["rank"],
+            "selection": ["rank"],
             "dim": ["index"],
+            "slab": ["index"],
+            "slice": ["index"],
             "field": ["name"],
             "group": ["type"],
             "link": ["name"],
@@ -109,7 +122,10 @@ class Merger(QThread):
             "record": ["name"],
             "device": ["member", "name"],
             "database": ["dbtype"],
-            "query": ["format"]
+            "query": ["format"],
+            "vds": ["name"],
+            "map": [],
+            "sourceview": [],
         }
 
         # it contains an exception instance when the exception was raised

@@ -67,7 +67,7 @@ class DefinitionDlg(NodeDlg):
 
         # allowed subitems
         self.subItems = ["group", "field", "attribute", "link", "component",
-                         "doc", "symbols"]
+                         "doc", "symbols", "vds"]
 
         # user interface
         self.ui = _formclass()
