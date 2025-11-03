@@ -33,6 +33,7 @@ import DimensionsDlg_test
 import DefinitionDlg_test
 import GroupDlg_test
 import FieldDlg_test
+import VDSDlg_test
 import NodeDlg_test
 import ComponentItem_test
 import ComponentModel_test
@@ -111,6 +112,9 @@ def main():
 
     suite.addTests(
         unittest.defaultTestLoader.loadTestsFromModule(FieldDlg_test))
+
+    suite.addTests(
+        unittest.defaultTestLoader.loadTestsFromModule(VDSDlg_test))
 
     suite.addTests(
         unittest.defaultTestLoader.loadTestsFromModule(RichAttributeDlg_test))
