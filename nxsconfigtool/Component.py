@@ -33,6 +33,8 @@ from PyQt5.QtXml import (QDomDocument)
 
 from .FieldDlg import FieldDlg
 from .VDSDlg import VDSDlg
+from .MapDlg import MapDlg
+from .SourceViewDlg import SourceViewDlg
 from .GroupDlg import GroupDlg
 from .LinkDlg import LinkDlg
 from .RichAttributeDlg import RichAttributeDlg
@@ -107,7 +109,8 @@ class Component(object):
         # item class shown in the frame
         self._tagClasses = {"field": FieldDlg,
                             "vds": VDSDlg,
-                            # "map": MapDlg,
+                            "map": MapDlg,
+                            "sourceview": SourceViewDlg,
                             "group": GroupDlg,
                             "definition": DefinitionDlg,
                             "attribute": RichAttributeDlg,

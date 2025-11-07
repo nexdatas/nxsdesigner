@@ -89,6 +89,8 @@
     <addaction name="actionNewGroupItem"/>
     <addaction name="actionNewFieldItem"/>
     <addaction name="actionNewVDSItem"/>
+    <addaction name="actionNewMapItem"/>
+    <addaction name="actionNewSourceViewItem"/>
     <addaction name="actionNewStrategyItem"/>
     <addaction name="actionNewDataSourceItem"/>
     <addaction name="actionNewAttributeItem"/>
@@ -541,6 +543,16 @@
   <action name="actionNewVDSItem">
    <property name="text">
     <string>Add &amp;VDS</string>
+   </property>
+  </action>
+  <action name="actionNewMapItem">
+   <property name="text">
+    <string>Add &amp;Map</string>
+   </property>
+  </action>
+  <action name="actionNewSourceViewItem">
+   <property name="text">
+    <string>Add SourceVie&amp;w</string>
    </property>
   </action>
   <action name="actionNewStrategyItem">

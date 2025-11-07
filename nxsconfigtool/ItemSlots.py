@@ -75,6 +75,13 @@ class ItemSlots(object):
             "actionNewVDSItem": [
                 "Add &VDS Item", "componentNewVDSItem",
                 "", "componentnewitem", "Add a new  component vds item"],
+            "actionNewMapItem": [
+                "Add &Map Item", "componentNewMapItem",
+                "", "componentnewitem", "Add a new  component map item"],
+            "actionNewSourceViewItem": [
+                "Add SourceVie&w Item", "componentNewSourceViewItem",
+                "", "componentnewitem",
+                "Add a new component source view item"],
             "actionNewStrategyItem": [
                 "Add &Strategy Item", "componentNewStrategyItem",
                 "", "componentnewitem", "Add a new component strategy item"],
