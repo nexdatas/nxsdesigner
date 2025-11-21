@@ -150,14 +150,14 @@
    <item row="5" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_11">
      <item>
-      <widget class="QPushButton" name="selectionsPushButton">
+      <widget class="QPushButton" name="selPushButton">
        <property name="text">
         <string>Selections:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="selectionsLabel">
+      <widget class="QLabel" name="selLabel">
        <property name="text">
         <string>[]</string>
        </property>
@@ -442,7 +442,7 @@
   <tabstop>typeComboBox</tabstop>
   <tabstop>typeLineEdit</tabstop>
   <tabstop>dimPushButton</tabstop>
-  <tabstop>selectionsPushButton</tabstop>
+  <tabstop>selPushButton</tabstop>
   <tabstop>addPushButton</tabstop>
   <tabstop>removePushButton</tabstop>
   <tabstop>attributeTableWidget</tabstop>

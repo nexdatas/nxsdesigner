@@ -30,12 +30,27 @@ from PyQt5 import uic
 import os
 import sys
 
-from .AttributeDlg import AttributeDlg
-from .DimensionsDlg import DimensionsDlg
-from .SlicesDlg import SlicesDlg
-from .SlabsDlg import SlabsDlg
-from .NodeDlg import NodeDlg
-from .DomTools import DomTools
+try:
+    from .AttributeDlg import AttributeDlg
+except Exception:
+    from AttributeDlg import AttributeDlg
+
+try:
+    from .DimensionsDlg import DimensionsDlg
+except Exception:
+    from DimensionsDlg import DimensionsDlg
+try:
+    from .SelectionsDlg import SelectionsDlg
+except Exception:
+    from SelectionsDlg import SelectionsDlg
+try:
+    from .NodeDlg import NodeDlg
+except Exception:
+    from NodeDlg import NodeDlg
+try:
+    from .DomTools import DomTools
+except Exception:
+    from DomTools import DomTools
 
 import logging
 # message logger
@@ -76,16 +91,41 @@ class MapDlg(NodeDlg):
         # dimensions
         self.dimensions = []
         self.__dimensions = []
-        # slices
-        self.slices = []
-        self.__slices = []
 
-        # slabs
-        self.slabs = []
-        self.__slabs = []
+        # key type
+        self.keytype = "slices"
+        # starts
+        self.starts = []
+        self.__starts = []
+        # stops
+        self.stops = []
+        self.__stops = []
+        # steps
+        self.steps = []
+        self.__steps = []
+
+        # offsets
+        self.offsets = []
+        self.__offsets = []
+        # blocks
+        self.blocks = []
+        self.__blocks = []
+        # counts
+        self.counts = []
+        self.__counts = []
+        # strides
+        self.strides = []
+        self.__strides = []
+
+        # selections
+        self.selections = []
+        self.__selections = []
+
+        self.selvalue = ""
 
         # allowed subitems
-        self.subItems = ["attribute", "datasource", "doc", "dimensions",
+        self.subItems = ["attribute", "datasource", "doc",
+                         "dimensions",
                          "selections", "sourceview",
                          "enumeration", "strategy"]
 
@@ -97,8 +137,7 @@ class MapDlg(NodeDlg):
     def getState(self):
         attributes = copy.copy(self.attributes)
         dimensions = copy.copy(self.dimensions)
-        slices = copy.copy(self.slices)
-        slabs = copy.copy(self.slabs)
+        selections = copy.copy(self.selections)
 
         state = (self.name,
                  self.nexusType,
@@ -108,8 +147,8 @@ class MapDlg(NodeDlg):
                  self.rank,
                  attributes,
                  dimensions,
-                 slices,
-                 slabs
+                 selections,
+                 self.selvalue
                  )
         return state
 
@@ -125,13 +164,16 @@ class MapDlg(NodeDlg):
          self.rank,
          attributes,
          dimensions,
-         slices,
-         slabs
+         selections,
+         self.selvalue
          ) = state
         self.attributes = copy.copy(attributes)
         self.dimensions = copy.copy(dimensions)
-        self.slices = copy.copy(slices)
-        self.slabs = copy.copy(slabs)
+        self.selections = copy.copy(selections)
+        if selections and selection[0] and len(selection) == 4:
+            self.keytype = "slabs"
+        else:
+            self.keytype = "slices"
 
     # links dataSource
     # \param dsName datasource name
@@ -181,11 +223,11 @@ class MapDlg(NodeDlg):
         for dm in self.dimensions:
             self.__dimensions.append(dm)
 
-        if self.rank < len(self.slices):
-            self.rank = len(self.slices)
+        if self.rank < len(self.selections):
+            self.rank = len(self.selections)
 
-        if self.slices:
-            label = self.slices.__str__()
+        if self.selections:
+            label = self.selections.__str__()
             self.ui.selLabel.setText("%s" % label.replace('None', '*'))
         elif self.rank > 0:
             label = ([None] * (self.rank)).__str__()
@@ -193,25 +235,9 @@ class MapDlg(NodeDlg):
         else:
             self.ui.selLabel.setText("[]")
 
-        self.__slices = []
-        for dm in self.slices:
-            self.__slices.append(dm)
-
-        if self.rank < len(self.slabs):
-            self.rank = len(self.slabs)
-
-        if self.slabs:
-            label = self.slabs.__str__()
-            self.ui.selLabel.setText("%s" % label.replace('None', '*'))
-        elif self.rank > 0:
-            label = ([None] * (self.rank)).__str__()
-            self.ui.selLabel.setText("%s" % label.replace('None', '*'))
-        else:
-            self.ui.selLabel.setText("[]")
-
-        self.__slabs = []
-        for dm in self.slabs:
-            self.__slabs.append(dm)
+        self.__selections = []
+        for dm in self.selections:
+            self.__selections.append(dm)
 
         self.__attributes.clear()
         for at in self.attributes.keys():
@@ -237,10 +263,8 @@ class MapDlg(NodeDlg):
             self.__removeAttribute)
         self.ui.dimPushButton.clicked.connect(
             self.__changeDimensions)
-        self.ui.slicePushButton.clicked.connect(
-            self.__changeSlices)
-        self.ui.slabPushButton.clicked.connect(
-            self.__changeSlabs)
+        self.ui.selPushButton.clicked.connect(
+            self.__changeSelections)
 
         self.ui.nameLineEdit.textEdited[str].connect(
             self.__updateUi)
@@ -336,10 +360,8 @@ class MapDlg(NodeDlg):
         selects = self.node.firstChildElement(str("selections"))
         attributeMap = selects.attributes()
 
-        self.slices = []
-        self.__slices = []
-        self.slabs = []
-        self.__slabs = []
+        self.selections = []
+        self.__selections = []
         if attributeMap.contains("rank"):
             try:
                 self.rank = int(attributeMap.namedItem("rank").nodeValue())
@@ -355,74 +377,149 @@ class MapDlg(NodeDlg):
                 if child.isElement() and child.nodeName() == "slice":
                     attributeMap = child.attributes()
                     index = None
-                    value = None
+                    start = None
+                    stop = None
+                    step = None
                     try:
                         if attributeMap.contains("index"):
                             index = int(
                                 attributeMap.namedItem("index").nodeValue())
-                        if attributeMap.contains("value"):
-                            value = str(
-                                attributeMap.namedItem("value").nodeValue())
+                        if attributeMap.contains("start"):
+                            start = str(
+                                attributeMap.namedItem("start").nodeValue())
+                        if attributeMap.contains("stop"):
+                            stop = str(
+                                attributeMap.namedItem("stop").nodeValue())
+                        if attributeMap.contains("step"):
+                            stop = str(
+                                attributeMap.namedItem("step").nodeValue())
                     except Exception:
                         pass
 
                     text = DomTools.getText(child)
+                    value = ""
                     if text and "$datasources." in text:
                         value = str(text).strip()
+                    if value:
+                        self.selvalue = value
+
                     if index < 1:
                         index = None
                     if index is not None:
-                        while len(self.slices) < index:
-                            self.slices.append(None)
-                            self.__slices.append(None)
-                        self.__slices[index - 1] = value
-                        self.slices[index - 1] = value
+                        while len(self.starts) < index:
+                            self.starts.append(None)
+                            self.__starts.append(None)
+                        self.__starts[index - 1] = start
+                        self.starts[index - 1] = start
+                        while len(self.stops) < index:
+                            self.stops.append(None)
+                            self.__stops.append(None)
+                        self.__stops[index - 1] = stop
+                        self.stops[index - 1] = stop
+                        while len(self.steps) < index:
+                            self.steps.append(None)
+                            self.__steps.append(None)
+                        self.__steps[index - 1] = step
+                        self.steps[index - 1] = step
 
                 elif child.isElement() and child.nodeName() == "slab":
                     attributeMap = child.attributes()
                     index = None
+                    offset = None
+                    block = None
+                    count = None
+                    stride = None
                     value = None
                     try:
                         if attributeMap.contains("index"):
                             index = int(
                                 attributeMap.namedItem("index").nodeValue())
-                        if attributeMap.contains("value"):
-                            value = str(
-                                attributeMap.namedItem("value").nodeValue())
+                        if attributeMap.contains("offset"):
+                            offset = str(
+                                attributeMap.namedItem("offset").nodeValue())
+                        if attributeMap.contains("block"):
+                            block = str(
+                                attributeMap.namedItem("block").nodeValue())
+                        if attributeMap.contains("count"):
+                            count = str(
+                                attributeMap.namedItem("count").nodeValue())
+                        if attributeMap.contains("stride"):
+                            stride = str(
+                                attributeMap.namedItem("stride").nodeValue())
                     except Exception:
                         pass
 
                     text = DomTools.getText(child)
                     if text and "$datasources." in text:
                         value = str(text).strip()
+                    if value:
+                        self.selvalue = value
                     if index < 1:
                         index = None
                     if index is not None:
-                        while len(self.slabs) < index:
-                            self.slabs.append(None)
-                            self.__slabs.append(None)
-                        self.__slabs[index - 1] = value
-                        self.slabs[index - 1] = value
+                        while len(self.offsets) < index:
+                            self.offsets.append(None)
+                            self.__offsets.append(None)
+                        self.__offsets[index - 1] = offset
+                        self.offsets[index - 1] = offset
+
+                        while len(self.blocks) < index:
+                            self.blocks.append(None)
+                            self.__blocks.append(None)
+                        self.__blocks[index - 1] = block
+                        self.blocks[index - 1] = block
+
+                        while len(self.counts) < index:
+                            self.counts.append(None)
+                            self.__counts.append(None)
+                        self.__counts[index - 1] = count
+                        self.counts[index - 1] = count
+
+                        while len(self.strides) < index:
+                            self.strides.append(None)
+                            self.__strides.append(None)
+                        self.__strides[index - 1] = stride
+                        self.strides[index - 1] = stride
 
                 child = child.nextSibling()
 
-        if self.rank < len(self.slices):
-            self.rank = len(self.slices)
-            self.rank = len(self.__slices)
-        elif self.rank > len(self.slices):
-            self.slices.extend(
-                [None] * (self.rank - len(self.slices)))
-            self.__slices.extend(
-                [None] * (self.rank - len(self.__slices)))
-            
-        if self.rank < len(self.slabs):
-            self.rank = len(self.slabs)
-            self.rank = len(self.__slabs)
-        elif self.rank > len(self.slabs):
-            self.slabs.extend(
-                [None] * (self.rank - len(self.slabs)))
-            self.__slabs.extend(
-                [None] * (self.rank - len(self.__slabs)))
+        if self.keytype == "slices":
+            elems = [self.starts, self.stops, self.steps]
+            _elems = [self.__starts, self.__stops, self.__steps]
+        else:
+            elems = [self.offsets, self.blocks,
+                     self.counts, self.strides]
+            _elems = [self.__offsets, self.__blocks,
+                      self.__counts, self.__strides]
+        for el, elem in enumerate(elems):
+            _elem = _elems[el]
+            if self.rank < len(elem):
+                self.rank = len(elem)
+                self.rank = len(_elem)
+            elif self.rank > len(elem):
+                elem.extend(
+                    [None] * (self.rank - len(elem)))
+                _elem.extend(
+                    [None] * (self.rank - len(_elem)))
+
+        if self.rank < len(self.selections):
+            self.rank = len(self.selections)
+            self.rank = len(self.__selections)
+        elif self.rank > len(self.selections):
+            if self.keytype == "slices":
+                self.selections.extend(
+                    [None, None, None] * (
+                        self.rank - len(self.selections)))
+                self.__selections.extend(
+                    [None, None, None] * (
+                        self.rank - len(self.__selections)))
+            else:
+                self.selections.extend(
+                    [None, None, None, None] * (
+                        self.rank - len(self.selections)))
+                self.__selections.extend(
+                    [None, None, None, None] * (
+                        self.rank - len(self.__selections)))
 
         doc = self.node.firstChildElement(str("doc"))
         text = DomTools.getText(doc)
@@ -460,39 +557,69 @@ class MapDlg(NodeDlg):
             label = self.__dimensions.__str__()
             self.ui.dimLabel.setText("%s" % label.replace('None', '*'))
 
-    # changing slices of the map
-    #  \brief It runs the Slices Dialog and fetches rank
-    #         and slices from it
-    def __changeSlices(self):
-        dform = SlicesDlg(self)
+    # changing selections of the map
+    #  \brief It runs the Selections Dialog and fetches rank
+    #         and selections from it
+    def __changeSelections(self):
+        dform = SelectionsDlg(self)
         dform.rank = self.rank
-        dform.lengths = [ln for ln in self.__slices]
+        dform.keytype = self.keytype
+        dform.starts = [ln for ln in self.__starts]
+        dform.stops = [ln for ln in self.__stops]
+        dform.steps = [ln for ln in self.__steps]
+        dform.offsets = [ln for ln in self.__offsets]
+        dform.blocks = [ln for ln in self.__blocks]
+        dform.counts = [ln for ln in self.__counts]
+        dform.strides = [ln for ln in self.__strides]
         dform.createGUI()
         if dform.exec_():
             self.rank = dform.rank
+            self.keytype = dform.keytype
             if self.rank:
-                self.__slices = [dm for dm in dform.lengths]
+                self.__starts = [dm for dm in dform.starts]
+                self.__stops = [dm for dm in dform.stops]
+                self.__steps = [dm for dm in dform.steps]
+                self.__offsets = [dm for dm in dform.offsets]
+                self.__blocks = [dm for dm in dform.blocks]
+                self.__counts = [dm for dm in dform.counts]
+                self.__stripes = [dm for dm in dform.stripes]
             else:
-                self.__slices = []
-            label = self.__slices.__str__()
-            self.ui.dimLabel.setText("%s" % label.replace('None', '*'))
+                self.__starts = []
+                self.__stops = []
+                self.__steps = []
+                self.__offsets = []
+                self.__blocks = []
+                self.__counts = []
+                self.__stripes = []
 
-    # changing slabs of the map
-    #  \brief It runs the Slabs Dialog and fetches rank
-    #         and slabs from it
-    def __changeSlabs(self):
-        dform = SlabsDlg(self)
-        dform.rank = self.rank
-        dform.lengths = [ln for ln in self.__slabs]
-        dform.createGUI()
-        if dform.exec_():
-            self.rank = dform.rank
-            if self.rank:
-                self.__slabs = [dm for dm in dform.lengths]
+            self.__selections = []
+            if self.keytype == "slices":
+                for rk in self.rank:
+                    self.__selections.append(
+                        [self.__starts[rk]
+                         if rk < len(self.__starts) else None,
+                         self.__stops[rk]
+                         if rk < len(self.__stops) else None,
+                         self.__steps[rk]
+                         if rk < len(self.__steps) else None
+                         ]
+                    )
             else:
-                self.__slabs = []
-            label = self.__slabs.__str__()
-            self.ui.dimLabel.setText("%s" % label.replace('None', '*'))
+                for rk in self.rank:
+                    self.__selections.append(
+                        [self.__offsets[rk]
+                         if rk < len(self.__offsets) else None,
+                         self.__blocks[rk]
+                         if rk < len(self.__blocks) else None,
+                         self.__counts[rk]
+                         if rk < len(self.__counts) else None,
+                         self.__strides[rk]
+                         if rk < len(self.__strides) else None
+                         ]
+                    )
+            label = self.__selections.__str__()
+
+            self.ui.selLabel.setText("%s" % label.replace('None', '*'))
 
     # takes a name of the current attribute
     # \returns name of the current attribute
@@ -622,13 +749,9 @@ class MapDlg(NodeDlg):
         for dm in self.__dimensions:
             self.dimensions.append(dm)
 
-        self.slices = []
-        for dm in self.__slices:
-            self.slices.append(dm)
-
-        self.slabs = []
-        for dm in self.__slabs:
-            self.slabs.append(dm)
+        self.selections = []
+        for dm in self.__selections:
+            self.selections.append(dm)
 
         if self.node and self.root and self.node.isElement():
             self.updateNode(index)
@@ -752,7 +875,7 @@ class MapDlg(NodeDlg):
 
 if __name__ == "__main__":
     import sys
-    from PyQt5.QtGui import QApplication
+    from PyQt5.QtWidgets import QApplication
 
     logging.basicConfig(level=logging.DEBUG)
 
@@ -769,6 +892,7 @@ if __name__ == "__main__":
     form.doc = """Distance between the source and the mca detector.
 It should be defined by client."""
     form.dimensions = [3]
+    form.selections = [[2,3,None]]
     form.value = "1.23,3.43,4.23"
     form.createGUI()
     form.show()
