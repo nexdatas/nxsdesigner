@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>225</width>
-    <height>215</height>
+    <width>217</width>
+    <height>197</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,12 +15,12 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QFormLayout" name="formLayout">
-         <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
           <widget class="QLabel" name="rankLabel">
            <property name="text">
             <string>&amp;Rank:</string>
@@ -30,7 +30,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
+         <item>
           <widget class="QSpinBox" name="rankSpinBox">
            <property name="maximum">
             <number>6</number>
@@ -40,56 +40,70 @@
         </layout>
        </item>
        <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QDialogButtonBox" name="buttonBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="standardButtons">
-          <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-         </property>
+        <widget class="QComboBox" name="keytypeComboBox">
+         <item>
+          <property name="text">
+           <string>Slices</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Slabs</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <widget class="QLabel" name="dimLabel">
-       <property name="text">
-        <string>Di&amp;mensions:</string>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-       <property name="buddy">
-        <cstring>dimTableWidget</cstring>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QTableWidget" name="dimTableWidget"/>
-     </item>
     </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="selLabel">
+     <property name="text">
+      <string>Selections:</string>
+     </property>
+     <property name="buddy">
+      <cstring>selTableWidget</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QTableWidget" name="selTableWidget"/>
    </item>
   </layout>
  </widget>
  <tabstops>
   <tabstop>rankSpinBox</tabstop>
-  <tabstop>dimTableWidget</tabstop>
+  <tabstop>selTableWidget</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
