@@ -74,8 +74,6 @@ class MapDlg(NodeDlg):
 
         # map name
         self.name = u''
-        # map type
-        self.nexusType = u''
         # map target
         self.target = u''
         # map value
@@ -140,7 +138,6 @@ class MapDlg(NodeDlg):
         selections = copy.copy(self.selections)
 
         state = (self.name,
-                 self.nexusType,
                  self.target,
                  self.value,
                  self.doc,
@@ -157,7 +154,6 @@ class MapDlg(NodeDlg):
     def setState(self, state):
 
         (self.name,
-         self.nexusType,
          self.target,
          self.value,
          self.doc,
@@ -170,7 +166,7 @@ class MapDlg(NodeDlg):
         self.attributes = copy.copy(attributes)
         self.dimensions = copy.copy(dimensions)
         self.selections = copy.copy(selections)
-        if selections and selection[0] and len(selection) == 4:
+        if selections and selections[0] and len(selections) == 4:
             self.keytype = "slabs"
         else:
             self.keytype = "slices"
@@ -186,20 +182,6 @@ class MapDlg(NodeDlg):
     def updateForm(self):
         if self.name is not None:
             self.ui.nameLineEdit.setText(self.name)
-        if self.nexusType is not None:
-            index = self.ui.typeComboBox.findText(unicode(self.nexusType))
-            if index > -1:
-                self.ui.typeComboBox.setCurrentIndex(index)
-                self.ui.otherFrame.hide()
-            else:
-                index2 = self.ui.typeComboBox.findText('other ...')
-                self.ui.typeComboBox.setCurrentIndex(index2)
-                self.ui.typeLineEdit.setText(self.nexusType)
-                self.ui.otherFrame.show()
-        else:
-            index = self.ui.typeComboBox.findText(unicode("None"))
-            self.ui.typeComboBox.setCurrentIndex(index)
-            self.ui.otherFrame.hide()
         if self.doc is not None:
             self.ui.docTextEdit.setText(self.doc)
         if self.target is not None:
@@ -268,8 +250,6 @@ class MapDlg(NodeDlg):
 
         self.ui.nameLineEdit.textEdited[str].connect(
             self.__updateUi)
-        self.ui.typeComboBox.currentIndexChanged[str].connect(
-            self.__currentIndexChanged)
 
         self.populateAttributes()
 
@@ -285,8 +265,6 @@ class MapDlg(NodeDlg):
 
         self.name = unicode(attributeMap.namedItem("name").nodeValue()
                             if attributeMap.contains("name") else "")
-        self.nexusType = unicode(attributeMap.namedItem("type").nodeValue()
-                                 if attributeMap.contains("type") else "")
         self.target = unicode(attributeMap.namedItem("target").nodeValue()
                               if attributeMap.contains("target") else "")
 
@@ -298,8 +276,7 @@ class MapDlg(NodeDlg):
         for i in range(attributeMap.count()):
             attribute = attributeMap.item(i)
             attrName = unicode(attribute.nodeName())
-            if attrName != "name" and attrName != "type" \
-                    and attrName != "target":
+            if attrName != "name" and attrName != "target":
                 self.attributes[attrName] = unicode(attribute.nodeValue())
                 self.__attributes[attrName] = unicode(attribute.nodeValue())
 
@@ -683,15 +660,6 @@ class MapDlg(NodeDlg):
             selected.setSelected(True)
             self.ui.attributeTableWidget.setCurrentItem(selected)
 
-    # calls updateUi when the name text is changing
-    # \param text the edited text
-    def __currentIndexChanged(self, text):
-        if text == 'other ...':
-            self.ui.otherFrame.show()
-            self.ui.typeLineEdit.setFocus()
-        else:
-            self.ui.otherFrame.hide()
-
     # updates map user interface
     # \brief It sets enable or disable the OK button
     def __updateUi(self):
@@ -726,12 +694,6 @@ class MapDlg(NodeDlg):
         self.name = unicode(self.ui.nameLineEdit.text())
         self.target = unicode(self.ui.targetLineEdit.text())
         self.value = unicode(self.ui.valueLineEdit.text())
-
-        self.nexusType = unicode(self.ui.typeComboBox.currentText())
-        if self.nexusType == 'other ...':
-            self.nexusType = unicode(self.ui.typeLineEdit.text())
-        elif self.nexusType == 'None':
-            self.nexusType = u''
 
         self.doc = unicode(self.ui.docTextEdit.toPlainText())
 
@@ -774,8 +736,6 @@ class MapDlg(NodeDlg):
             attributeMap.removeNamedItem(attributeMap.item(0).nodeName())
         if self.name:
             elem.setAttribute(str("name"), str(self.name))
-        if self.nexusType:
-            elem.setAttribute(str("type"), str(self.nexusType))
         if self.target:
             elem.setAttribute(str("target"), str(self.target))
 
@@ -884,7 +844,6 @@ if __name__ == "__main__":
     # map form
     form = MapDlg()
     form.name = 'distance'
-    form.nexusType = 'NX_FLOAT'
     form.target = ''
     form.attributes = {"signal": "1",
                        "long_name": "source detector distance",
@@ -892,15 +851,13 @@ if __name__ == "__main__":
     form.doc = """Distance between the source and the mca detector.
 It should be defined by client."""
     form.dimensions = [3]
-    form.selections = [[2,3,None]]
+    form.selections = [[2, 3, None]]
     form.value = "1.23,3.43,4.23"
     form.createGUI()
     form.show()
     app.exec_()
     if form.name:
         logger.info("Map: name = \'%s\'" % (form.name))
-    if form.nexusType:
-        logger.info("       type = \'%s\'" % (form.nexusType))
     if form.target:
         logger.info("       target = \'%s\'" % (form.target))
     if form.attributes:
