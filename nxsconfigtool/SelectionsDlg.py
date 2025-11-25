@@ -87,9 +87,11 @@ class SelectionsDlg(QDialog):
         try:
             if self.rank is not None and int(self.rank) >= 0:
                 self.rank = int(self.rank)
-                for elem in [self.starts, self.stops, self.steps, self.offsets,
+                for elem in [self.starts, self.stops,
+                             self.steps, self.offsets,
                              self.blocks, self.counts, self.strides]:
                     for i, ln in enumerate(elem):
+                        iln = None
                         if ln is not None:
                             if isinstance(ln, int) or \
                                    '$var.' not in ln and \
@@ -98,7 +100,8 @@ class SelectionsDlg(QDialog):
                                 iln = int(ln)
                                 elem[i] = ln
                                 if iln < 1:
-                                    elem[i] = None
+                                    elem[i] = (
+                                        iln if iln is not None else ln)
                             else:
                                 elem[i] = ln
                         else:
@@ -175,6 +178,7 @@ class SelectionsDlg(QDialog):
         if row not in range(len(elem)):
             return
         try:
+            iln = None
             if item.text():
                 if '$var' not in str(item.text()) and  \
                         '$datasources' not in str(item.text()):
@@ -182,7 +186,7 @@ class SelectionsDlg(QDialog):
                     if iln < 0:
                         raise ValueError("Negative value")
                 ln = str(item.text())
-                elem[row] = ln
+                elem[row] = iln if iln is not None else ln
             else:
                 elem[row] = None
         except Exception:
@@ -227,7 +231,7 @@ class SelectionsDlg(QDialog):
                     item = QTableWidgetItem(unicode(ln))
                 else:
                     item = QTableWidgetItem("")
-                print(row, col, ln)
+                # print(row, col, ln)
                 item.setData(Qt.UserRole, (long(row)))
                 if selectedDim is not None and selectedDim == row:
                     selected = item

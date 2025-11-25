@@ -93,33 +93,24 @@ class MapDlg(NodeDlg):
         # key type
         self.keytype = "slices"
         # starts
-        self.starts = []
         self.__starts = []
         # stops
-        self.stops = []
         self.__stops = []
         # steps
-        self.steps = []
         self.__steps = []
 
         # offsets
-        self.offsets = []
         self.__offsets = []
         # blocks
-        self.blocks = []
         self.__blocks = []
         # counts
-        self.counts = []
         self.__counts = []
         # strides
-        self.strides = []
         self.__strides = []
 
         # selections
         self.selections = []
         self.__selections = []
-
-        self.selvalue = ""
 
         # allowed subitems
         self.subItems = ["attribute", "datasource", "doc",
@@ -145,7 +136,6 @@ class MapDlg(NodeDlg):
                  attributes,
                  dimensions,
                  selections,
-                 self.selvalue
                  )
         return state
 
@@ -161,7 +151,6 @@ class MapDlg(NodeDlg):
          attributes,
          dimensions,
          selections,
-         self.selvalue
          ) = state
         self.attributes = copy.copy(attributes)
         self.dimensions = copy.copy(dimensions)
@@ -218,8 +207,26 @@ class MapDlg(NodeDlg):
             self.ui.selLabel.setText("[]")
 
         self.__selections = []
-        for dm in self.selections:
+        for idx, dm in enumerate(self.selections):
             self.__selections.append(dm)
+            if hasattr(dm, "__len__") and len(dm) == 4:
+                self.keytype = "slabs"
+                for elems in [self.__offsets, self.__blocks,
+                              self.__counts, self.__strides]:
+                    while len(elems) <= idx:
+                        elems.append(None)
+                self.__offsets[idx] = dm[0]
+                self.__blocks[idx] = dm[1]
+                self.__counts[idx] = dm[2]
+                self.__strides[idx] = dm[3]
+            elif hasattr(dm, "__len__") and len(dm) == 3:
+                self.keytype = "slices"
+                for elems in [self.__starts, self.__steps, self.__stops]:
+                    while len(elems) <= idx:
+                        elems.append(None)
+                self.__starts[idx] = dm[0]
+                self.__stops[idx] = dm[1]
+                self.__steps[idx] = dm[2]
 
         self.__attributes.clear()
         for at in self.attributes.keys():
@@ -368,7 +375,7 @@ class MapDlg(NodeDlg):
                             stop = str(
                                 attributeMap.namedItem("stop").nodeValue())
                         if attributeMap.contains("step"):
-                            stop = str(
+                            step = str(
                                 attributeMap.namedItem("step").nodeValue())
                     except Exception:
                         pass
@@ -377,27 +384,31 @@ class MapDlg(NodeDlg):
                     value = ""
                     if text and "$datasources." in text:
                         value = str(text).strip()
-                    if value:
-                        self.selvalue = value
 
                     if index < 1:
                         index = None
                     if index is not None:
-                        while len(self.starts) < index:
-                            self.starts.append(None)
+                        while len(self.__starts) < index:
                             self.__starts.append(None)
-                        self.__starts[index - 1] = start
-                        self.starts[index - 1] = start
-                        while len(self.stops) < index:
-                            self.stops.append(None)
+                        self.__starts[index - 1] = value or start
+                        while len(self.__stops) < index:
                             self.__stops.append(None)
                         self.__stops[index - 1] = stop
-                        self.stops[index - 1] = stop
-                        while len(self.steps) < index:
-                            self.steps.append(None)
+                        while len(self.__steps) < index:
                             self.__steps.append(None)
                         self.__steps[index - 1] = step
-                        self.steps[index - 1] = step
+
+                        while len(self.selections) < index:
+                            self.selections.append([None, None, None])
+                            self.__selections.append([None, None, None])
+                        self.__selections[index - 1] = [
+                            self.__starts[index - 1],
+                            self.__stops[index - 1],
+                            self.__steps[index - 1]]
+                        self.selections[index - 1] = [
+                            self.__starts[index - 1],
+                            self.__stops[index - 1],
+                            self.__steps[index - 1]]
 
                 elif child.isElement() and child.nodeName() == "slab":
                     attributeMap = child.attributes()
@@ -429,55 +440,53 @@ class MapDlg(NodeDlg):
                     text = DomTools.getText(child)
                     if text and "$datasources." in text:
                         value = str(text).strip()
-                    if value:
-                        self.selvalue = value
+
                     if index < 1:
                         index = None
                     if index is not None:
-                        while len(self.offsets) < index:
-                            self.offsets.append(None)
+                        while len(self.__offsets) < index:
                             self.__offsets.append(None)
-                        self.__offsets[index - 1] = offset
-                        self.offsets[index - 1] = offset
+                        self.__offsets[index - 1] = value or offset
 
-                        while len(self.blocks) < index:
-                            self.blocks.append(None)
+                        while len(self.__blocks) < index:
                             self.__blocks.append(None)
                         self.__blocks[index - 1] = block
-                        self.blocks[index - 1] = block
 
-                        while len(self.counts) < index:
-                            self.counts.append(None)
+                        while len(self.__counts) < index:
                             self.__counts.append(None)
                         self.__counts[index - 1] = count
-                        self.counts[index - 1] = count
 
-                        while len(self.strides) < index:
-                            self.strides.append(None)
+                        while len(self.__strides) < index:
                             self.__strides.append(None)
                         self.__strides[index - 1] = stride
-                        self.strides[index - 1] = stride
+
+                        while len(self.selections) < index:
+                            self.selections.append([None, None, None, None])
+                            self.__selections.append([None, None, None, None])
+                        self.__selections[index - 1] = [
+                            self.__offsets[index - 1],
+                            self.__blocks[index - 1],
+                            self.__counts[index - 1],
+                            self.__strides[index - 1]]
+                        self.selections[index - 1] = [
+                            self.__offsets[index - 1],
+                            self.__blocks[index - 1],
+                            self.__counts[index - 1],
+                            self.__strides[index - 1]]
 
                 child = child.nextSibling()
 
         if self.keytype == "slices":
-            elems = [self.starts, self.stops, self.steps]
-            _elems = [self.__starts, self.__stops, self.__steps]
+            elems = [self.__starts, self.__stops, self.__steps]
         else:
-            elems = [self.offsets, self.blocks,
-                     self.counts, self.strides]
-            _elems = [self.__offsets, self.__blocks,
-                      self.__counts, self.__strides]
+            elems = [self.__offsets, self.__blocks,
+                     self.__counts, self.__strides]
         for el, elem in enumerate(elems):
-            _elem = _elems[el]
             if self.rank < len(elem):
                 self.rank = len(elem)
-                self.rank = len(_elem)
             elif self.rank > len(elem):
                 elem.extend(
                     [None] * (self.rank - len(elem)))
-                _elem.extend(
-                    [None] * (self.rank - len(_elem)))
 
         if self.rank < len(self.selections):
             self.rank = len(self.selections)
@@ -496,7 +505,7 @@ class MapDlg(NodeDlg):
                         self.rank - len(self.selections)))
                 self.__selections.extend(
                     [None, None, None, None] * (
-                        self.rank - len(self.__selections)))
+                        self.rank - len(self.__selectixsons)))
 
         doc = self.node.firstChildElement(str("doc"))
         text = DomTools.getText(doc)
@@ -559,7 +568,7 @@ class MapDlg(NodeDlg):
                 self.__offsets = [dm for dm in dform.offsets]
                 self.__blocks = [dm for dm in dform.blocks]
                 self.__counts = [dm for dm in dform.counts]
-                self.__stripes = [dm for dm in dform.stripes]
+                self.__strides = [dm for dm in dform.strides]
             else:
                 self.__starts = []
                 self.__stops = []
@@ -567,11 +576,11 @@ class MapDlg(NodeDlg):
                 self.__offsets = []
                 self.__blocks = []
                 self.__counts = []
-                self.__stripes = []
+                self.__strides = []
 
             self.__selections = []
             if self.keytype == "slices":
-                for rk in self.rank:
+                for rk in range(self.rank):
                     self.__selections.append(
                         [self.__starts[rk]
                          if rk < len(self.__starts) else None,
@@ -582,7 +591,7 @@ class MapDlg(NodeDlg):
                          ]
                     )
             else:
-                for rk in self.rank:
+                for rk in range(self.rank):
                     self.__selections.append(
                         [self.__offsets[rk]
                          if rk < len(self.__offsets) else None,
@@ -595,7 +604,7 @@ class MapDlg(NodeDlg):
                          ]
                     )
             label = self.__selections.__str__()
-
+            # print("SEL", self.__selections)
             self.ui.selLabel.setText("%s" % label.replace('None', '*'))
 
     # takes a name of the current attribute
@@ -808,22 +817,31 @@ class MapDlg(NodeDlg):
                     dimDefined = False
             if dimDefined:
                 for i in range(min(self.rank, len(self.selections))):
-                    dim = self.root.createElement(str("dim"))
-                    dim.setAttribute(str("index"), str(unicode(i + 1)))
-                    if "$datasources." not in unicode(self.selections[i]):
-
-                        dim.setAttribute(str("value"),
-                                         str(unicode(self.selections[i])))
+                    dm = self.selections[i]
+                    if hasattr(dm, "__len__") and len(dm) == 4:
+                        dim = self.root.createElement(str("slab"))
+                        elem = ["offset", "block", "count", "stride"]
+                    elif hasattr(dm, "__len__") and len(dm) == 3:
+                        dim = self.root.createElement(str("slice"))
+                        elem = ["start", "stop", "step"]
                     else:
-                        dsText = self.root.createTextNode(
-                            str(unicode(self.selections[i])))
-                        dstrategy = self.root.createElement(
-                            str("strategy"))
-                        dstrategy.setAttribute(
-                            str("mode"),
-                            str(unicode("CONFIG")))
-                        dim.appendChild(dsText)
-                        dim.appendChild(dstrategy)
+                        continue
+                    dim.setAttribute(str("index"), str(unicode(i + 1)))
+                    for di, sel in enumerate(dm):
+                        if "$datasources." not in unicode(sel):
+
+                            dim.setAttribute(str(elem[di]),
+                                             str(unicode(sel)))
+                        else:
+                            dsText = self.root.createTextNode(
+                                str(unicode(sel)))
+                            dstrategy = self.root.createElement(
+                                str("strategy"))
+                            dstrategy.setAttribute(
+                                str("mode"),
+                                str(unicode("CONFIG")))
+                            dim.appendChild(dsText)
+                            dim.appendChild(dstrategy)
 
                     newDimens.appendChild(dim)
 
