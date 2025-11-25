@@ -34,36 +34,36 @@ logger = logging.getLogger("nxsdesigner")
 
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                 "ui", "selectionsdlg.ui"))
+                 "ui", "selectiondlg.ui"))
 
 if sys.version_info > (3,):
     unicode = str
     long = int
 
 
-# dialog defining a selections tag
-class SelectionsDlg(QDialog):
+# dialog defining a selection tag
+class SelectionDlg(QDialog):
 
     # constructor
     # \param parent patent instance
     def __init__(self, parent=None):
-        super(SelectionsDlg, self).__init__(parent)
+        super(SelectionDlg, self).__init__(parent)
 
-        # selections rank
+        # selection rank
         self.rank = 0
-        # selections start
+        # selection start
         self.starts = []
-        # selections stops
+        # selection stops
         self.stops = []
-        # selections stops
+        # selection stops
         self.steps = []
-        # selections stops
+        # selection stops
         self.offsets = []
-        # selections blocks
+        # selection blocks
         self.blocks = []
-        # selections counts
+        # selection counts
         self.counts = []
-        # selections strides
+        # selection strides
         self.strides = []
         # key type
         self.keytype = "slices"
@@ -244,7 +244,7 @@ class SelectionsDlg(QDialog):
             self.ui.selTableWidget.editItem(selected)
 
     # accepts input text strings
-    # \brief It copies the selections name and type from lineEdit widgets
+    # \brief It copies the selection name and type from lineEdit widgets
     #        and accept the dialog
     def accept(self):
         if self.keytype.lower() == 'slices':
@@ -267,8 +267,8 @@ if __name__ == "__main__":
 
     # Qt application
     app = QApplication(sys.argv)
-    # selections form
-    form = SelectionsDlg()
+    # selection form
+    form = SelectionDlg()
     form.rank = 2
     form.keytype = "slices"
     form.starts = [2, None]
@@ -285,17 +285,17 @@ if __name__ == "__main__":
 
     if form.result():
         if form.rank:
-            logger.info("Selections: rank = %s" % (form.rank))
+            logger.info("Selection: rank = %s" % (form.rank))
         if form.keytype:
-            logger.info("Selections: keytype = %s" % (form.keytype))
+            logger.info("Selection: keytype = %s" % (form.keytype))
 
-        logger.info("Selections: starts = %s" % (form.starts))
-        logger.info("Selections: stops = %s" % (form.stops))
-        logger.info("Selections: steps = %s" % (form.steps))
-        logger.info("Selections: offsets = %s" % (form.offsets))
-        logger.info("Selections: blocks = %s" % (form.blocks))
-        logger.info("Selections: counts = %s" % (form.counts))
-        logger.info("Selections: strides = %s" % (form.strides))
+        logger.info("Selection: starts = %s" % (form.starts))
+        logger.info("Selection: stops = %s" % (form.stops))
+        logger.info("Selection: steps = %s" % (form.steps))
+        logger.info("Selection: offsets = %s" % (form.offsets))
+        logger.info("Selection: blocks = %s" % (form.blocks))
+        logger.info("Selection: counts = %s" % (form.counts))
+        logger.info("Selection: strides = %s" % (form.strides))
 
         #     logger.info("Lengths:")
         #     for mrow, mln in enumerate(form.lengths):

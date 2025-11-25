@@ -16,24 +16,20 @@
 #    You should have received a copy of the GNU General Public License
 #    along with nexdatas.  If not, see <http://www.gnu.org/licenses/>.
 # \package nxsconfigtool nexdatas
-# \file MapDlg.py
-# Map dialog class
+# \file SourceViewDlg.py
+# SourceView dialog class
 
-""" map widget """
+""" sourceview widget """
 
 import copy
 
-from PyQt5.QtWidgets import (QMessageBox, QTableWidgetItem)
-from PyQt5.QtCore import (Qt, QModelIndex)
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import QModelIndex
 from PyQt5 import uic
 
 import os
 import sys
 
-try:
-    from .AttributeDlg import AttributeDlg
-except Exception:
-    from AttributeDlg import AttributeDlg
 
 try:
     from .DimensionsDlg import DimensionsDlg
@@ -58,31 +54,22 @@ logger = logging.getLogger("nxsdesigner")
 
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                 "ui", "mapdlg.ui"))
+                 "ui", "sourceviewdlg.ui"))
 
 if sys.version_info > (3,):
     unicode = str
 
 
-# dialog defining a map tag
-class MapDlg(NodeDlg):
+# dialog defining a sourceview tag
+class SourceViewDlg(NodeDlg):
 
     # constructor
     # \param parent patent instance
     def __init__(self, parent=None):
-        super(MapDlg, self).__init__(parent)
+        super(SourceViewDlg, self).__init__(parent)
 
-        # map name
-        self.name = u''
-        # map target
-        self.target = u''
-        # map value
-        self.value = u''
-        # map doc
+        # sourceview doc
         self.doc = u''
-        # map attributes
-        self.attributes = {}
-        self.__attributes = {}
 
         # rank
         self.rank = 0
@@ -113,46 +100,37 @@ class MapDlg(NodeDlg):
         self.__selection = []
 
         # allowed subitems
-        self.subItems = ["attribute", "datasource", "doc",
+        self.subItems = ["datasource", "doc",
                          "dimensions",
-                         "selection", "sourceview",
+                         "selection",
                          "enumeration", "strategy"]
 
         # user interface
         self.ui = _formclass()
 
-    # provides the state of the map dialog
-    # \returns state of the map in tuple
+    # provides the state of the sourceview dialog
+    # \returns state of the sourceview in tuple
     def getState(self):
-        attributes = copy.copy(self.attributes)
         dimensions = copy.copy(self.dimensions)
         selection = copy.copy(self.selection)
 
-        state = (self.name,
-                 self.target,
-                 self.value,
-                 self.doc,
+        state = (self.doc,
                  self.rank,
-                 attributes,
                  dimensions,
                  selection,
                  )
         return state
 
-    # sets the state of the map dialog
-    # \param state map state written in tuple
+    # sets the state of the sourceview dialog
+    # \param state sourceview state written in tuple
     def setState(self, state):
 
-        (self.name,
-         self.target,
-         self.value,
-         self.doc,
+        (self.doc,
          self.rank,
          attributes,
          dimensions,
          selection,
          ) = state
-        self.attributes = copy.copy(attributes)
         self.dimensions = copy.copy(dimensions)
         self.selection = copy.copy(selection)
         if selection and selection[0] and len(selection) == 4:
@@ -160,23 +138,11 @@ class MapDlg(NodeDlg):
         else:
             self.keytype = "slices"
 
-    # links dataSource
-    # \param dsName datasource name
-    def linkDataSource(self, dsName):
-        self.value = "$%s.%s" % (self.dsLabel, dsName)
-        self.updateForm()
-
-    # updates the map dialog
+    # updates the sourceview dialog
     # \brief It sets the form local variables
     def updateForm(self):
-        if self.name is not None:
-            self.ui.nameLineEdit.setText(self.name)
         if self.doc is not None:
             self.ui.docTextEdit.setText(self.doc)
-        if self.target is not None:
-            self.ui.targetLineEdit.setText(self.target)
-        if self.value is not None:
-            self.ui.valueLineEdit.setText(self.value)
 
         if self.rank < len(self.dimensions):
             self.rank = len(self.dimensions)
@@ -228,12 +194,6 @@ class MapDlg(NodeDlg):
                 self.__stops[idx] = dm[1]
                 self.__steps[idx] = dm[2]
 
-        self.__attributes.clear()
-        for at in self.attributes.keys():
-            self.__attributes[unicode(at)] = self.attributes[(unicode(at))]
-
-        self.populateAttributes()
-
     #  creates GUI
     # \brief It calls setupUi and  connects signals and slots
     def createGUI(self):
@@ -244,21 +204,10 @@ class MapDlg(NodeDlg):
         self.__updateUi()
 
         self.ui.resetPushButton.clicked.connect(self.reset)
-        self.ui.attributeTableWidget.itemChanged.connect(
-            self.__tableItemChanged)
-        self.ui.addPushButton.clicked.connect(
-            self.__addAttribute)
-        self.ui.removePushButton.clicked.connect(
-            self.__removeAttribute)
         self.ui.dimPushButton.clicked.connect(
             self.__changeDimensions)
         self.ui.selPushButton.clicked.connect(
             self.__changeSelection)
-
-        self.ui.nameLineEdit.textEdited[str].connect(
-            self.__updateUi)
-
-        self.populateAttributes()
 
     # sets the form from the DOM node
     # \param node DOM node
@@ -268,24 +217,9 @@ class MapDlg(NodeDlg):
             self.node = node
         if not self.node:
             return
-        attributeMap = self.node.attributes()
-
-        self.name = unicode(attributeMap.namedItem("name").nodeValue()
-                            if attributeMap.contains("name") else "")
-        self.target = unicode(attributeMap.namedItem("target").nodeValue()
-                              if attributeMap.contains("target") else "")
 
         text = DomTools.getText(self.node)
         self.value = unicode(text).strip() if text else ""
-
-        self.attributes.clear()
-        self.__attributes.clear()
-        for i in range(attributeMap.count()):
-            attribute = attributeMap.item(i)
-            attrName = unicode(attribute.nodeName())
-            if attrName != "name" and attrName != "target":
-                self.attributes[attrName] = unicode(attribute.nodeValue())
-                self.__attributes[attrName] = unicode(attribute.nodeValue())
 
         dimens = self.node.firstChildElement(str("dimensions"))
         attributeMap = dimens.attributes()
@@ -511,21 +445,6 @@ class MapDlg(NodeDlg):
         text = DomTools.getText(doc)
         self.doc = unicode(text).strip() if text else ""
 
-    # adds an attribute
-    #  \brief It runs the Map Dialog and fetches attribute name and value
-    def __addAttribute(self):
-        aform = AttributeDlg()
-        if aform.exec_():
-
-            if aform.name not in self.__attributes.keys():
-                self.__attributes[aform.name] = aform.value
-                self.populateAttributes(aform.name)
-            else:
-                QMessageBox.warning(
-                    self, "Attribute name exists",
-                    "To change the attribute value, "
-                    "please edit the value in the attribute table")
-
     # changing dimensions of the map
     #  \brief It runs the Dimensions Dialog and fetches rank
     #         and dimensions from it
@@ -543,7 +462,7 @@ class MapDlg(NodeDlg):
             label = self.__dimensions.__str__()
             self.ui.dimLabel.setText("%s" % label.replace('None', '*'))
 
-    # changing selection of the map
+    # changing selection of the sourceview
     #  \brief It runs the Selection Dialog and fetches rank
     #         and selection from it
     def __changeSelection(self):
@@ -607,73 +526,10 @@ class MapDlg(NodeDlg):
             # print("SEL", self.__selection)
             self.ui.selLabel.setText("%s" % label.replace('None', '*'))
 
-    # takes a name of the current attribute
-    # \returns name of the current attribute
-    def __currentTableAttribute(self):
-        item = self.ui.attributeTableWidget.item(
-            self.ui.attributeTableWidget.currentRow(), 0)
-        if item is None:
-            return None
-        return item.data(Qt.UserRole)
-
-    # removes an attribute
-    #  \brief It removes the current attribute asking before about it
-    def __removeAttribute(self):
-        attr = self.__currentTableAttribute()
-        if attr is None:
-            return
-        if unicode(attr) in self.__attributes.keys():
-            self.__attributes.pop(unicode(attr))
-            self.populateAttributes()
-
-    # changes the current value of the attribute
-    # \brief It changes the current value of the attribute and informs
-    #        the user that attribute names arenot editable
-    def __tableItemChanged(self, item):
-        attr = self.__currentTableAttribute()
-        if unicode(attr) not in self.__attributes.keys():
-            return
-        column = self.ui.attributeTableWidget.currentColumn()
-        if column == 1:
-            self.__attributes[unicode(attr)] = unicode(item.text())
-        if column == 0:
-            QMessageBox.warning(
-                self, "Attribute name is not editable",
-                "To change the attribute name, "
-                "please remove the attribute and add the new one")
-        self.populateAttributes()
-
-    # fills in the attribute table
-    # \param selectedAttribute selected attribute
-    def populateAttributes(self, selectedAttribute=None):
-        selected = None
-        self.ui.attributeTableWidget.clear()
-        self.ui.attributeTableWidget.setSortingEnabled(False)
-        self.ui.attributeTableWidget.setRowCount(len(self.__attributes))
-        headers = ["Name", "Value"]
-        self.ui.attributeTableWidget.setColumnCount(len(headers))
-        self.ui.attributeTableWidget.setHorizontalHeaderLabels(headers)
-        for row, name in enumerate(self.__attributes):
-            item = QTableWidgetItem(name)
-            item.setData(Qt.UserRole, (name))
-            self.ui.attributeTableWidget.setItem(row, 0, item)
-            item2 = QTableWidgetItem(self.__attributes[name])
-            self.ui.attributeTableWidget.setItem(row, 1, item2)
-            if selectedAttribute is not None and selectedAttribute == name:
-                selected = item2
-        self.ui.attributeTableWidget.setSortingEnabled(True)
-        self.ui.attributeTableWidget.resizeColumnsToContents()
-        self.ui.attributeTableWidget.horizontalHeader().\
-            setStretchLastSection(True)
-        if selected is not None:
-            selected.setSelected(True)
-            self.ui.attributeTableWidget.setCurrentItem(selected)
-
-    # updates map user interface
+    # updates sourceview user interface
     # \brief It sets enable or disable the OK button
     def __updateUi(self):
-        enable = bool(self.ui.nameLineEdit.text())
-        self.ui.applyPushButton.setEnabled(enable)
+        self.ui.applyPushButton.setEnabled(True)
 
     # appends newElement
     # \param newElement DOM node to append
@@ -697,13 +553,9 @@ class MapDlg(NodeDlg):
         return NodeDlg.appendElement(self, newElement, parent)
 
     # applys input text strings
-    # \brief It copies the map name and type from lineEdit widgets
+    # \brief It copies the sourceview name and type from lineEdit widgets
     #        and apply the dialog
     def apply(self):
-        self.name = unicode(self.ui.nameLineEdit.text())
-        self.target = unicode(self.ui.targetLineEdit.text())
-        self.value = unicode(self.ui.valueLineEdit.text())
-
         self.doc = unicode(self.ui.docTextEdit.toPlainText())
 
         index = self.view.currentIndex()
@@ -711,10 +563,6 @@ class MapDlg(NodeDlg):
             index.row(), 2, index.parent().internalPointer())
 
         self.view.expand(index)
-
-        self.attributes.clear()
-        for at in self.__attributes.keys():
-            self.attributes[at] = self.__attributes[at]
 
         self.dimensions = []
         for dm in self.__dimensions:
@@ -739,19 +587,6 @@ class MapDlg(NodeDlg):
         elem = self.node.toElement()
 
         mindex = self.view.currentIndex() if not index.isValid() else index
-
-        attributeMap = self.node.attributes()
-        for i in range(attributeMap.count()):
-            attributeMap.removeNamedItem(attributeMap.item(0).nodeName())
-        if self.name:
-            elem.setAttribute(str("name"), str(self.name))
-        if self.target:
-            elem.setAttribute(str("target"), str(self.target))
-
-        self.replaceText(mindex, unicode(self.value))
-
-        for attr in self.attributes.keys():
-            elem.setAttribute(str(attr), str(self.attributes[attr]))
 
         doc = self.node.firstChildElement(str("doc"))
         if not self.doc and doc and doc.nodeName() == "doc":
@@ -859,13 +694,8 @@ if __name__ == "__main__":
 
     # Qt application
     app = QApplication(sys.argv)
-    # map form
-    form = MapDlg()
-    form.name = 'distance'
-    form.target = ''
-    form.attributes = {"signal": "1",
-                       "long_name": "source detector distance",
-                       "interpretation": "spectrum"}
+    # sourceview form
+    form = SourceViewDlg()
     form.doc = """Distance between the source and the mca detector.
 It should be defined by client."""
     form.dimensions = [3]
@@ -874,18 +704,6 @@ It should be defined by client."""
     form.createGUI()
     form.show()
     app.exec_()
-    if form.name:
-        logger.info("Map: name = \'%s\'" % (form.name))
-    if form.target:
-        logger.info("       target = \'%s\'" % (form.target))
-    if form.attributes:
-        logger.info("Other attributes:")
-        for k in form.attributes.keys():
-            logger.info(" %s = '%s' " % (k, form.attributes[k]))
-    if form.value:
-        logger.info("Value:\n \'%s\'" % (form.value))
-    if form.rank:
-        logger.info(" rank = %s" % (form.rank))
     if form.dimensions:
         logger.info("Dimensions:")
         for mrow, mln in enumerate(form.dimensions):
