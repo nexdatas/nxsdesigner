@@ -279,6 +279,32 @@ class ItemSlots(object):
             QMessageBox.warning(self.main, "Component not created",
                                 "Please edit one of the components")
 
+    # new vds component item action
+    # \brief It adds a new vds component item
+    def componentNewMapItem(self):
+        if hasattr(self.main.ui.mdi.activeSubWindow(), 'widget') and \
+                isinstance(self.main.ui.mdi.activeSubWindow().widget(),
+                           ComponentDlg):
+            cmd = ComponentNewItem(self.main)
+            cmd.itemName = 'vds'
+            self.undoStack.push(cmd)
+        else:
+            QMessageBox.warning(self.main, "Component not created",
+                                "Please edit one of the components")
+
+    # new vds component item action
+    # \brief It adds a new vds component item
+    def componentNewSourceViewItem(self):
+        if hasattr(self.main.ui.mdi.activeSubWindow(), 'widget') and \
+                isinstance(self.main.ui.mdi.activeSubWindow().widget(),
+                           ComponentDlg):
+            cmd = ComponentNewItem(self.main)
+            cmd.itemName = 'vds'
+            self.undoStack.push(cmd)
+        else:
+            QMessageBox.warning(self.main, "Component not created",
+                                "Please edit one of the components")
+
     # new attribute component item action
     # \brief It adds a new attribute component item
     def componentNewAttributeItem(self):
