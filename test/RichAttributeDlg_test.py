@@ -2278,7 +2278,7 @@ class RichAttributeDlgTest(unittest.TestCase):
 
         mrnk = self.__rnd.randint(0, 5)
         self.dimensions = [str(self.__rnd.randint(1, 40)) for n in range(mrnk)]
-        idimensions = [dm for int(dm) in self.dimensions]
+        idimensions = [int(dm) for dm in self.dimensions]
 
         QTimer.singleShot(10, self.dimensionsWidget)
         QTest.mouseClick(form.ui.dimPushButton, Qt.LeftButton)
