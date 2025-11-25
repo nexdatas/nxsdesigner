@@ -464,6 +464,7 @@ class DimensionsDlgTest(unittest.TestCase):
         print("Run: %s.%s() " % (self.__class__.__name__, fun))
         rank = self.__rnd.randint(1, 6)
         lengths = [str(self.__rnd.randint(1, 100)) for r in range(rank)]
+        ilengths = [int(ln) for ln in lengths]
         form = DimensionsDlg()
         self.assertEqual(form.rank, 0)
         self.assertEqual(form.lengths, [])
@@ -496,7 +497,7 @@ class DimensionsDlgTest(unittest.TestCase):
         self.assertEqual(form.result(), 0)
 
         self.assertEqual(form.rank, rank)
-        self.assertEqual(form.lengths, lengths)
+        self.assertEqual(form.lengths, ilengths)
 
     # create GUI test
     # \brief It tests default settings
@@ -547,6 +548,7 @@ class DimensionsDlgTest(unittest.TestCase):
         print("Run: %s.%s() " % (self.__class__.__name__, fun))
         rank = self.__rnd.randint(1, 6)
         lengths = [str(self.__rnd.randint(1, 100)) for r in range(rank)]
+        ilengths = [int(ln) for ln in lengths]
         form = DimensionsDlg()
         self.assertEqual(form.rank, 0)
         self.assertEqual(form.lengths, [])
@@ -586,7 +588,7 @@ class DimensionsDlgTest(unittest.TestCase):
         self.assertEqual(form.result(), 1)
 
         self.assertEqual(form.rank, rank)
-        self.assertEqual(form.lengths, lengths)
+        self.assertEqual(form.lengths, ilengths)
 
 
 if __name__ == '__main__':

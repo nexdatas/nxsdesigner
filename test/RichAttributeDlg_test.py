@@ -2278,6 +2278,7 @@ class RichAttributeDlgTest(unittest.TestCase):
 
         mrnk = self.__rnd.randint(0, 5)
         self.dimensions = [str(self.__rnd.randint(1, 40)) for n in range(mrnk)]
+        idimensions = [dm for int(dm) in self.dimensions]
 
         QTimer.singleShot(10, self.dimensionsWidget)
         QTest.mouseClick(form.ui.dimPushButton, Qt.LeftButton)
@@ -2289,7 +2290,7 @@ class RichAttributeDlgTest(unittest.TestCase):
         self.assertEqual(form.value, mvalue)
         self.assertEqual(form.doc, mdoc)
         self.assertEqual(form.rank, len(self.dimensions))
-        self.assertEqual(form.dimensions, self.dimensions)
+        self.assertEqual(form.dimensions, idimensions)
 
         cnt = 0
         for i in range(attributeMap.count()):
