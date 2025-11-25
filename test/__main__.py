@@ -34,6 +34,7 @@ import DefinitionDlg_test
 import GroupDlg_test
 import FieldDlg_test
 import VDSDlg_test
+import MapDlg_test
 import NodeDlg_test
 import ComponentItem_test
 import ComponentModel_test
@@ -72,6 +73,7 @@ def main():
 
     app = QApplication([])
     VDSDlg_test.app = app
+    MapDlg_test.app = app
     FieldDlg_test.app = app
     NodeDlg_test.app = app
     DefinitionDlg_test.app = app
@@ -117,6 +119,9 @@ def main():
 
     suite.addTests(
         unittest.defaultTestLoader.loadTestsFromModule(VDSDlg_test))
+
+    suite.addTests(
+        unittest.defaultTestLoader.loadTestsFromModule(MapDlg_test))
 
     suite.addTests(
         unittest.defaultTestLoader.loadTestsFromModule(RichAttributeDlg_test))
