@@ -24,7 +24,10 @@
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import (QModelIndex)
 
-from .DomTools import DomTools
+try:
+    from .DomTools import DomTools
+except Exception:
+    from DomTools import DomTools
 
 
 # abstract node dialog

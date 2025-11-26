@@ -26,7 +26,10 @@ from PyQt5.QtWidgets import (QDialog, QDialogButtonBox, QMessageBox)
 from PyQt5 import uic
 
 # from .ui.ui_attributedlg import Ui_AttributeDlg
-from .Errors import CharacterError
+try:
+    from .Errors import CharacterError
+except Exception:
+    from Errors import CharacterError
 
 import logging
 import sys

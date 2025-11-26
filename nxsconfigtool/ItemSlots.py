@@ -72,6 +72,16 @@ class ItemSlots(object):
             "actionNewFieldItem": [
                 "Add &Field Item", "componentNewFieldItem",
                 "", "componentnewitem", "Add a new  component field item"],
+            "actionNewVDSItem": [
+                "Add &VDS Item", "componentNewVDSItem",
+                "", "componentnewitem", "Add a new  component vds item"],
+            "actionNewMapItem": [
+                "Add &Map Item", "componentNewMapItem",
+                "", "componentnewitem", "Add a new  component map item"],
+            "actionNewSourceViewItem": [
+                "Add SourceVie&w Item", "componentNewSourceViewItem",
+                "", "componentnewitem",
+                "Add a new component source view item"],
             "actionNewStrategyItem": [
                 "Add &Strategy Item", "componentNewStrategyItem",
                 "", "componentnewitem", "Add a new component strategy item"],
@@ -251,6 +261,45 @@ class ItemSlots(object):
                            ComponentDlg):
             cmd = ComponentNewItem(self.main)
             cmd.itemName = 'field'
+            self.undoStack.push(cmd)
+        else:
+            QMessageBox.warning(self.main, "Component not created",
+                                "Please edit one of the components")
+
+    # new vds component item action
+    # \brief It adds a new vds component item
+    def componentNewVDSItem(self):
+        if hasattr(self.main.ui.mdi.activeSubWindow(), 'widget') and \
+                isinstance(self.main.ui.mdi.activeSubWindow().widget(),
+                           ComponentDlg):
+            cmd = ComponentNewItem(self.main)
+            cmd.itemName = 'vds'
+            self.undoStack.push(cmd)
+        else:
+            QMessageBox.warning(self.main, "Component not created",
+                                "Please edit one of the components")
+
+    # new vds component item action
+    # \brief It adds a new vds component item
+    def componentNewMapItem(self):
+        if hasattr(self.main.ui.mdi.activeSubWindow(), 'widget') and \
+                isinstance(self.main.ui.mdi.activeSubWindow().widget(),
+                           ComponentDlg):
+            cmd = ComponentNewItem(self.main)
+            cmd.itemName = 'vds'
+            self.undoStack.push(cmd)
+        else:
+            QMessageBox.warning(self.main, "Component not created",
+                                "Please edit one of the components")
+
+    # new vds component item action
+    # \brief It adds a new vds component item
+    def componentNewSourceViewItem(self):
+        if hasattr(self.main.ui.mdi.activeSubWindow(), 'widget') and \
+                isinstance(self.main.ui.mdi.activeSubWindow().widget(),
+                           ComponentDlg):
+            cmd = ComponentNewItem(self.main)
+            cmd.itemName = 'vds'
             self.undoStack.push(cmd)
         else:
             QMessageBox.warning(self.main, "Component not created",

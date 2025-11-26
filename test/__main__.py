@@ -30,9 +30,13 @@ from PyQt5.QtWidgets import QApplication
 import AttributeDlg_test
 import ConnectDlg_test
 import DimensionsDlg_test
+import SelectionDlg_test
 import DefinitionDlg_test
 import GroupDlg_test
 import FieldDlg_test
+import VDSDlg_test
+import MapDlg_test
+import SourceViewDlg_test
 import NodeDlg_test
 import ComponentItem_test
 import ComponentModel_test
@@ -70,11 +74,16 @@ def main():
     suite = unittest.TestSuite()
 
     app = QApplication([])
+    VDSDlg_test.app = app
+    MapDlg_test.app = app
+    SourceViewDlg_test.app = app
+    FieldDlg_test.app = app
     NodeDlg_test.app = app
     DefinitionDlg_test.app = app
     AttributeDlg_test.app = app
     ConnectDlg_test.app = app
     DimensionsDlg_test.app = app
+    SelectionDlg_test.app = app
     GroupDlg_test.app = app
     ComponentItem_test.app = app
     DomTools_test.app = app
@@ -111,6 +120,18 @@ def main():
 
     suite.addTests(
         unittest.defaultTestLoader.loadTestsFromModule(FieldDlg_test))
+
+    suite.addTests(
+        unittest.defaultTestLoader.loadTestsFromModule(VDSDlg_test))
+
+    suite.addTests(
+        unittest.defaultTestLoader.loadTestsFromModule(MapDlg_test))
+
+    suite.addTests(
+        unittest.defaultTestLoader.loadTestsFromModule(SelectionDlg_test))
+
+    suite.addTests(
+        unittest.defaultTestLoader.loadTestsFromModule(SourceViewDlg_test))
 
     suite.addTests(
         unittest.defaultTestLoader.loadTestsFromModule(RichAttributeDlg_test))

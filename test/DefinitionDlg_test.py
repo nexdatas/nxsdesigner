@@ -185,7 +185,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.view, None)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
         self.assertTrue(isinstance(form, NodeDlg))
         self.assertEqual(form.externalApply, None)
@@ -214,7 +214,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute",
-                          "link", "component", "doc", "symbols"])
+                          "link", "component", "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -255,7 +255,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute",
-                          "link", "component", "doc", "symbols"])
+                          "link", "component", "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -365,7 +365,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ["group", "field", "attribute", "link", "component", "doc",
-             "symbols"])
+             "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -464,7 +464,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ["group", "field", "attribute",
-             "link", "component", "doc", "symbols"])
+             "link", "component", "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -683,7 +683,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -694,7 +694,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         form.setFromNode()
 
@@ -710,7 +710,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ["group", "field", "attribute", "link", "component", "doc",
-             "symbols"])
+             "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -757,7 +757,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ["group", "field", "attribute", "link", "component", "doc",
-             "symbols"])
+             "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -769,7 +769,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(
             form.subItems,
             ["group", "field", "attribute", "link", "component", "doc",
-             "symbols"])
+             "symbols", "vds"])
 
         form.setFromNode(qdn)
         self.assertEqual(form.node, qdn)
@@ -785,7 +785,7 @@ class DefinitionDlgTest(unittest.TestCase):
              u'type': u'mytype%s' % nn, u'unit': u'myunits%s' % nn})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -827,7 +827,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -838,7 +838,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         form.setFromNode()
 
@@ -848,7 +848,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -878,7 +878,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -889,7 +889,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         form.setFromNode()
 
@@ -899,7 +899,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -945,7 +945,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -956,7 +956,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         form.setFromNode()
 
@@ -971,7 +971,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -1033,7 +1033,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -1044,7 +1044,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         form.setFromNode()
 
@@ -1060,7 +1060,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -1122,7 +1122,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -1133,7 +1133,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         form.setFromNode()
 
@@ -1148,7 +1148,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -1213,7 +1213,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -1224,7 +1224,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute",
-                          "link", "component", "doc", "symbols"])
+                          "link", "component", "doc", "symbols", "vds"])
 
         form.setFromNode()
 
@@ -1240,7 +1240,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -1349,7 +1349,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -1360,7 +1360,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         form.setFromNode()
 
@@ -1377,7 +1377,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc", "symbols"])
+                          "component", "doc", "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -1469,7 +1469,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc", "symbols"])
+                          "component", "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.createGUI()
@@ -1481,7 +1481,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc", "symbols"])
+                          "component", "doc", "symbols", "vds"])
 
         form.setFromNode()
 
@@ -1497,7 +1497,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, attributes)
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
 
         self.assertTrue(not form.ui.nameLineEdit.text())
         self.assertTrue(not form.ui.contentTextEdit.toPlainText())
@@ -1613,7 +1613,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.setFromNode()
@@ -1730,7 +1730,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc", "symbols"])
+                          "component", "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.setFromNode()
@@ -1852,7 +1852,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link", "component",
-                          "doc", "symbols"])
+                          "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.setFromNode()
@@ -1997,7 +1997,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc", "symbols"])
+                          "component", "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.setFromNode()
@@ -2144,7 +2144,7 @@ class DefinitionDlgTest(unittest.TestCase):
         self.assertEqual(form.attributes, {})
         self.assertEqual(form.subItems,
                          ["group", "field", "attribute", "link",
-                          "component", "doc", "symbols"])
+                          "component", "doc", "symbols", "vds"])
         self.assertEqual(form.ui.__class__.__name__, "Ui_DefinitionDlg")
 
         form.setFromNode()

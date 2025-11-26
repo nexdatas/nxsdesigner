@@ -3116,6 +3116,7 @@ class FieldDlgTest(unittest.TestCase):
 
         mrnk = self.__rnd.randint(0, 5)
         self.dimensions = [str(self.__rnd.randint(1, 40)) for n in range(mrnk)]
+        idimensions = [int(dm) for dm in self.dimensions]
 
         QTimer.singleShot(10, self.dimensionsWidget)
         QTest.mouseClick(form.ui.dimPushButton, Qt.LeftButton)
@@ -3129,7 +3130,7 @@ class FieldDlgTest(unittest.TestCase):
         self.assertEqual(form.doc, mdoc)
         self.assertEqual(form.attributes, attrs)
         self.assertEqual(form.rank, len(self.dimensions))
-        self.assertEqual(form.dimensions, self.dimensions)
+        self.assertEqual(form.dimensions, idimensions)
 
         cnt = 0
         for i in range(attributeMap.count()):

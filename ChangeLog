@@ -1,3 +1,7 @@
+2021-11-26 Jan Kotanski <jankotan@gmail.com>
+	* add support for vds, map, sourceview and selection tag (#59)
+	* tagged as v2.2.0
+
 2021-11-13 Jan Kotanski <jankotan@gmail.com>
 	* comment out GNOME env variables (#57)
 	* tagged as v2.1.2

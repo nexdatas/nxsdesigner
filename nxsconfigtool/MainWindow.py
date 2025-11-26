@@ -455,6 +455,9 @@ class MainWindow(QMainWindow):
         self.contextMenuActions = (
             self.ui.actionNewGroupItem,
             self.ui.actionNewFieldItem,
+            self.ui.actionNewVDSItem,
+            self.ui.actionNewMapItem,
+            self.ui.actionNewSourceViewItem,
             self.ui.actionNewDataSourceItem,
             self.ui.actionNewStrategyItem,
             self.ui.actionNewAttributeItem,

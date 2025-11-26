@@ -67,7 +67,7 @@ class GroupDlg(NodeDlg):
 
         # allowed subitems
         self.subItems = ["group", "field", "attribute", "link",
-                         "component", "doc"]
+                         "component", "doc", "vds"]
 
         # list of NeXus types
         self.typehelper = [
