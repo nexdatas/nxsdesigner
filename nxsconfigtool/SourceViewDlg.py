@@ -127,7 +127,6 @@ class SourceViewDlg(NodeDlg):
 
         (self.doc,
          self.rank,
-         attributes,
          dimensions,
          selection,
          ) = state

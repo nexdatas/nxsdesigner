@@ -17,7 +17,7 @@
 #    along with nexdatas.  If not, see <http://www.gnu.org/licenses/>.
 # \package test nexdatas
 # \file MapDlgTest.py
-# unittests for vds Tags running Tango Server
+# unittests for map Tags running Tango Server
 #
 import unittest
 import os
@@ -39,7 +39,7 @@ from nxsconfigtool.AttributeDlg import AttributeDlg
 from nxsconfigtool.NodeDlg import NodeDlg
 from nxsconfigtool.DimensionsDlg import DimensionsDlg
 
-# from nxsconfigtool.ui.ui_vdsdlg import Ui_MapDlg
+# from nxsconfigtool.ui.ui_mapdlg import Ui_MapDlg
 from nxsconfigtool.DomTools import DomTools
 
 #  Qt-application
@@ -306,7 +306,7 @@ class MapDlgTest(unittest.TestCase):
         self.assertTrue(not form.ui.applyPushButton.isEnabled())
         self.assertTrue(form.ui.resetPushButton.isEnabled())
 
-        name = "myvds"
+        name = "mymap"
         target = "seconds"
         value = "14:45"
         QTest.keyClicks(form.ui.nameLineEdit, name)
@@ -1247,7 +1247,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -1344,7 +1344,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -1441,7 +1441,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -1532,7 +1532,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -1621,7 +1621,7 @@ class MapDlgTest(unittest.TestCase):
 
         # dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         doc.appendChild(qdn)
 
@@ -1678,7 +1678,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -1797,7 +1797,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -1917,7 +1917,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -2041,7 +2041,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -2208,7 +2208,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -2384,7 +2384,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -2555,7 +2555,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -2726,7 +2726,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -2947,7 +2947,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -3158,7 +3158,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -3629,7 +3629,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
@@ -3839,7 +3839,7 @@ class MapDlgTest(unittest.TestCase):
 
         dks = []
         doc = QDomDocument()
-        nname = "vds"
+        nname = "map"
         qdn = doc.createElement(nname)
         nn = self.__rnd.randint(0, 9)
         qdn.setAttribute("name", "myname%s" % nn)
