@@ -75,7 +75,7 @@
       </group>
     </group>
     <group type="NXdata" name="data">
-      <link target="NXentry/NXinstrument/NXdetector/data" name="data"/>
+      <link target="NXentry/instrument:NXinstrument/NXdetector/data" name="data"/>
     </group>
     <field type="NX_CHAR" name="definition">NXsas</field>
   </group>

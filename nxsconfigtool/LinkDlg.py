@@ -217,7 +217,7 @@ if __name__ == "__main__":
     # link form
     form = LinkDlg()
     form.name = 'data'
-    form.target = '/NXentry/NXinstrument/NXdetector/data'
+    form.target = '/NXentry/instrument:NXinstrument/NXdetector/data'
     form.createGUI()
     form.show()
     app.exec_()

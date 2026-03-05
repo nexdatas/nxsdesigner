@@ -36,7 +36,7 @@
       </group>
     </group>
     <group type="NXdata" name="data">
-      <link target="NXentry/NXinstrument/pilatus300k:NXdetector/data" name="pilatus300k"/>
+      <link target="NXentry/instrument:NXinstrument/pilatus300k:NXdetector/data" name="pilatus300k"/>
     </group>
   </group>
 </definition>

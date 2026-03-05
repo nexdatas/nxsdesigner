@@ -29,19 +29,19 @@
       </group>
     </group>
     <group type="NXdata" name="data">
-      <link target="/NXentry/NXinstrument/NXdetector/mca" name="data">
+      <link target="/NXentry/instrument:NXinstrument/NXdetector/mca" name="data">
         <doc>
-          Link to mca in /NXentry/NXinstrument/NXdetector
+          Link to mca in /NXentry/instrument:NXinstrument/NXdetector
         </doc>
       </link>
-      <link target="/NXentry/NXinstrument/NXdetector/counter1" name="counter1">
+      <link target="/NXentry/instrument:NXinstrument/NXdetector/counter1" name="counter1">
         <doc>
-          Link to counter1 in /NXentry/NXinstrument/NXdetector
+          Link to counter1 in /NXentry/instrument:NXinstrument/NXdetector
         </doc>
       </link>
-      <link target="/NXentry/NXinstrument/NXdetector/counter2" name="counter2">
+      <link target="/NXentry/instrument:NXinstrument/NXdetector/counter2" name="counter2">
         <doc>
-          Link to counter2 in /NXentry/NXinstrument/NXdetector
+          Link to counter2 in /NXentry/instrument:NXinstrument/NXdetector
         </doc>
       </link>
     </group>

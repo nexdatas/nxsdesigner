@@ -180,14 +180,14 @@
       </group>
     </group>
     <group type="NXdata" name="data">
-      <link target="/NXentry/NXinstrument/NXdetector/polar_angle" name="polar_angle">
+      <link target="/NXentry/instrument:NXinstrument/NXdetector/polar_angle" name="polar_angle">
         <doc>
-          Link to polar angle in /NXentry/NXinstrument/NXdetector
+          Link to polar angle in /NXentry/instrument:NXinstrument/NXdetector
         </doc>
       </link>
-      <link target="/NXentry/NXinstrument/NXdetector/data" name="data">
+      <link target="/NXentry/instrument:NXinstrument/NXdetector/data" name="data">
         <doc>
-          Link to data in /NXentry/NXinstrument/NXdetector
+          Link to data in /NXentry/instrument:NXinstrument/NXdetector
         </doc>
       </link>
     </group>

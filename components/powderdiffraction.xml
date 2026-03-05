@@ -49,8 +49,8 @@
       </field>
     </group>
     <group type="NXdata" name="data">
-      <link target="NXentry/NXinstrument/NXdetector/data" name="data"/>
-      <link target="NXentry/NXinstrument/NXdetector/polar_angle" name="polar_angle"/>
+      <link target="NXentry/instrument:NXinstrument/NXdetector/data" name="data"/>
+      <link target="NXentry/instrument:NXinstrument/NXdetector/polar_angle" name="polar_angle"/>
     </group>
     <field type="NX_CHAR" name="definition">NXmonopd</field>
   </group>

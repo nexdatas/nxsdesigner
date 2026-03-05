@@ -138,7 +138,7 @@ The beamtime ID at DESY is an 8 digit number.R</doc>
     <field version="1.0.0" type="NX_CHAR" name="program_name">Nexus data server<doc>Program that created the file.</doc>
     </field>
     <group type="NXdata" name="data">
-      <link target="NXentry/NXinstrument/NXsample/data" name="data"/>
+      <link target="NXentry/instrument:NXinstrument/NXsample/data" name="data"/>
       <link target="NXentry/NXsample/rotation_angle" name="rotation_angle"/>
     </group>
   </group>
