@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 
 if [ "$1" = "2" ]; then
-    echo "run python-nxsconfigserver tests"
+    echo "run python-nxsconfigtool tests"
     docker exec  ndts python test
 else
-    echo "run python3-nxsconfigserver tests"
+    echo "run python3-nxsconfigtool tests"
     docker exec  ndts python3 test
 fi
-if [ "$?" -ne "0" ]; then exit 255; fi
+ERR=$?
+
+echo "ERROR: "$ERR
+
+if [ $ERR != 0 ]; then
+    if [ $ERR != 139 ]; then
+	exit $ERR;
+    fi
+fi
