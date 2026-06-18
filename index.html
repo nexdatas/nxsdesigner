@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Welcome to nxsconfigtool’s documentation! &#8212; NXS Component Designer 2.1.1 documentation</title>
+    <title>Welcome to nxsconfigtool’s documentation! &#8212; NXS Component Designer 2.2.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -38,7 +38,7 @@
         </button>
         <a class="navbar-brand" href="#">
           NXS Component Designer</a>
-        <span class="navbar-text navbar-version pull-left"><b>2.1</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>2.2</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -143,7 +143,7 @@ in the extended Nexus XML format in Configuration Tango Server or in disk files.
 <p>One can also download the lastest version directly from the git repository by</p>
 <p>git clone <a class="reference external" href="https://github.com/jkotan/nexdatas.configtool/">https://github.com/jkotan/nexdatas.configtool/</a></p>
 <p>Next, run the installation script</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>setup.py<span class="w"> </span>install
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python3<span class="w"> </span>setup.py<span class="w"> </span>install
 </pre></div>
 </div>
 <p>and launch</p>
@@ -153,15 +153,16 @@ in the extended Nexus XML format in Configuration Tango Server or in disk files.
 </section>
 <section id="debian-packages">
 <h3>Debian packages<a class="headerlink" href="#debian-packages" title="Permalink to this heading">¶</a></h3>
-<p>Debian Bookworm, Bullseye, Buster or Ubuntu Lunar, Jammy, Focal packages can be found in the HDRI repository.</p>
+<p>Debian Trixie, Bookworm, Bullseye or Ubuntu Resolute, Noble, Jammy packages can be found in the HDRI repository.</p>
 <p>To install the debian packages, add the PGP repository key</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>su
-<span class="gp">$ </span>wget<span class="w"> </span>-q<span class="w"> </span>-O<span class="w"> </span>-<span class="w"> </span>http://repos.pni-hdri.de/debian_repo.pub.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>apt-key<span class="w"> </span>add<span class="w"> </span>-
+<span class="gp">$ </span>curl<span class="w"> </span>-s<span class="w"> </span>http://repos.pni-hdri.de/debian_repo.pub.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--no-default-keyring<span class="w"> </span>--keyring<span class="w"> </span>gnupg-ring:/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg<span class="w"> </span>--import
+<span class="gp">$ </span>chmod<span class="w"> </span><span class="m">644</span><span class="w"> </span>/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 </pre></div>
 </div>
 <p>and then download the corresponding source list</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>/etc/apt/sources.list.d
-<span class="gp">$ </span>wget<span class="w"> </span>http://repos.pni-hdri.de/bookworm-pni-hdri.list
+<span class="gp">$ </span>wget<span class="w"> </span>http://repos.pni-hdri.de/trixie-pni-hdri.sources
 </pre></div>
 </div>
 <p>Finally,</p>
@@ -170,11 +171,11 @@ in the extended Nexus XML format in Configuration Tango Server or in disk files.
 </pre></div>
 </div>
 <p>To instal other NexDaTaS packages</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt-get<span class="w"> </span>install<span class="w"> </span>python-nxswriter<span class="w"> </span>python-nxsconfigserver<span class="w"> </span>nxsconfigserver-db<span class="w"> </span>nxstools
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt-get<span class="w"> </span>install<span class="w"> </span>python3-nxswriter<span class="w"> </span>python3-nxsconfigserver<span class="w"> </span>nxsconfigserver-db<span class="w"> </span>nxstools
 </pre></div>
 </div>
 <p>and</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt-get<span class="w"> </span>install<span class="w"> </span>python-nxsrecselector<span class="w"> </span>nxselector<span class="w"> </span>python-sardana-nxsrecorder
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>apt-get<span class="w"> </span>install<span class="w"> </span>python3-nxsrecselector<span class="w"> </span>nxselector<span class="w"> </span>python3-sardana-nxsrecorder
 </pre></div>
 </div>
 <p>for Component Selector and Sardana related packages.</p>
