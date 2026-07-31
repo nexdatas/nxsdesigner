@@ -1,3 +1,7 @@
+2026-07-31 Jan Kotanski <jankotan@gmail.com>
+	* add missing onlinexmlfile (#66)
+	* tagged as v2.2.1
+
 2021-11-26 Jan Kotanski <jankotan@gmail.com>
 	* add support for vds, map, sourceview and selection tag (#59)
 	* tagged as v2.2.0

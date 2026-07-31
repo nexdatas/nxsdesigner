@@ -62,6 +62,7 @@ class Options(object):
         self.insname = "instrument"
         self.oldclientlike = False
         self.clientlike = True
+        self.onlinexmlfile = ""
 
 
 # configuration server
