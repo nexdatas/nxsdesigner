@@ -1,6 +1,7 @@
-2026-XX-YY Jan Kotanski <jankotan@gmail.com>
-	* run pixi tests without HDRI repository (#70)
-	* tagged as v2.2.X
+2026-10-28 Jan Kotanski <jankotan@gmail.com>
+	* run pixi tests without HDRI repository (#71)
+	* add pyproject.toml (#73)
+	* tagged as v2.2.2
 
 2026-07-31 Jan Kotanski <jankotan@gmail.com>
 	* add missing onlinexmlfile (#66)
