@@ -66,7 +66,7 @@ release = '2.2.2'
 
 try:
     sys.path.insert(0, os.path.abspath("../"))
-    from nxsconfigserver import Release
+    from nxsconfigtool import Release
     version = ".".join(Release.__version__.split(".")[:2])
     release = Release.__version__
 except Exception:
