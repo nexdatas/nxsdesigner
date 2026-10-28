@@ -26,6 +26,8 @@ from setuptools.command.build_py import build_py
 from distutils.command.clean import clean
 from distutils.util import get_platform
 import shutil
+from importlib.util import module_from_spec, spec_from_file_location
+from pathlib import Path
 
 try:
     from sphinx.setup_command import BuildDoc
@@ -36,7 +38,15 @@ except Exception:
 #: package name
 TOOL = "nxsconfigtool"
 #: package instance
-ITOOL = __import__(TOOL)
+# ITOOL = __import__(TOOL)
+
+
+def get_version():
+    path = Path(__file__).parent / "nxsconfigtool" / "Release.py"
+    spec = spec_from_file_location("Release", path.as_posix())
+    module = module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def read(fname):
@@ -138,7 +148,7 @@ def get_scripts(scripts):
     return scripts
 
 
-release = ITOOL.__version__
+release = get_version().__version__
 version = ".".join(release.split(".")[:2])
 name = "NXS Component Designer"
 
@@ -151,7 +161,7 @@ package_data = {
 #: metadata for distutils
 SETUPDATA = dict(
     name="nxsconfigtool",
-    version=ITOOL.__version__,
+    version=get_version().__version__,
     author="Jan Kotanski, Eugen Wintersberger , Halil Pasic",
     author_email="jankotan@gmail.com, eugen.wintersberger@gmail.com, "
     + "halil.pasic@gmail.com",
@@ -166,18 +176,20 @@ SETUPDATA = dict(
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
+        # 'Programming Language :: Python :: 2.7',
+        # 'Programming Language :: Python :: 3',
+        # 'Programming Language :: Python :: 3.4',
+        # 'Programming Language :: Python :: 3.5',
+        # 'Programming Language :: Python :: 3.6',
+        # 'Programming Language :: Python :: 3.7',
+        # 'Programming Language :: Python :: 3.8',
+        # 'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
+        'Programming Language :: Python :: 3.15',
     ],
     keywords="configuration writer Tango component nexus data",
     url="https://github.com/nexdatas/nxsdesigner/",
