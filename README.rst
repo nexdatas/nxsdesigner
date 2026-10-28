@@ -62,7 +62,7 @@ Next, run the installation script
 
 .. code-block:: console
 
-	  $ python3 setup.py install
+	  $ pip3 install . -vv  --no-deps --no-build-isolation
 
 and launch
 
@@ -73,7 +73,7 @@ and launch
 Debian packages
 ^^^^^^^^^^^^^^^
 
-Debian Trixie, Bookworm, Bullseye or Ubuntu Resolute, Noble, Jammy packages can be found in the HDRI repository.
+Debian Trixie, Bookworm, Bullseye or Ubuntu Stonking, Resolute, Noble packages can be found in the HDRI repository.
 
 To install the debian packages, add the PGP repository key
 
@@ -111,8 +111,20 @@ and
 
 for Component Selector and Sardana related packages.
 
-From pip
-^^^^^^^^
+From conda or pip
+^^^^^^^^^^^^^^^^^
+
+The code can be installed in your conda environment by
+
+.. code-block:: console
+
+   $ conda create -n myenv python=3.13
+   $ conda activate myenv
+   $ conda config --add channels conda-forge
+   $ conda config --set channel_priority strict
+
+   $ conda install nxsdesigner
+
 
 To install it from pip you need to install pyqt5, e.g.
 

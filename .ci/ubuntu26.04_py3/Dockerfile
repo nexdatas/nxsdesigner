@@ -12,7 +12,7 @@ RUN cd /etc/apt/sources.list.d && wget https://repos.pni-hdri.de/resolute-pni-hd
     && useradd -ms /bin/bash tango
 
 RUN apt-get -qq update && apt-get -qq -y dist-upgrade
-RUN apt-get -qq update && apt-get -qq install -y  python3-mysqldb python3-sphinx  apt-utils debconf-utils net-tools  omniidl libomniorb4-dev libcos4-dev libomnithread4-dev libzmq3-dev python3-pyqt5 python3-pyqt5.qtsvg   qtchooser  python3-qtchecker
+RUN apt-get -qq update && apt-get -qq install -y  python3-mysqldb python3-sphinx  apt-utils debconf-utils net-tools  omniidl libomniorb4-dev libcos4-dev libomnithread4-dev libzmq3-dev python3-pyqt5 python3-pyqt5.qtsvg   qtchooser  python3-qtchecker   python3-pip python3-pip-whl python3-sphinx-bootstrap-theme git
 RUN apt-get -qq install -y python3-pninexus
 # RUN apt-get -qq install -y  python3-pni
 
