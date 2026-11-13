@@ -1,3 +1,7 @@
+2026-XX-YY Jan Kotanski <jankotan@gmail.com>
+	* update URL for the HDRI repository (#78)
+	* tagged as v2.2.X
+
 2026-10-28 Jan Kotanski <jankotan@gmail.com>
 	* run pixi tests without HDRI repository (#71)
 	* add pyproject.toml (#73)
