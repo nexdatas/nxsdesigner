@@ -21,7 +21,6 @@
 
 """ Provides datasource widget methods """
 
-import sys
 
 from PyQt5.QtCore import (QModelIndex)
 from PyQt5.QtWidgets import (QApplication, QMessageBox, QWidget, QVBoxLayout)
@@ -34,9 +33,6 @@ from .Errors import ParameterError
 import logging
 # message logger
 logger = logging.getLogger("nxsdesigner")
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining datasource
@@ -97,7 +93,7 @@ class DataSourceMethods(object):
             self.__dialog.ui.docTextEdit.setText(self.__datasource.doc)
         if self.__datasource.dataSourceType is not None:
             index = self.__dialog.ui.typeComboBox.findText(
-                unicode(self.__datasource.dataSourceType))
+                str(self.__datasource.dataSourceType))
             if index > -1:
                 self.__dialog.ui.typeComboBox.setCurrentIndex(index)
             else:
@@ -175,7 +171,7 @@ class DataSourceMethods(object):
 
         value = attributeMap.namedItem("type").nodeValue() \
             if attributeMap.contains("type") else ""
-        self.__datasource.dataSourceType = unicode(value)
+        self.__datasource.dataSourceType = str(value)
 
         if attributeMap.contains("name"):
             self.__datasource.dataSourceName = \
@@ -186,7 +182,7 @@ class DataSourceMethods(object):
 
         doc = self.__dialog.node.firstChildElement(str("doc"))
         text = DomTools.getText(doc)
-        self.__datasource.doc = unicode(text).strip() if text else ""
+        self.__datasource.doc = str(text).strip() if text else ""
 
     # accepts input text strings
     # \brief It copies the parameters and accept the self.__dialog
@@ -195,15 +191,15 @@ class DataSourceMethods(object):
             self.createDialog()
 
         self.__datasource.applied = False
-        sourceType = unicode(self.__dialog.ui.typeComboBox.currentText())
-        self.__datasource.dataSourceName = unicode(
+        sourceType = str(self.__dialog.ui.typeComboBox.currentText())
+        self.__datasource.dataSourceName = str(
             self.__dialog.ui.nameLineEdit.text())
 
         if sourceType in self.__dialog.imp.keys():
             self.__dialog.imp[sourceType].fromForm(self.__datasource)
 
         self.__datasource.dataSourceType = sourceType
-        self.__datasource.doc = unicode(
+        self.__datasource.doc = str(
             self.__dialog.ui.docTextEdit.toPlainText()).strip()
 
         index = QModelIndex()
@@ -474,7 +470,7 @@ class DataSourceMethods(object):
         doc = QDomDocument()
         child = doc.importNode(dsNode, True)
         doc.appendChild(child)
-        text = unicode(doc.toString(0))
+        text = str(doc.toString(0))
         clipboard = QApplication.clipboard()
         clipboard.setText(text)
 
@@ -485,7 +481,7 @@ class DataSourceMethods(object):
         if not self.__dialog:
             self.createDialog()
         clipboard = QApplication.clipboard()
-        text = unicode(clipboard.text())
+        text = str(clipboard.text())
         self.__datasource.document = QDomDocument()
         self.__dialog.root = self.__datasource.document
         if not self.__datasource.document.setContent(

@@ -26,7 +26,6 @@ from PyQt5.QtWidgets import (QTableWidgetItem, QMessageBox, QDialog)
 from PyQt5 import uic
 
 import os
-import sys
 
 import logging
 # message logger
@@ -35,10 +34,6 @@ logger = logging.getLogger("nxsdesigner")
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "selectiondlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
-    long = int
 
 
 # dialog defining a selection tag
@@ -216,7 +211,7 @@ class SelectionDlg(QDialog):
         self.ui.selTableWidget.setColumnCount(len(headers))
         self.ui.selTableWidget.setHorizontalHeaderLabels(headers)
         self.ui.selTableWidget.setVerticalHeaderLabels(
-            [unicode(el + 1) for el in range(self.rank)])
+            [str(el + 1) for el in range(self.rank)])
         if self.keytype.lower() == 'slices':
             elems = [self.starts, self.stops, self.steps]
         else:
@@ -228,11 +223,11 @@ class SelectionDlg(QDialog):
                 elem.append(None)
             for row, ln in enumerate(elem):
                 if ln:
-                    item = QTableWidgetItem(unicode(ln))
+                    item = QTableWidgetItem(str(ln))
                 else:
                     item = QTableWidgetItem("")
                 # print(row, col, ln)
-                item.setData(Qt.UserRole, (long(row)))
+                item.setData(Qt.UserRole, (int(row)))
                 if selectedDim is not None and selectedDim == row:
                     selected = item
                 self.ui.selTableWidget.setItem(row, col, item)

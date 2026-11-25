@@ -35,9 +35,6 @@ from nxsconfigtool.ComponentItem import ComponentItem
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
 
-if sys.version_info > (3,):
-    long = int
-
 
 # test fixture
 class ComponentItemTest(unittest.TestCase):
@@ -58,9 +55,9 @@ class ComponentItemTest(unittest.TestCase):
         self.performed = False
 
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
 #        self.__seed =335783554629280825854815889576355181078
 #        self.__seed =56405821691954067238837069340540387163
 

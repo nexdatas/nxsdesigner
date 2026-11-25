@@ -34,12 +34,8 @@ from .ComponentCreator import (
 from .LabeledObject import LabeledObject
 
 import logging
-import sys
 # message logger
 logger = logging.getLogger("nxsdesigner")
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # Command which performs connection to the configuration server
@@ -74,7 +70,7 @@ class ServerConnect(QUndoCommand):
                 QMessageBox.warning(
                     self.receiver,
                     "Error in connecting to Configuration Server",
-                    unicode(e))
+                    str(e))
 
         logger.debug("EXEC serverConnect")
 
@@ -92,7 +88,7 @@ class ServerConnect(QUndoCommand):
                 QMessageBox.warning(
                     self.receiver,
                     "Error in Closing Configuration Server Connection",
-                    unicode(e))
+                    str(e))
 
         logger.debug("UNDO serverConnect")
 
@@ -139,7 +135,7 @@ class ServerCPCreate(QUndoCommand):
                     QMessageBox.warning(
                         self.receiver,
                         "Error in creating Component",
-                        unicode(e))
+                        str(e))
         logger.debug("EXEC serverCPCreate")
 
     def __addComponent(self, name, xml, action):
@@ -275,7 +271,7 @@ class ServerSCPCreate(QUndoCommand):
                     QMessageBox.warning(
                         self.receiver,
                         "Error in creating Standard Component",
-                        unicode(e))
+                        str(e))
         logger.debug("EXEC serverSCPCreate")
 
     def __addComponent(self, name, xml, action):
@@ -424,7 +420,7 @@ class ServerDSCreate(QUndoCommand):
                     QMessageBox.warning(
                         self.receiver,
                         "Error in creating Component",
-                        unicode(e))
+                        str(e))
         logger.debug("EXEC serverDSCreate")
 
     def __addDataSource(self, name, xml, action):
@@ -533,7 +529,7 @@ class ServerFetchComponents(QUndoCommand):
             except Exception as e:
                 QMessageBox.warning(
                     self.receiver,
-                    "Error in fetching components", unicode(e))
+                    "Error in fetching components", str(e))
 
         logger.debug("EXEC serverFetchComponents")
 
@@ -634,7 +630,7 @@ class ServerStoreComponent(QUndoCommand):
             except Exception as e:
                 QMessageBox.warning(self.receiver,
                                     "Error in storing the component",
-                                    unicode(e))
+                                    str(e))
         if hasattr(self._cp, "id"):
             self.receiver.componentList.populateElements(self._cp.id)
         else:
@@ -692,7 +688,7 @@ class ServerDeleteComponent(QUndoCommand):
             except Exception as e:
                 QMessageBox.warning(
                     self.receiver, "Error in deleting the component",
-                    unicode(e))
+                    str(e))
 
         cid = self._cp.id if hasattr(self._cp, "id") else None
         self.receiver.componentList.populateElements(cid)
@@ -750,7 +746,7 @@ class ServerSetMandatoryComponent(QUndoCommand):
                 QMessageBox.warning(
                     self.receiver,
                     "Error in setting the component as mandatory",
-                    unicode(e))
+                    str(e))
         logger.debug("EXEC serverSetMandatoryComponent")
 
 
@@ -788,13 +784,13 @@ class ServerGetMandatoryComponents(QUndoCommand):
             logger.info("Mandatory Components: \n %s" % str(mandatory))
             QMessageBox.information(
                 self.receiver, "Mandatory",
-                "Mandatory Components: \n %s" % unicode(mandatory))
+                "Mandatory Components: \n %s" % str(mandatory))
 
         except Exception as e:
             QMessageBox.warning(
                 self.receiver,
                 "Error in getting the mandatory components",
-                unicode(e))
+                str(e))
         logger.debug("EXEC serverGetMandatoryComponent")
 
 
@@ -841,7 +837,7 @@ class ServerUnsetMandatoryComponent(QUndoCommand):
                 QMessageBox.warning(
                     self.receiver,
                     "Error in setting the component as mandatory",
-                    unicode(e))
+                    str(e))
         logger.debug("EXEC serverUnsetMandatoryComponent")
 
     # unexecutes the command
@@ -905,7 +901,7 @@ class ServerFetchDataSources(QUndoCommand):
             except Exception as e:
                 QMessageBox.warning(
                     self.receiver,
-                    "Error in fetching datasources", unicode(e))
+                    "Error in fetching datasources", str(e))
 
         logger.debug("EXEC serverFetchDataSources")
 
@@ -964,7 +960,7 @@ class ServerStoreDataSource(QUndoCommand):
             except Exception as e:
                 QMessageBox.warning(
                     self.receiver,
-                    "Error in datasource storing", unicode(e))
+                    "Error in datasource storing", str(e))
 
         ds = self.receiver.sourceList.currentListElement()
         if hasattr(ds, "id"):
@@ -1028,7 +1024,7 @@ class ServerDeleteDataSource(QUndoCommand):
             except Exception as e:
                 QMessageBox.warning(
                     self.receiver,
-                    "Error in datasource deleting", unicode(e))
+                    "Error in datasource deleting", str(e))
 
         ds = self.receiver.sourceList.currentListElement()
         if hasattr(ds, "id"):
@@ -1076,7 +1072,7 @@ class ServerClose(QUndoCommand):
                 QMessageBox.warning(
                     self.receiver,
                     "Error in closing connection to Configuration Server",
-                    unicode(e))
+                    str(e))
 
         logger.debug("EXEC serverClose")
 
@@ -1095,7 +1091,7 @@ class ServerClose(QUndoCommand):
                 QMessageBox.warning(
                     self.receiver,
                     "Error in connecting to Configuration Server",
-                    unicode(e))
+                    str(e))
         logger.debug("UNDO serverClose")
 
 
@@ -1162,7 +1158,7 @@ class ServerStoreAllComponents(QUndoCommand):
             except Exception as e:
                 QMessageBox.warning(
                     self.receiver, "Error in storing the component",
-                    unicode(e))
+                    str(e))
             progress.setValue(i)
         progress.setValue(len(keys))
         progress.close()
@@ -1240,7 +1236,7 @@ class ServerStoreAllDataSources(QUndoCommand):
             except Exception as e:
                 QMessageBox.warning(
                     self.receiver, "Error in datasource storing",
-                    unicode(e))
+                    str(e))
 
             progress.setValue(i)
         progress.setValue(len(keys))

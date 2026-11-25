@@ -44,9 +44,6 @@ from nxsconfigtool.DomTools import DomTools
 #  Qt-application
 app = None
 
-if sys.version_info > (3,):
-    unicode = str
-    long = int
 
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
@@ -94,9 +91,9 @@ class GroupDlgTest(unittest.TestCase):
         self.performed = False
 
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
         self.__rnd = random.Random(self.__seed)
 
     # test starter
@@ -1482,7 +1479,7 @@ class GroupDlgTest(unittest.TestCase):
         item = atw.item(atw.currentRow(), 0)
         aname = str(item.data(Qt.UserRole))
 
-        it = QTableWidgetItem(unicode(aname))
+        it = QTableWidgetItem(str(aname))
         it.setData(Qt.DisplayRole, (aname + "_" + attributes[aname]))
         it.setData(Qt.UserRole, (aname))
 
@@ -1507,7 +1504,7 @@ class GroupDlgTest(unittest.TestCase):
             it2 = atw.item(i, 1)
             self.assertEqual(it2.text(), attributes[k])
 
-        it = QTableWidgetItem(unicode(aname))
+        it = QTableWidgetItem(str(aname))
         it.setData(Qt.DisplayRole, (aname+"_"+attributes[aname]))
         it.setData(Qt.UserRole, (aname))
 
@@ -1601,7 +1598,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, form.doc)
 
@@ -1639,7 +1636,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -1712,7 +1709,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, form.doc)
 
@@ -1750,7 +1747,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -1818,7 +1815,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, form.doc)
 
@@ -1884,7 +1881,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -1952,7 +1949,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, form.doc)
 
@@ -2021,7 +2018,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             ("".join(["\nText\n %s\n" % i for i in range(ndcs)])).strip())
@@ -2090,7 +2087,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, form.doc)
 
@@ -2159,7 +2156,7 @@ class GroupDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             ("".join(["\nText\n %s\n" % i for i in range(ndcs)])).strip())

@@ -22,7 +22,6 @@
 """ Help slots """
 
 import platform
-import sys
 
 from PyQt5.QtGui import (QKeySequence)
 from PyQt5.QtWidgets import (QMessageBox)
@@ -30,9 +29,6 @@ from PyQt5.QtCore import (QT_VERSION_STR, PYQT_VERSION_STR)
 
 from . import __version__
 from .HelpForm import HelpForm
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # stack with the application commands
@@ -66,11 +62,11 @@ class HelpSlots(object):
             <p>This application can be used to create
             XML configuration files for Nexus Data Writer.
             <p>Python %s - Qt %s - PyQt %s on %s""" % (
-                unicode(__version__),
-                unicode(platform.python_version()),
-                unicode(QT_VERSION_STR),
-                unicode(PYQT_VERSION_STR),
-                unicode(platform.system())))
+                str(__version__),
+                str(platform.python_version()),
+                str(QT_VERSION_STR),
+                str(PYQT_VERSION_STR),
+                str(platform.system())))
 
     # shows the detail help
     # \brief It shows the detail help from help directory

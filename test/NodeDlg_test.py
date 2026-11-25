@@ -44,10 +44,6 @@ app = None
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
 
-if sys.version_info > (3,):
-    unicode = str
-    long = int
-
 
 class MyNodeDlg(NodeDlg):
     def __init__(self, parent=None):
@@ -116,9 +112,9 @@ class TestTools(object):
 class TestView(object):
     def __init__(self):
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
 #        self.__seed = 71366247078680776091931824685320965500
         self.__rnd = random.Random(self.__seed)
         print("VIEW SEED %s" % self.__seed)
@@ -186,9 +182,9 @@ class NodeDlgTest(unittest.TestCase):
         self.performed2 = False
 
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
 #        self.__seed = 332115341842367128541506422124286219441
         self.__rnd = random.Random(self.__seed)
 

@@ -45,9 +45,6 @@ from nxsconfigtool.DomTools import DomTools
 #  Qt-application
 app = None
 
-if sys.version_info > (3,):
-    unicode = str
-    long = int
 
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
@@ -97,9 +94,9 @@ class StrategyDlgTest(unittest.TestCase):
         self.performed = False
 
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
 
         self.__rnd = random.Random(self.__seed)
 
@@ -167,7 +164,7 @@ class StrategyDlgTest(unittest.TestCase):
 
         for r in range(len(self.dimensions)):
             mb.ui.dimTableWidget.setCurrentCell(r, 0)
-            it = QTableWidgetItem(unicode(self.dimensions[r]))
+            it = QTableWidgetItem(str(self.dimensions[r]))
             mb.ui.dimTableWidget.setItem(r, 0, it)
 
 #        QTest.keyClicks(mb.ui.nameLineEdit, self.aname)
@@ -387,7 +384,7 @@ class StrategyDlgTest(unittest.TestCase):
         self.assertTrue(not form.ui.postLineEdit.text())
 
         form.mode = "STEP"
-        index = form.ui.modeComboBox.findText(unicode(form.mode))
+        index = form.ui.modeComboBox.findText(str(form.mode))
         form.ui.modeComboBox.setCurrentIndex(index)
 
         form.compression = compr
@@ -1986,12 +1983,12 @@ class StrategyDlgTest(unittest.TestCase):
                 cnt += 1
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.postrun)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         nmode = self.__rnd.choice(['INIT', 'STEP', 'FINAL', 'POSTRUN'])
@@ -2032,12 +2029,12 @@ class StrategyDlgTest(unittest.TestCase):
         text = DomTools.getText(mydoc)
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.postrun)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
 #        self.assertEqual(
 #        olddoc, "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
@@ -2119,12 +2116,12 @@ class StrategyDlgTest(unittest.TestCase):
         form.view.testIndex = di
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.postrun)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         nmode = self.__rnd.choice(['INIT', 'STEP', 'FINAL', 'POSTRUN'])
@@ -2187,13 +2184,13 @@ class StrategyDlgTest(unittest.TestCase):
                 cnt += 1
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.postrun)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
 
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, nmdoc.strip())
 
@@ -2310,12 +2307,12 @@ class StrategyDlgTest(unittest.TestCase):
                 cnt += 1
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.postrun)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         self.assertEqual(form.mode, mode)
@@ -2371,7 +2368,7 @@ class StrategyDlgTest(unittest.TestCase):
         form.trigger = ntrigger
         form.grows = ngrows
 
-        index = form.ui.modeComboBox.findText(unicode(nmode))
+        index = form.ui.modeComboBox.findText(str(nmode))
         if index > -1:
             form.ui.modeComboBox.setCurrentIndex(index)
         form.ui.compressionCheckBox.setChecked(ncompr)
@@ -2426,11 +2423,11 @@ class StrategyDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, nmdoc.strip())
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, npost if nmode == 'POSTRUN' else '')
 
     # constructor test
@@ -2547,12 +2544,12 @@ class StrategyDlgTest(unittest.TestCase):
                 cnt += 1
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.postrun)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         self.assertEqual(form.mode, mode)
@@ -2608,7 +2605,7 @@ class StrategyDlgTest(unittest.TestCase):
         form.trigger = ntrigger
         form.grows = ngrows
 
-        index = form.ui.modeComboBox.findText(unicode(nmode))
+        index = form.ui.modeComboBox.findText(str(nmode))
         if index > -1:
             form.ui.modeComboBox.setCurrentIndex(index)
         form.ui.compressionCheckBox.setChecked(ncompr)
@@ -2663,13 +2660,13 @@ class StrategyDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, post)
 
     def test_reset_button(self):
@@ -2784,12 +2781,12 @@ class StrategyDlgTest(unittest.TestCase):
                 cnt += 1
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.postrun)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         self.assertEqual(form.mode, mode)
@@ -2845,7 +2842,7 @@ class StrategyDlgTest(unittest.TestCase):
         form.trigger = ntrigger
         form.grows = ngrows
 
-        index = form.ui.modeComboBox.findText(unicode(nmode))
+        index = form.ui.modeComboBox.findText(str(nmode))
         if index > -1:
             form.ui.modeComboBox.setCurrentIndex(index)
         form.ui.compressionCheckBox.setChecked(ncompr)
@@ -2900,13 +2897,13 @@ class StrategyDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, post)
 
     def myAction(self):

@@ -122,11 +122,7 @@ if [ "$?" -ne "0" ]; then exit 255; fi
 
 
 
-if [ "$2" = "2" ]; then
-    echo "install pytango and nxsconfigserver-db"
-    docker exec  --user root ndts /bin/bash -c 'export DEBIAN_FRONTEND=noninteractive; apt-get -qq update; apt-get install -y   python-pytango  nxsconfigserver-db ; sleep 10'
-else
-    if [ "$1" = "debian10" ] || [ "$1" = "ubuntu24.04" ] || [ "$1" = "ubuntu26.10py" ] || [ "$1" = "ubuntu25.04" ] || [ "$1" = "ubuntu26.04" ] || [ "$1" = "ubuntu22.04" ] || [ "$1" = "ubuntu20.04" ] || [ "$1" = "ubuntu20.10" ] || [ "$1" = "debian11" ] || [ "$1" = "debian12" ]  || [ "$1" = "debian13" ] ; then
+if [ "$1" = "debian10" ] || [ "$1" = "ubuntu24.04" ] || [ "$1" = "ubuntu26.10py" ] || [ "$1" = "ubuntu25.04" ] || [ "$1" = "ubuntu26.04" ] || [ "$1" = "ubuntu22.04" ] || [ "$1" = "ubuntu20.04" ] || [ "$1" = "ubuntu20.10" ] || [ "$1" = "debian11" ] || [ "$1" = "debian12" ]  || [ "$1" = "debian13" ] ; then
 	echo "install pytango"
 	docker exec --user root ndts /bin/bash -c 'apt-get -qq update; apt-get install -y   python3-tango'
 	echo "install nxsconfigserver-db"
@@ -143,42 +139,30 @@ else
 	    docker exec  --user root ndts /usr/bin/mysql -e 'GRANT ALL PRIVILEGES ON nxsconfig.* TO "tango"@"localhost" identified by "rootpw"'
 	    docker exec  --user root ndts /usr/bin/mysql -e 'FLUSH PRIVILEGES'
 	fi
-    else
+else
 	echo "install pytango and nxsconfigserver-db"
 	docker exec  --user root ndts /bin/bash -c 'export DEBIAN_FRONTEND=noninteractive;  apt-get -qq update; apt-get -qq install -y   python3-pytango nxsconfigserver-db; sleep 10'
-    fi
 fi
 if [ "$?" != "0" ]; then exit 255; fi
 
 
 echo "install nxs packages"
-if [ "$2" = "2" ]; then
-    echo "install python-pytango"
-    docker exec --user root ndts /bin/bash -c 'apt-get -qq update; apt-get install -y python-nxsconfigserver python-nxswriter python-pyqt5  python-nxstools  python-setuptools; sleep 10'
-else
-    docker exec --user root ndts /bin/bash -c 'apt-get -qq update; apt-get install -y python3-nxsconfigserver python3-nxswriter python3-pyqt5  python3-nxstools python3-setuptools; sleep 10'
-fi
+docker exec --user root ndts /bin/bash -c 'apt-get -qq update; apt-get install -y python3-nxsconfigserver python3-nxswriter python3-pyqt5  python3-nxstools python3-setuptools; sleep 10'
 if [ "$?" != "0" ]; then exit 255; fi
 
-if [ "$2" = "2" ]; then
-    echo "install nxsconfigtool"
-    docker exec  ndts python setup.py build
-    docker exec --user root ndts python setup.py  install
-else
-    echo "install nxsconfigtool3"
-    docker exec --user root ndts chown -R tango:tango .
-    docker exec ndts mkdir build
-    if [ "$1" = "ubuntu22.04" ] ; then
+echo "install nxsconfigtool3"
+docker exec --user root ndts chown -R tango:tango .
+docker exec ndts mkdir build
+if [ "$1" = "ubuntu22.04" ] ; then
 	docker exec --user root ndts python3 -m pip install . -vv  --no-deps --no-build-isolation
-    else
+else
 	docker exec --user root ndts python3 -m pip install . -vv  --no-deps --no-build-isolation  --break-system-packages --root-user-action=ignore
-    fi    
-    # if [ "$?" != "0" ]; then exit 255; fi
+fi    
+# if [ "$?" != "0" ]; then exit 255; fi
 
-    echo "build python3-nxstools docs"
-    docker exec ndts mkdir doc/_static
-    docker exec ndts sphinx-build  doc build/sphinx/html
-fi
+echo "build python3-nxstools docs"
+docker exec ndts mkdir doc/_static
+docker exec ndts sphinx-build  doc build/sphinx/html
 if [ "$1" != "ubuntu26.04" ] && [ "$1" != "ubuntu26.04py" ] && [ "$?" != "0" ]; then exit 255; fi
 
 if  [ "$1" = "debian13py" ] || [ "$1" = "ubuntu26.04py" ] || [ "$1" = "ubuntu26.10py" ] ; then

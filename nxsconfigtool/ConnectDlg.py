@@ -22,7 +22,6 @@
 """ server connect widget """
 
 import os
-import sys
 
 from PyQt5.QtWidgets import (QDialog, QMessageBox)
 from PyQt5 import uic
@@ -36,9 +35,6 @@ logger = logging.getLogger("nxsdesigner")
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "connectdlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining a tag connect
@@ -90,7 +86,7 @@ class ConnectDlg(QDialog):
     # \brief It copies the connect name and value from lineEdit
     #        widgets and accept the dialog
     def accept(self):
-        device = unicode(self.ui.deviceLineEdit.text()).strip()
+        device = str(self.ui.deviceLineEdit.text()).strip()
         if not device:
             QMessageBox.warning(self, "Empty device name",
                                 "Please define the device name")
@@ -98,7 +94,7 @@ class ConnectDlg(QDialog):
             return
 
         self.device = device
-        self.host = unicode(self.ui.hostLineEdit.text()).strip()
+        self.host = str(self.ui.hostLineEdit.text()).strip()
 
         self.port = None
         try:

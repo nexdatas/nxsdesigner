@@ -46,9 +46,6 @@ from nxsconfigtool.DimensionsDlg import DimensionsDlg
 #  Qt-application
 app = None
 
-if sys.version_info > (3,):
-    unicode = str
-    long = int
 
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
@@ -135,9 +132,9 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.form = None
         self.cds = None
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
 
         self.__rnd = random.Random(self.__seed)
 
@@ -232,7 +229,7 @@ class DataSourceMethodsTest(unittest.TestCase):
 
         for r in range(len(self.dimensions)):
             mb.ui.dimTableWidget.setCurrentCell(r, 0)
-            it = QTableWidgetItem(unicode(self.dimensions[r]))
+            it = QTableWidgetItem(str(self.dimensions[r]))
             mb.ui.dimTableWidget.setItem(r, 0, it)
 
 #        QTest.keyClicks(mb.ui.nameLineEdit, self.aname)
@@ -1724,7 +1721,7 @@ class DataSourceMethodsTest(unittest.TestCase):
 
         pname = str(item.data(Qt.UserRole))
 
-        it = QTableWidgetItem(unicode(pname))
+        it = QTableWidgetItem(str(pname))
         it.setData(Qt.DisplayRole, ("Myname2"))
         it.setData(Qt.UserRole, (pname))
 
@@ -1903,7 +1900,7 @@ class DataSourceMethodsTest(unittest.TestCase):
 
         pname = str(item.data(Qt.UserRole))
 
-        it = QTableWidgetItem(unicode(pname))
+        it = QTableWidgetItem(str(pname))
         it.setData(Qt.DisplayRole, ("Myname2"))
         it.setData(Qt.UserRole, (pname))
 
@@ -2583,12 +2580,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i+1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i+1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -2643,12 +2640,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(len(form.attributes), attributeMap.count() - cnt)
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -2702,7 +2699,7 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(mrnk, int(trank) if trank else 0)
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -2712,12 +2709,12 @@ class DataSourceMethodsTest(unittest.TestCase):
             child = child.nextSibling()
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -2758,12 +2755,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i+1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i+1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -2818,12 +2815,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(len(form.attributes), attributeMap.count() - cnt)
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -2877,7 +2874,7 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(mrnk, int(trank) if trank else 0)
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -2887,12 +2884,12 @@ class DataSourceMethodsTest(unittest.TestCase):
             child = child.nextSibling()
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -2933,12 +2930,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i+1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i+1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -2995,12 +2992,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(len(form.attributes), attributeMap.count() - cnt)
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -3082,11 +3079,11 @@ class DataSourceMethodsTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, mdoc)
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, mvalue)
 
         mydm = form.node.firstChildElement(str("dimensions"))
@@ -3096,7 +3093,7 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(mrnk, int(trank) if trank else 0)
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -3123,12 +3120,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(len(attrs), attributeMap.count() - cnt)
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -3169,12 +3166,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i+1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i+1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -3231,12 +3228,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(len(form.attributes), attributeMap.count() - cnt)
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -3328,13 +3325,13 @@ class DataSourceMethodsTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(
             oldval,
             "".join(["\nVAL\n %s\n" % n for n in range(nval)]).strip())
@@ -3345,7 +3342,7 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -3391,12 +3388,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i+1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i+1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -3452,12 +3449,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(len(form.attributes), attributeMap.count() - cnt)
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -3550,13 +3547,13 @@ class DataSourceMethodsTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(
             oldval,
             "".join(["\nVAL\n %s\n" % n for n in range(nval)]).strip())
@@ -3567,7 +3564,7 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -3874,12 +3871,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i+1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i+1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -3952,13 +3949,13 @@ class DataSourceMethodsTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(
             oldval,
             "".join(["\nVAL\n %s\n" % n for n in range(nval)]).strip())
@@ -3969,7 +3966,7 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -4009,13 +4006,13 @@ class DataSourceMethodsTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(
             oldval,
             "".join(["\nVAL\n %s\n" % n for n in range(nval)]).strip())
@@ -4026,7 +4023,7 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -4096,12 +4093,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i+1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i+1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -4173,13 +4170,13 @@ class DataSourceMethodsTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = form.dts.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         vtext = form.dts.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(
             oldval,
             "".join(["\nVAL\n %s\n" % n for n in range(nval)]).strip())
@@ -4190,7 +4187,7 @@ class DataSourceMethodsTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -4274,12 +4271,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i+1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i+1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -4441,12 +4438,12 @@ class DataSourceMethodsTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i+1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i+1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -4531,7 +4528,7 @@ class DataSourceMethodsTest(unittest.TestCase):
         item = atw.item(atw.currentRow(), 0)
         aname = str(item.data(Qt.UserRole))
 
-        it = QTableWidgetItem(unicode(aname))
+        it = QTableWidgetItem(str(aname))
         it.setData(Qt.DisplayRole, (aname+"_"+attributes[aname]))
         it.setData(Qt.UserRole, (aname))
 
@@ -4556,7 +4553,7 @@ class DataSourceMethodsTest(unittest.TestCase):
             it2 = atw.item(i, 1)
             self.assertEqual(it2.text(), attributes[k])
 
-        it = QTableWidgetItem(unicode(aname))
+        it = QTableWidgetItem(str(aname))
         it.setData(Qt.DisplayRole, (aname+"_"+attributes[aname]))
         it.setData(Qt.UserRole, (aname))
 

@@ -21,7 +21,6 @@
 
 """ datasource list widget """
 import os
-import sys
 
 from PyQt5.QtCore import (Qt, )
 from PyQt5.QtWidgets import (QWidget, QMenu, QMessageBox, QListWidgetItem,
@@ -39,9 +38,6 @@ logger = logging.getLogger("nxsdesigner")
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "elementlist.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining a group tag
@@ -172,7 +168,7 @@ class ElementList(QWidget):
                 old = self.elements[ide]
                 oname = self.elements[ide].name
                 if name is None:
-                    self.elements[ide].name = unicode(item.text())
+                    self.elements[ide].name = str(item.text())
                 else:
                     self.elements[ide].name = name
                 self.populateElements()

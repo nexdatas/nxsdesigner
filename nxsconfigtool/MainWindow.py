@@ -22,7 +22,6 @@
 """ main window application dialog """
 
 import os
-import sys
 
 from PyQt5.QtCore import (
     QSettings, Qt, pyqtSlot)
@@ -62,15 +61,9 @@ _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "mainwindow.ui"))
 
-if sys.version_info > (3,):
-    unicode = str
-
 
 def iternext(it):
-    if sys.version_info > (3,):
-        return next(iter(it.values()))
-    else:
-        return it.itervalues().next()
+    return next(iter(it.values()))
 
 
 # main window class
@@ -279,7 +272,7 @@ class MainWindow(QMainWindow):
         if directory and os.path.exists(directory):
             return os.path.abspath(directory)
         ldir = ""
-        dsdir = unicode(settings.value(name))
+        dsdir = str(settings.value(name))
         if dsdir:
             ldir = os.path.abspath(dsdir)
         else:
@@ -299,11 +292,11 @@ class MainWindow(QMainWindow):
         if server:
             self.configServer.setServer(server)
         else:
-            self.configServer.device = unicode(
+            self.configServer.device = str(
                 settings.value("ConfigServer/device"))
-            self.configServer.host = unicode(
+            self.configServer.host = str(
                 settings.value("ConfigServer/host"))
-            self.onlineFile = unicode(
+            self.onlineFile = str(
                 settings.value("Online/filename"))
             port = str(settings.value("ConfigServer/port") or "")
             if port:
@@ -340,7 +333,7 @@ class MainWindow(QMainWindow):
     def __setAction(self, action, _, slot=None, shortcut=None, icon=None,
                     tip=None, checkable=False, signal="triggered"):
         if icon is not None:
-            action.setIcon(QIcon(":/%s.png" % unicode(icon).strip()))
+            action.setIcon(QIcon(":/%s.png" % str(icon).strip()))
         if shortcut is not None:
             action.setShortcut(shortcut)
         if tip is not None:
@@ -588,7 +581,7 @@ class MainWindow(QMainWindow):
                         elementList.populateElements(cid)
 
                     except IOError as e:
-                        failures.append(unicode(e))
+                        failures.append(str(e))
 
                 elif status == QMessageBox.Cancel:
                     if event:
@@ -649,7 +642,7 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(
                 self, "NXS Component Designer -- Save Error",
                 "Failed to save%s\nQuit anyway?"
-                % unicode("\n\t".join(failures)),
+                % str("\n\t".join(failures)),
                 QMessageBox.Yes | QMessageBox.No) == QMessageBox.No):
             event.ignore()
             return

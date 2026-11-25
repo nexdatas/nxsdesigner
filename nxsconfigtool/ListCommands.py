@@ -26,13 +26,9 @@ from PyQt5.QtWidgets import (QMessageBox, QUndoCommand)
 from .Component import Component
 from .LabeledObject import LabeledObject
 
-import sys
 import logging
 # message logger
 logger = logging.getLogger("nxsdesigner")
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # Command which creates a new component
@@ -185,7 +181,7 @@ class ComponentListChanged(QUndoCommand):
     def redo(self):
         if self.item is not None or self.name is not None:
             if self.name is None:
-                self.name = unicode(self.item.text())
+                self.name = str(self.item.text())
             if self._cp is None:
                 self._cp, self._oldName = \
                     self.receiver.componentList.listItemChanged(
@@ -357,7 +353,7 @@ class DataSourceListChanged(QUndoCommand):
     def redo(self):
         if self.item is not None or self.name is not None:
             if self.name is None:
-                self.name = unicode(self.item.text())
+                self.name = str(self.item.text())
             if self._ds is None:
                 self._ds, self._oldName = \
                     self.receiver.sourceList.listItemChanged(

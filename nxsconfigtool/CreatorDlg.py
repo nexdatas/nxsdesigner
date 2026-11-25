@@ -21,7 +21,6 @@
 
 """ server creator widget """
 import os
-import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QTableWidgetItem, QMessageBox
@@ -38,9 +37,6 @@ _formclass, _baseclass = uic.loadUiType(
 _stdformclass, _stdbaseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "stdcreatordlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining a component creator dialog
@@ -77,17 +73,17 @@ class CreatorDlg(QDialog):
             self.ui.compComboBox.addItems(self.components)
 
     def savePressed(self):
-        self.componentName = unicode(self.ui.compComboBox.currentText())
+        self.componentName = str(self.ui.compComboBox.currentText())
         self.action = 'SAVE'
         QDialog.accept(self)
 
     def storePressed(self):
-        self.componentName = unicode(self.ui.compComboBox.currentText())
+        self.componentName = str(self.ui.compComboBox.currentText())
         self.action = 'STORE'
         QDialog.accept(self)
 
     def applyPressed(self):
-        self.componentName = unicode(self.ui.compComboBox.currentText())
+        self.componentName = str(self.ui.compComboBox.currentText())
         self.action = 'APPLY'
         QDialog.accept(self)
 
@@ -147,7 +143,7 @@ class StdCreatorDlg(QDialog):
         self.updateParams()
 
     def updateParams(self):
-        self.componentType = unicode(self.ui.cpTypeComboBox.currentText())
+        self.componentType = str(self.ui.cpTypeComboBox.currentText())
         self.__creator.options.cptype = self.componentType or None
         if self.componentType:
             self.__pardesc = self.__creator.listcomponentvariables()
@@ -173,21 +169,21 @@ class StdCreatorDlg(QDialog):
         self.__creator.args = args
 
     def savePressed(self):
-        self.componentName = unicode(self.ui.cpNameLineEdit.text())
+        self.componentName = str(self.ui.cpNameLineEdit.text())
         self.__creator.options.component = self.componentName or None
         self.populateArgs()
         self.action = 'SAVE'
         QDialog.accept(self)
 
     def storePressed(self):
-        self.componentName = unicode(self.ui.cpNameLineEdit.text())
+        self.componentName = str(self.ui.cpNameLineEdit.text())
         self.__creator.options.component = self.componentName or None
         self.populateArgs()
         self.action = 'STORE'
         QDialog.accept(self)
 
     def applyPressed(self):
-        self.componentName = unicode(self.ui.cpNameLineEdit.text())
+        self.componentName = str(self.ui.cpNameLineEdit.text())
         self.__creator.options.component = self.componentName or None
         self.populateArgs()
         self.action = 'APPLY'
@@ -202,14 +198,14 @@ class StdCreatorDlg(QDialog):
             return
 
         var = self.__currentTableVar()
-        if unicode(var) not in self.__vars.keys():
+        if str(var) not in self.__vars.keys():
             QMessageBox.warning(
                 self, "Variable not selected",
                 "Please select the required variable from the table")
             return
             return
-        self.__vars[unicode(var)] = unicode(dsname)
-        self.__oldvars[unicode(var)] = self.__vars[unicode(var)]
+        self.__vars[str(var)] = str(dsname)
+        self.__oldvars[str(var)] = self.__vars[str(var)]
         self.populateVars()
 
     # calls updateUi when the name text is changing
@@ -231,12 +227,12 @@ class StdCreatorDlg(QDialog):
     #        and informs the user that variable names arenot editable
     def __tableItemChanged(self, item):
         var = self.__currentTableVar()
-        if unicode(var) not in self.__vars.keys():
+        if str(var) not in self.__vars.keys():
             return
         column = self.ui.varTableWidget.currentColumn()
         if column == 1:
-            self.__vars[unicode(var)] = unicode(item.text())
-            self.__oldvars[unicode(var)] = self.__vars[unicode(var)]
+            self.__vars[str(var)] = str(item.text())
+            self.__oldvars[str(var)] = self.__vars[str(var)]
         if column == 0:
             QMessageBox.warning(
                 self, "Variable name is not editable",

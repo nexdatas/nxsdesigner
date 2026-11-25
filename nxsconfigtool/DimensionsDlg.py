@@ -26,7 +26,6 @@ from PyQt5.QtWidgets import (QTableWidgetItem, QMessageBox, QDialog)
 from PyQt5 import uic
 
 import os
-import sys
 
 import logging
 # message logger
@@ -35,10 +34,6 @@ logger = logging.getLogger("nxsdesigner")
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "dimensionsdlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
-    long = int
 
 
 # dialog defining a dimensions tag
@@ -152,13 +147,13 @@ class DimensionsDlg(QDialog):
         self.ui.dimTableWidget.setColumnCount(len(headers))
         self.ui.dimTableWidget.setHorizontalHeaderLabels(headers)
         self.ui.dimTableWidget.setVerticalHeaderLabels(
-            [unicode(el + 1) for el in range(self.rank)])
+            [str(el + 1) for el in range(self.rank)])
         for row, ln in enumerate(self.lengths):
             if ln:
-                item = QTableWidgetItem(unicode(ln))
+                item = QTableWidgetItem(str(ln))
             else:
                 item = QTableWidgetItem("")
-            item.setData(Qt.UserRole, (long(row)))
+            item.setData(Qt.UserRole, (int(row)))
             if selectedDim is not None and selectedDim == row:
                 selected = item
             self.ui.dimTableWidget.setItem(row, 0, item)

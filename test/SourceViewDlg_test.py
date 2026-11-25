@@ -45,9 +45,6 @@ from nxsconfigtool.DomTools import DomTools
 #  Qt-application
 app = None
 
-if sys.version_info > (3,):
-    unicode = str
-    long = int
 
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
@@ -97,9 +94,9 @@ class SourceViewDlgTest(unittest.TestCase):
         self.performed = False
 
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
 
         self.__rnd = random.Random(self.__seed)
 
@@ -167,7 +164,7 @@ class SourceViewDlgTest(unittest.TestCase):
 
         for r in range(len(self.dimensions)):
             mb.ui.dimTableWidget.setCurrentCell(r, 0)
-            it = QTableWidgetItem(unicode(self.dimensions[r]))
+            it = QTableWidgetItem(str(self.dimensions[r]))
             mb.ui.dimTableWidget.setItem(r, 0, it)
 
 #        QTest.keyClicks(mb.ui.nameLineEdit, self.aname)
@@ -744,12 +741,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [str(self.__rnd.randint(1, 40)) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -819,12 +816,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [str(self.__rnd.randint(1, 40)) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -896,7 +893,7 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         qdn.appendChild(mdim)
 
@@ -961,12 +958,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -1082,12 +1079,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -1117,12 +1114,12 @@ class SourceViewDlgTest(unittest.TestCase):
         mdoc = "New text \nNew text"
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         mrnk = self.__rnd.randint(0, 5)
@@ -1150,7 +1147,7 @@ class SourceViewDlgTest(unittest.TestCase):
         self.assertEqual(mrnk, int(trank) if trank else 0)
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -1160,12 +1157,12 @@ class SourceViewDlgTest(unittest.TestCase):
             child = child.nextSibling()
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -1200,12 +1197,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -1235,12 +1232,12 @@ class SourceViewDlgTest(unittest.TestCase):
         mdoc = "New text \nNew text"
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         mrnk = self.__rnd.randint(0, 5)
@@ -1268,7 +1265,7 @@ class SourceViewDlgTest(unittest.TestCase):
         self.assertEqual(mrnk, int(trank) if trank else 0)
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -1278,12 +1275,12 @@ class SourceViewDlgTest(unittest.TestCase):
             child = child.nextSibling()
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -1318,12 +1315,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [self.__rnd.randint(1, 40) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -1353,12 +1350,12 @@ class SourceViewDlgTest(unittest.TestCase):
         mdoc = "New text \nNew text"
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(oldval, form.value)
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.doc = mdoc
@@ -1389,7 +1386,7 @@ class SourceViewDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, mdoc)
 
         mydm = form.node.firstChildElement(str("dimensions"))
@@ -1399,7 +1396,7 @@ class SourceViewDlgTest(unittest.TestCase):
         self.assertEqual(mrnk, int(trank) if trank else 0)
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -1410,7 +1407,7 @@ class SourceViewDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -1439,12 +1436,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [str(self.__rnd.randint(1, 40)) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -1475,7 +1472,7 @@ class SourceViewDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.doc = mdoc
@@ -1510,7 +1507,7 @@ class SourceViewDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
@@ -1521,7 +1518,7 @@ class SourceViewDlgTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -1555,12 +1552,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [str(self.__rnd.randint(1, 40)) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -1591,7 +1588,7 @@ class SourceViewDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.doc = mdoc
@@ -1627,7 +1624,7 @@ class SourceViewDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
@@ -1638,7 +1635,7 @@ class SourceViewDlgTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -1907,12 +1904,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [str(self.__rnd.randint(1, 40)) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -1951,7 +1948,7 @@ class SourceViewDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
@@ -1962,7 +1959,7 @@ class SourceViewDlgTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -1980,13 +1977,13 @@ class SourceViewDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(
             oldval,
             "".join(["\nVAL\n %s\n" % n for n in range(nval)]).strip())
@@ -1997,7 +1994,7 @@ class SourceViewDlgTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())
@@ -2038,12 +2035,12 @@ class SourceViewDlgTest(unittest.TestCase):
         dimensions = [str(self.__rnd.randint(1, 40)) for n in range(rn)]
 
         mdim = doc.createElement('dimensions')
-        mdim.setAttribute("rank", str(unicode(rn)))
+        mdim.setAttribute("rank", str(str(rn)))
 
         for i in range(rn):
             dim = doc.createElement(str("dim"))
-            dim.setAttribute(str("index"), str(unicode(i + 1)))
-            dim.setAttribute(str("value"), str(unicode(dimensions[i])))
+            dim.setAttribute(str("index"), str(str(i + 1)))
+            dim.setAttribute(str("value"), str(str(dimensions[i])))
             mdim.appendChild(dim)
 
         qdn.appendChild(mdim)
@@ -2082,13 +2079,13 @@ class SourceViewDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         vtext = DomTools.getText(qdn)
-        oldval = unicode(vtext).strip() if vtext else ""
+        oldval = str(vtext).strip() if vtext else ""
         self.assertEqual(
             oldval,
             "".join(["\nVAL\n %s\n" % n for n in range(nval)]).strip())
@@ -2099,7 +2096,7 @@ class SourceViewDlgTest(unittest.TestCase):
         self.assertEqual(rn, int(atdim.namedItem("rank").nodeValue()))
         child = mydm.firstChild()
         while not child.isNull():
-            if child.nodeName() == unicode("dim"):
+            if child.nodeName() == str("dim"):
                 at = child.attributes()
                 ind = int(at.namedItem("index").nodeValue())
                 vl = int(at.namedItem("value").nodeValue())

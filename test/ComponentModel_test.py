@@ -38,10 +38,6 @@ from nxsconfigtool.ComponentItem import ComponentItem
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
 
-if sys.version_info > (3,):
-    long = int
-    unicode = str
-
 
 # test fixture
 class ComponentModelTest(unittest.TestCase):
@@ -62,9 +58,9 @@ class ComponentModelTest(unittest.TestCase):
         self.performed = False
 
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
         #  self.__seed = 105186230414225794971485160270620812570
 
         self.__rnd = random.Random(self.__seed)
@@ -240,11 +236,11 @@ class ComponentModelTest(unittest.TestCase):
             self.assertEqual(dt, None)
 
         dt = cm.data(cm.rootIndex)
-        self.assertTrue(isinstance(dt, (unicode, str)))
+        self.assertTrue(isinstance(dt, (str, str)))
         self.assertEqual(dt, '#document')
 
         dt = cm.data(cm.rootIndex, Qt.DisplayRole)
-        self.assertTrue(isinstance(dt, (unicode, str)))
+        self.assertTrue(isinstance(dt, (str, str)))
         self.assertEqual(dt, '#document')
 
     # constructor test
@@ -290,17 +286,17 @@ class ComponentModelTest(unittest.TestCase):
 
             ki0 = cm.index(n, 0, di)
             dt = cm.data(ki0)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(dt, 'kid%s: myname%s' % (n, n))
 
             ki1 = cm.index(n, 1, di)
             dt = cm.data(ki1)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(str(dt).strip(), 'mytype%s' % n)
 
             ki2 = cm.index(n, 2, di)
             dt = cm.data(ki2)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(str(dt).strip(), '')
 
             ki2 = cm.index(n, -1, di)
@@ -356,17 +352,17 @@ class ComponentModelTest(unittest.TestCase):
 
             ki0 = cm.index(n, 0, di)
             dt = cm.data(ki0)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(dt, 'kid%s: myname%s' % (n, n))
 
             ki1 = cm.index(n, 1, di)
             dt = cm.data(ki1)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(str(dt).strip(), 'mytype%s' % n)
 
             ki2 = cm.index(n, 2, di)
             dt = cm.data(ki2)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(str(dt).strip(), '')
 
             ki2 = cm.index(n, -1, di)
@@ -383,12 +379,12 @@ class ComponentModelTest(unittest.TestCase):
 
             ki0 = cm.index(n, 0, di)
             dt = cm.data(ki0)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(dt, 'kid%s: myname%s' % (n, n))
 
             ki1 = cm.index(n, 1, di)
             dt = cm.data(ki1)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
 
             s1 = set(str(dt).strip().split(" "))
             s2 = set(('units="myunits%s" type="mytype%s" name="myname%s"' %
@@ -398,7 +394,7 @@ class ComponentModelTest(unittest.TestCase):
 
             ki2 = cm.index(n, 2, di)
             dt = cm.data(ki2)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(str(dt).strip(), '')
 
     def test_data_name_attr_true(self):
@@ -442,12 +438,12 @@ class ComponentModelTest(unittest.TestCase):
 
             ki0 = cm.index(n, 0, di)
             dt = cm.data(ki0)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(dt, 'kid%s: myname%s' % (n, n))
 
             ki1 = cm.index(n, 1, di)
             dt = cm.data(ki1)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             s1 = set(str(dt).strip().split(" "))
             s2 = set(('units="myunits%s" type="mytype%s" name="myname%s"' %
                       (n, n, n)).split(" "))
@@ -455,7 +451,7 @@ class ComponentModelTest(unittest.TestCase):
             self.assertEqual(s1, s2)
             ki2 = cm.index(n, 2, di)
             dt = cm.data(ki2)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(str(dt).strip(), '')
 
     def test_data_name_text(self):
@@ -501,17 +497,17 @@ class ComponentModelTest(unittest.TestCase):
 
             ti = cm.index(0, 0, ki)
             dt = cm.data(ti)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(dt, '#text')
 
             ti = cm.index(0, 1, ki)
             dt = cm.data(ti)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(str(dt).strip(), '')
 
             ti = cm.index(0, 2, ki)
             dt = cm.data(ti)
-            self.assertTrue(isinstance(dt, (unicode, str)))
+            self.assertTrue(isinstance(dt, (str, str)))
             self.assertEqual(str(dt).strip(), 'Text  %s' % n)
 
     def test_flags(self):

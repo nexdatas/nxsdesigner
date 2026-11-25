@@ -28,7 +28,6 @@ from PyQt5.QtCore import (Qt, QModelIndex)
 from PyQt5 import uic
 
 import os
-import sys
 
 from .AttributeDlg import AttributeDlg
 from .DimensionsDlg import DimensionsDlg
@@ -42,9 +41,6 @@ logger = logging.getLogger("nxsdesigner")
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "fielddlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining a field tag
@@ -127,7 +123,7 @@ class FieldDlg(NodeDlg):
         if self.name is not None:
             self.ui.nameLineEdit.setText(self.name)
         if self.nexusType is not None:
-            index = self.ui.typeComboBox.findText(unicode(self.nexusType))
+            index = self.ui.typeComboBox.findText(str(self.nexusType))
             if index > -1:
                 self.ui.typeComboBox.setCurrentIndex(index)
                 self.ui.otherFrame.hide()
@@ -137,7 +133,7 @@ class FieldDlg(NodeDlg):
                 self.ui.typeLineEdit.setText(self.nexusType)
                 self.ui.otherFrame.show()
         else:
-            index = self.ui.typeComboBox.findText(unicode("None"))
+            index = self.ui.typeComboBox.findText(str("None"))
             self.ui.typeComboBox.setCurrentIndex(index)
             self.ui.otherFrame.hide()
         if self.doc is not None:
@@ -165,7 +161,7 @@ class FieldDlg(NodeDlg):
 
         self.__attributes.clear()
         for at in self.attributes.keys():
-            self.__attributes[unicode(at)] = self.attributes[(unicode(at))]
+            self.__attributes[str(at)] = self.attributes[(str(at))]
 
         self.populateAttributes()
 
@@ -205,25 +201,25 @@ class FieldDlg(NodeDlg):
             return
         attributeMap = self.node.attributes()
 
-        self.name = unicode(attributeMap.namedItem("name").nodeValue()
-                            if attributeMap.contains("name") else "")
-        self.nexusType = unicode(attributeMap.namedItem("type").nodeValue()
-                                 if attributeMap.contains("type") else "")
-        self.units = unicode(attributeMap.namedItem("units").nodeValue()
-                             if attributeMap.contains("units") else "")
+        self.name = str(attributeMap.namedItem("name").nodeValue()
+                        if attributeMap.contains("name") else "")
+        self.nexusType = str(attributeMap.namedItem("type").nodeValue()
+                             if attributeMap.contains("type") else "")
+        self.units = str(attributeMap.namedItem("units").nodeValue()
+                         if attributeMap.contains("units") else "")
 
         text = DomTools.getText(self.node)
-        self.value = unicode(text).strip() if text else ""
+        self.value = str(text).strip() if text else ""
 
         self.attributes.clear()
         self.__attributes.clear()
         for i in range(attributeMap.count()):
             attribute = attributeMap.item(i)
-            attrName = unicode(attribute.nodeName())
+            attrName = str(attribute.nodeName())
             if attrName != "name" and attrName != "type" \
                     and attrName != "units":
-                self.attributes[attrName] = unicode(attribute.nodeValue())
-                self.__attributes[attrName] = unicode(attribute.nodeValue())
+                self.attributes[attrName] = str(attribute.nodeValue())
+                self.__attributes[attrName] = str(attribute.nodeValue())
 
         dimens = self.node.firstChildElement(str("dimensions"))
         attributeMap = dimens.attributes()
@@ -281,7 +277,7 @@ class FieldDlg(NodeDlg):
 
         doc = self.node.firstChildElement(str("doc"))
         text = DomTools.getText(doc)
-        self.doc = unicode(text).strip() if text else ""
+        self.doc = str(text).strip() if text else ""
 
     # adds an attribute
     #  \brief It runs the Field Dialog and fetches attribute name and value
@@ -330,8 +326,8 @@ class FieldDlg(NodeDlg):
         attr = self.__currentTableAttribute()
         if attr is None:
             return
-        if unicode(attr) in self.__attributes.keys():
-            self.__attributes.pop(unicode(attr))
+        if str(attr) in self.__attributes.keys():
+            self.__attributes.pop(str(attr))
             self.populateAttributes()
 
     # changes the current value of the attribute
@@ -339,11 +335,11 @@ class FieldDlg(NodeDlg):
     #        the user that attribute names arenot editable
     def __tableItemChanged(self, item):
         attr = self.__currentTableAttribute()
-        if unicode(attr) not in self.__attributes.keys():
+        if str(attr) not in self.__attributes.keys():
             return
         column = self.ui.attributeTableWidget.currentColumn()
         if column == 1:
-            self.__attributes[unicode(attr)] = unicode(item.text())
+            self.__attributes[str(attr)] = str(item.text())
         if column == 0:
             QMessageBox.warning(
                 self, "Attribute name is not editable",
@@ -397,12 +393,12 @@ class FieldDlg(NodeDlg):
     # \param parent parent DOM node
     def appendElement(self, newElement, parent):
         singles = {"datasource": "DataSource", "strategy": "Strategy"}
-        if unicode(newElement.nodeName()) in singles:
+        if str(newElement.nodeName()) in singles:
             if not self.node:
                 return
             child = self.node.firstChild()
             while not child.isNull():
-                if child.nodeName() == unicode(newElement.nodeName()):
+                if child.nodeName() == str(newElement.nodeName()):
                     QMessageBox.warning(
                         self,
                         "%s exists" % singles[str(newElement.nodeName())],
@@ -417,17 +413,17 @@ class FieldDlg(NodeDlg):
     # \brief It copies the field name and type from lineEdit widgets
     #        and apply the dialog
     def apply(self):
-        self.name = unicode(self.ui.nameLineEdit.text())
-        self.units = unicode(self.ui.unitsLineEdit.text())
-        self.value = unicode(self.ui.valueLineEdit.text())
+        self.name = str(self.ui.nameLineEdit.text())
+        self.units = str(self.ui.unitsLineEdit.text())
+        self.value = str(self.ui.valueLineEdit.text())
 
-        self.nexusType = unicode(self.ui.typeComboBox.currentText())
+        self.nexusType = str(self.ui.typeComboBox.currentText())
         if self.nexusType == 'other ...':
-            self.nexusType = unicode(self.ui.typeLineEdit.text())
+            self.nexusType = str(self.ui.typeLineEdit.text())
         elif self.nexusType == 'None':
             self.nexusType = u''
 
-        self.doc = unicode(self.ui.docTextEdit.toPlainText())
+        self.doc = str(self.ui.docTextEdit.toPlainText())
 
         index = self.view.currentIndex()
         finalIndex = self.view.model().createIndex(
@@ -469,7 +465,7 @@ class FieldDlg(NodeDlg):
         if self.units:
             elem.setAttribute(str("units"), str(self.units))
 
-        self.replaceText(mindex, unicode(self.value))
+        self.replaceText(mindex, str(self.value))
 
         for attr in self.attributes.keys():
             elem.setAttribute(str(attr), str(self.attributes[attr]))
@@ -493,7 +489,7 @@ class FieldDlg(NodeDlg):
         elif self.dimensions:
             newDimens = self.root.createElement(str("dimensions"))
             newDimens.setAttribute(str("rank"),
-                                   str(unicode(self.rank)))
+                                   str(str(self.rank)))
             dimDefined = True
             for i in range(min(self.rank, len(self.dimensions))):
                 if self.dimensions[i] is None:
@@ -501,19 +497,19 @@ class FieldDlg(NodeDlg):
             if dimDefined:
                 for i in range(min(self.rank, len(self.dimensions))):
                     dim = self.root.createElement(str("dim"))
-                    dim.setAttribute(str("index"), str(unicode(i + 1)))
-                    if "$datasources." not in unicode(self.dimensions[i]):
+                    dim.setAttribute(str("index"), str(str(i + 1)))
+                    if "$datasources." not in str(self.dimensions[i]):
 
                         dim.setAttribute(str("value"),
-                                         str(unicode(self.dimensions[i])))
+                                         str(str(self.dimensions[i])))
                     else:
                         dsText = self.root.createTextNode(
-                            str(unicode(self.dimensions[i])))
+                            str(str(self.dimensions[i])))
                         dstrategy = self.root.createElement(
                             str("strategy"))
                         dstrategy.setAttribute(
                             str("mode"),
-                            str(unicode("CONFIG")))
+                            str(str("CONFIG")))
                         dim.appendChild(dsText)
                         dim.appendChild(dstrategy)
 
