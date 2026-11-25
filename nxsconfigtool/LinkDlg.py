@@ -22,7 +22,6 @@
 """ link widget """
 
 import os
-import sys
 
 from PyQt5.QtCore import (QModelIndex)
 from PyQt5.QtWidgets import (QMessageBox)
@@ -39,9 +38,6 @@ logger = logging.getLogger("nxsdesigner")
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "linkdlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining a tag link
@@ -119,20 +115,20 @@ class LinkDlg(NodeDlg):
             return
         attributeMap = self.node.attributes()
 
-        self.name = unicode(
+        self.name = str(
             attributeMap.namedItem("name").nodeValue()
             if attributeMap.contains("name") else "")
-        self.target = unicode(
+        self.target = str(
             attributeMap.namedItem("target").nodeValue()
             if attributeMap.contains("target") else "")
 
-        text = unicode(DomTools.getText(self.node)).strip()
+        text = str(DomTools.getText(self.node)).strip()
         if text and text.startswith("$datasources."):
             self.target = text
 
         doc = self.node.firstChildElement(str("doc"))
         text = DomTools.getText(doc)
-        self.doc = unicode(text).strip() if text else ""
+        self.doc = str(text).strip() if text else ""
 
     # updates link user interface
     # \brief It sets enable or disable the OK button
@@ -144,7 +140,7 @@ class LinkDlg(NodeDlg):
     # \brief It copies the link name and target from lineEdit widgets
     #        and accept the dialog
     def apply(self):
-        name = unicode(self.ui.nameLineEdit.text())
+        name = str(self.ui.nameLineEdit.text())
 
         try:
             if 1 in [c in name for c in '!"#$%&\'()*+,/;<=>?@[\\]^`{|}~']:
@@ -155,12 +151,12 @@ class LinkDlg(NodeDlg):
                     "The first character of Name is '-'")
 
         except CharacterError as e:
-            QMessageBox.warning(self, "Character Error", unicode(e))
+            QMessageBox.warning(self, "Character Error", str(e))
             return
         self.name = name
-        self.target = unicode(self.ui.targetLineEdit.text())
+        self.target = str(self.ui.targetLineEdit.text())
 
-        self.doc = unicode(self.ui.docTextEdit.toPlainText())
+        self.doc = str(self.ui.docTextEdit.toPlainText())
 
         index = self.view.currentIndex()
         finalIndex = self.view.model().createIndex(
@@ -189,7 +185,7 @@ class LinkDlg(NodeDlg):
         self.replaceText(mindex)
         if self.target:
             if self.target.startswith("$datasources."):
-                self.replaceText(mindex, unicode(self.target))
+                self.replaceText(mindex, str(self.target))
             else:
                 elem.setAttribute(str("target"), str(self.target))
 

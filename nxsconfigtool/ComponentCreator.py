@@ -25,12 +25,9 @@ from PyQt5.QtWidgets import (QMessageBox, QFileDialog)
 from .CreatorDlg import CreatorDlg, StdCreatorDlg
 
 import logging
-import sys
 # message logger
 logger = logging.getLogger("nxsdesigner")
 
-if sys.version_info > (3,):
-    unicode = str
 
 try:
     import nxstools
@@ -91,7 +88,7 @@ class ComponentCreator(object):
     # sets onlineFile name and check if online file exists
     def checkOnlineFile(self, onlineFile):
         onlineFile = onlineFile or '/online_dir/online.xml'
-        onlineFile = unicode(QFileDialog.getOpenFileName(
+        onlineFile = str(QFileDialog.getOpenFileName(
             self.parent, "Open Online File", onlineFile,
             "XML files (*.xml)")[0])
         if onlineFile:
@@ -209,7 +206,7 @@ class DataSourceCreator(object):
     # sets onlineFile name and check if online file exists
     def checkOnlineFile(self, onlineFile):
         onlineFile = onlineFile or '/online_dir/online.xml'
-        onlineFile = unicode(QFileDialog.getOpenFileName(
+        onlineFile = str(QFileDialog.getOpenFileName(
             self.parent, "Open Online File", onlineFile,
             "XML files (*.xml)")[0])
         if onlineFile:

@@ -34,16 +34,12 @@ from .Errors import CharacterError
 from .DomTools import DomTools
 
 import logging
-import sys
 # message logger
 logger = logging.getLogger("nxsdesigner")
 
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "richattributedlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining an attribute
@@ -115,7 +111,7 @@ class RichAttributeDlg(NodeDlg):
         if self.name is not None:
             self.ui.nameLineEdit.setText(self.name)
         if self.nexusType is not None:
-            index = self.ui.typeComboBox.findText(unicode(self.nexusType))
+            index = self.ui.typeComboBox.findText(str(self.nexusType))
             if index > -1:
                 self.ui.typeComboBox.setCurrentIndex(index)
                 self.ui.otherFrame.hide()
@@ -125,7 +121,7 @@ class RichAttributeDlg(NodeDlg):
                 self.ui.typeLineEdit.setText(self.nexusType)
                 self.ui.otherFrame.show()
         else:
-            index = self.ui.typeComboBox.findText(unicode("None"))
+            index = self.ui.typeComboBox.findText(str("None"))
             self.ui.typeComboBox.setCurrentIndex(index)
             self.ui.otherFrame.hide()
 
@@ -176,13 +172,13 @@ class RichAttributeDlg(NodeDlg):
             return
         attributeMap = self.node.attributes()
 
-        self.name = unicode(attributeMap.namedItem("name").nodeValue()
-                            if attributeMap.contains("name") else "")
-        self.nexusType = unicode(attributeMap.namedItem("type").nodeValue()
-                                 if attributeMap.contains("type") else "")
+        self.name = str(attributeMap.namedItem("name").nodeValue()
+                        if attributeMap.contains("name") else "")
+        self.nexusType = str(attributeMap.namedItem("type").nodeValue()
+                             if attributeMap.contains("type") else "")
 
         text = DomTools.getText(self.node)
-        self.value = unicode(text).strip() if text else ""
+        self.value = str(text).strip() if text else ""
 
         dimens = self.node.firstChildElement(str("dimensions"))
         attributeMap = dimens.attributes()
@@ -239,7 +235,7 @@ class RichAttributeDlg(NodeDlg):
 
         doc = self.node.firstChildElement(str("doc"))
         text = DomTools.getText(doc)
-        self.doc = unicode(text).strip() if text else ""
+        self.doc = str(text).strip() if text else ""
 
     # changing dimensions of the field
     #  \brief It runs the Dimensions Dialog and fetches rank
@@ -277,7 +273,7 @@ class RichAttributeDlg(NodeDlg):
     # \brief It copies the attribute name and value from lineEdit widgets
     #        and accept the dialog
     def apply(self):
-        name = unicode(self.ui.nameLineEdit.text())
+        name = str(self.ui.nameLineEdit.text())
 
         try:
             if 1 in [c in name for c in '!"#$%&\'()*+,/;<=>?@[\\]^`{|}~']:
@@ -287,19 +283,19 @@ class RichAttributeDlg(NodeDlg):
                 raise CharacterError(
                     "The first character of Name is '-'")
         except CharacterError as e:
-            QMessageBox.warning(self, "Character Error", unicode(e))
+            QMessageBox.warning(self, "Character Error", str(e))
             return
 
         self.name = name
-        self.value = unicode(self.ui.valueLineEdit.text())
+        self.value = str(self.ui.valueLineEdit.text())
 
-        self.nexusType = unicode(self.ui.typeComboBox.currentText())
+        self.nexusType = str(self.ui.typeComboBox.currentText())
         if self.nexusType == 'other ...':
-            self.nexusType = unicode(self.ui.typeLineEdit.text())
+            self.nexusType = str(self.ui.typeLineEdit.text())
         elif self.nexusType == 'None':
             self.nexusType = u''
 
-        self.doc = unicode(self.ui.docTextEdit.toPlainText())
+        self.doc = str(self.ui.docTextEdit.toPlainText())
 
         index = self.view.currentIndex()
         finalIndex = self.view.model().createIndex(
@@ -330,7 +326,7 @@ class RichAttributeDlg(NodeDlg):
         if self.nexusType:
             elem.setAttribute(str("type"), str(self.nexusType))
 
-        self.replaceText(mindex, unicode(self.value))
+        self.replaceText(mindex, str(self.value))
 
         doc = self.node.firstChildElement(str("doc"))
         if not self.doc and doc and doc.nodeName() == "doc":
@@ -351,7 +347,7 @@ class RichAttributeDlg(NodeDlg):
         elif self.dimensions:
             newDimens = self.root.createElement(str("dimensions"))
             newDimens.setAttribute(str("rank"),
-                                   str(unicode(self.rank)))
+                                   str(str(self.rank)))
             dimDefined = True
             for i in range(min(self.rank, len(self.dimensions))):
                 if self.dimensions[i] is None:
@@ -359,18 +355,18 @@ class RichAttributeDlg(NodeDlg):
             if dimDefined:
                 for i in range(min(self.rank, len(self.dimensions))):
                     dim = self.root.createElement(str("dim"))
-                    dim.setAttribute(str("index"), str(unicode(i + 1)))
-                    if "$datasources." not in unicode(self.dimensions[i]):
+                    dim.setAttribute(str("index"), str(str(i + 1)))
+                    if "$datasources." not in str(self.dimensions[i]):
 
                         dim.setAttribute(str("value"),
-                                         str(unicode(self.dimensions[i])))
+                                         str(str(self.dimensions[i])))
                     else:
                         dsText = self.root.createTextNode(
-                            str(unicode(self.dimensions[i])))
+                            str(str(self.dimensions[i])))
                         dstrategy = self.root.createElement(
                             str("strategy"))
                         dstrategy.setAttribute(str("mode"),
-                                               str(unicode("CONFIG")))
+                                               str(str("CONFIG")))
                         dim.appendChild(dsText)
                         dim.appendChild(dstrategy)
                     newDimens.appendChild(dim)
@@ -385,12 +381,12 @@ class RichAttributeDlg(NodeDlg):
     # \param parent parent DOM node
     def appendElement(self, newElement, parent):
         singles = {"datasource": "DataSource", "strategy": "Strategy"}
-        if unicode(newElement.nodeName()) in singles:
+        if str(newElement.nodeName()) in singles:
             if not self.node:
                 return
             child = self.node.firstChild()
             while not child.isNull():
-                if child.nodeName() == unicode(newElement.nodeName()):
+                if child.nodeName() == str(newElement.nodeName()):
                     QMessageBox.warning(
                         self, "%s exists" % singles[
                             str(newElement.nodeName())],

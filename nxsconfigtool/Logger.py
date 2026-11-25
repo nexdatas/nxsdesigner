@@ -22,14 +22,10 @@
 """ "Component Desigener Loggers  """
 
 import logging
-import sys
 
 from PyQt5.QtCore import (QObject, pyqtSignal)
 
 logger = logging.getLogger("nxsdesigner")
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 class LogHandler(logging.Handler):
@@ -91,7 +87,7 @@ class LogStream(QObject):
 
     def write(self, message):
         if not self.signalsBlocked():
-            self.written.emit(unicode(message))
+            self.written.emit(str(message))
 
     def flush(self):
         pass

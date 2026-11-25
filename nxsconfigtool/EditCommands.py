@@ -27,17 +27,13 @@ from .DataSourceDlg import DataSourceDlg
 from . import DataSource
 from .Component import Component
 
-import sys
 import logging
 # message logger
 logger = logging.getLogger("nxsdesigner")
 
 
 def iternext(it):
-    if sys.version_info > (3,):
-        return next(iter(it.values()))
-    else:
-        return it.itervalues().next()
+    return next(iter(it.values()))
 
 
 # Command which opens dialog with the current component

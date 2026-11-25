@@ -22,7 +22,6 @@
 """ component widget data """
 
 import os
-import sys
 
 from PyQt5.QtCore import (QModelIndex, Qt,
                           QFileInfo, QFile, QIODevice, QTextStream)
@@ -49,9 +48,6 @@ from .ComponentDlg import ComponentDlg
 import logging
 # message logger
 logger = logging.getLogger("nxsdesigner")
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # Component data
@@ -152,7 +148,7 @@ class Component(object):
         dss = set()
         cps = set()
         if hasattr(self.document, "toString"):
-            xml = unicode(self.document.toString(0))
+            xml = str(self.document.toString(0))
             dss = set(DomTools.findElements(xml, "datasources"))
             cps = set(DomTools.findElements(xml, "components"))
         self.components = list(cps)
@@ -178,9 +174,9 @@ class Component(object):
         ancestors = [node]
         path = []
 
-        while unicode(
+        while str(
             ancestors[0].parentNode().nodeName()).strip() != '#document' and \
-                unicode(ancestors[0].parentNode().nodeName()).strip() != '':
+                str(ancestors[0].parentNode().nodeName()).strip() != '':
             ancestors.insert(0, ancestors[0].parentNode())
         ancestors.insert(0, ancestors[0].parentNode())
 
@@ -193,7 +189,7 @@ class Component(object):
                     path = []
                     break
 
-                path.append((row, unicode(child.nodeName())))
+                path.append((row, str(child.nodeName())))
             parent = child
         if not path:
             path = [(0, 'definition')]
@@ -237,13 +233,13 @@ class Component(object):
             child = index.internalPointer().node
             parent = pindex.internalPointer().node
             row = DomTools.getNodeRow(child, parent)
-            path.insert(0, (row, unicode(child.nodeName())))
+            path.insert(0, (row, str(child.nodeName())))
             index = pindex
             pindex = pindex.parent()
 
         child = index.internalPointer().node
         row = DomTools.getNodeRow(child, self.document)
-        path.insert(0, (row, unicode(child.nodeName())))
+        path.insert(0, (row, str(child.nodeName())))
 
         return path
 
@@ -416,7 +412,7 @@ class Component(object):
         doc = QDomDocument()
         child = doc.importNode(node, True)
         doc.appendChild(child)
-        return unicode(doc.toString(0))
+        return str(doc.toString(0))
 
     # converts XML string to DOM node
     # \param xml XML string
@@ -424,9 +420,9 @@ class Component(object):
     def _stringToNode(self, xml):
         doc = QDomDocument()
 
-        if not unicode(xml).strip():
+        if not str(xml).strip():
             return
-        if not doc.setContent(unicode(xml).strip()):
+        if not doc.setContent(str(xml).strip()):
             raise ValueError("could not parse XML")
         if self.document and doc and doc.hasChildNodes():
             return self.document.importNode(doc.firstChild(), True)
@@ -444,7 +440,7 @@ class Component(object):
         if clipNode is None:
             return
 
-        name = unicode(clipNode.nodeName())
+        name = str(clipNode.nodeName())
 
         if name not in self.dialog.ui.widget.subItems:
             return
@@ -727,7 +723,7 @@ class Component(object):
 
         if self.dialog.ui.widget:
             self.dialog.ui.widget.setVisible(False)
-        if unicode(nNode) in self._tagClasses.keys():
+        if str(nNode) in self._tagClasses.keys():
             if self.dialog.ui and self.dialog.ui.widget:
                 if hasattr(self.dialog.ui.widget, "widget"):
                     self.dialog.ui.widget.widget.hide()
@@ -737,7 +733,7 @@ class Component(object):
             self.dialog.ui.frame.hide()
             self._frameLayout.removeWidget(self.dialog.ui.widget)
             self.dialog.ui.widget = self._tagClasses[
-                unicode(nNode)](self.dialog)
+                str(nNode)](self.dialog)
             self.dialog.ui.widget.root = self.document
             self.dialog.ui.widget.setFromNode(node)
             self.dialog.ui.widget.createGUI()
@@ -796,9 +792,9 @@ class Component(object):
         if self._componentFile:
             fi = QFileInfo(self._componentFile)
         if directory is None and fi:
-            dr = unicode(fi.dir().path())
+            dr = str(fi.dir().path())
         elif directory:
-            dr = unicode(directory)
+            dr = str(directory)
         elif self.directory:
             dr = self.directory
         else:
@@ -814,7 +810,7 @@ class Component(object):
 
         if not filePath:
             if not self.name:
-                self._componentFile = unicode(QFileDialog.getOpenFileName(
+                self._componentFile = str(QFileDialog.getOpenFileName(
                     self.parent, "Open File", self._xmlPath,
                     "XML files (*.xml);;HTML files (*.html);;"
                     "SVG files (*.svg);;User Interface files (*.ui)")[0])
@@ -830,7 +826,7 @@ class Component(object):
                     self._loadFromString(fh)
                     self._xmlPath = self._componentFile
                     fi = QFileInfo(self._componentFile)
-                    self.name = unicode(fi.fileName())
+                    self.name = str(fi.fileName())
 
                     if self.name[-4:] == '.xml':
                         self.name = self.name[:-4]
@@ -903,7 +899,7 @@ class Component(object):
         node = sel.node
 
         if not filePath:
-            itemFile = unicode(
+            itemFile = str(
                 QFileDialog.getOpenFileName(
                     self.parent, "Open File", self._xmlPath,
                     "XML files (*.xml);;HTML files (*.html);;"
@@ -977,7 +973,7 @@ class Component(object):
         node = sel.node
 
         if not filePath:
-            dsFile = unicode(
+            dsFile = str(
                 QFileDialog.getOpenFileName(
                     self.parent, "Open File", self._dsPath,
                     "XML files (*.xml);;HTML files (*.html);;"
@@ -1198,7 +1194,7 @@ class Component(object):
             self._merger = None
 
         except IncompatibleNodeError as e:
-            logger.warn("Error in Merging: %s" % unicode(e.value))
+            logger.warn("Error in Merging: %s" % str(e.value))
             self._merger = None
             self._merged = False
             if dialog:
@@ -1215,9 +1211,9 @@ class Component(object):
                 QMessageBox.warning(
                     self.parent, "Merging problem",
                     "Error in %s Merging: %s" % (
-                        unicode(self.name), unicode(e.value)))
+                        str(self.name), str(e.value)))
         except Exception as e:
-            logger.warn("Exception: %s" % unicode(e))
+            logger.warn("Exception: %s" % str(e))
             self._merged = False
             if dialog:
                 newModel = ComponentModel(
@@ -1228,7 +1224,7 @@ class Component(object):
                 self.connectView()
             if dialog:
                 QMessageBox.warning(self.parent, "Warning",
-                                    "%s" % unicode(e))
+                                    "%s" % str(e))
         return self._merged
 
     # hides the component item frame
@@ -1273,7 +1269,7 @@ class Component(object):
                 if child.nodeName() == tagName:
                     attr = child.attributes()
                     if attr.contains("name"):
-                        name = unicode(attr.namedItem("name").nodeValue())
+                        name = str(attr.namedItem("name").nodeValue())
                     else:
                         self._tagCnt += 1
                         name = "__datasource__%s" % self._tagCnt
@@ -1317,7 +1313,7 @@ class Component(object):
 
         attr = node.attributes()
         if attr.contains("name"):
-            name = unicode(attr.namedItem("name").nodeValue())
+            name = str(attr.namedItem("name").nodeValue())
         else:
             name = "__datasource__"
         ds[name] = self._nodeToString(node)
@@ -1331,7 +1327,7 @@ class Component(object):
             processing = self.document.createProcessingInstruction(
                 "xml", "version='1.0'")
             self.document.insertBefore(processing, self.document.firstChild())
-            string = unicode(self.document.toString(indent))
+            string = str(self.document.toString(indent))
             self.document.removeChild(processing)
             return string
 
@@ -1350,7 +1346,7 @@ class Component(object):
         try:
             fh = QFile(fpath)
             if not fh.open(QIODevice.WriteOnly):
-                raise IOError(unicode(fh.errorString()))
+                raise IOError(str(fh.errorString()))
             stream = QTextStream(fh)
             string = self.get(2)
             if string:
@@ -1387,7 +1383,7 @@ class Component(object):
         if self._componentFile is None:
             self.setName(self.name, self.directory)
 
-        self._componentFile = unicode(
+        self._componentFile = str(
             QFileDialog.getSaveFileName(
                 self.parent, "Save Component As ...", self._componentFile,
                 "XML files (*.xml);;HTML files (*.html);;"

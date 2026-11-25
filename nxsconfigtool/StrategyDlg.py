@@ -22,7 +22,6 @@
 """ strategy widget """
 
 import os
-import sys
 
 from PyQt5.QtCore import (QModelIndex)
 from PyQt5 import uic
@@ -38,9 +37,6 @@ logger = logging.getLogger("nxsdesigner")
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "strategydlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining an attribute
@@ -82,12 +78,12 @@ class StrategyDlg(NodeDlg):
     def updateForm(self):
         index = -1
         if self.mode is not None:
-            index = self.ui.modeComboBox.findText(unicode(self.mode))
+            index = self.ui.modeComboBox.findText(str(self.mode))
             if index > -1:
                 self.ui.modeComboBox.setCurrentIndex(index)
                 self.setFrames(self.mode)
         if index < 0 or index is None:
-            index2 = self.ui.modeComboBox.findText(unicode("STEP"))
+            index2 = self.ui.modeComboBox.findText(str("STEP"))
             self.mode = 'STEP'
             self.ui.modeComboBox.setCurrentIndex(index2)
             self.setFrames(self.mode)
@@ -221,11 +217,11 @@ class StrategyDlg(NodeDlg):
                 self.rate = rate
 
         text = DomTools.getText(self.node)
-        self.postrun = unicode(text).strip() if text else ""
+        self.postrun = str(text).strip() if text else ""
 
         doc = self.node.firstChildElement(str("doc"))
         text = DomTools.getText(doc)
-        self.doc = unicode(text).strip() if text else ""
+        self.doc = str(text).strip() if text else ""
 
     # accepts input text strings
     # \brief It copies the attribute name and value from
@@ -236,21 +232,21 @@ class StrategyDlg(NodeDlg):
         self.grows = ''
         self.postrun = ''
 
-        self.mode = unicode(self.ui.modeComboBox.currentText())
+        self.mode = str(self.ui.modeComboBox.currentText())
         if self.mode == 'STEP':
-            self.trigger = unicode(self.ui.triggerLineEdit.text())
+            self.trigger = str(self.ui.triggerLineEdit.text())
             grows = int(self.ui.growsSpinBox.value())
             if grows > 0:
                 self.grows = str(grows)
         if self.mode == 'POSTRUN':
-            self.postrun = unicode(self.ui.postLineEdit.text())
+            self.postrun = str(self.ui.postLineEdit.text())
 
         self.canfail = self.ui.canFailCheckBox.isChecked()
         self.compression = self.ui.compressionCheckBox.isChecked()
         self.shuffle = self.ui.shuffleCheckBox.isChecked()
         self.rate = self.ui.rateSpinBox.value()
 
-        self.doc = unicode(self.ui.docTextEdit.toPlainText())
+        self.doc = str(self.ui.docTextEdit.toPlainText())
 
         index = self.view.currentIndex()
         finalIndex = self.view.model().createIndex(
@@ -290,7 +286,7 @@ class StrategyDlg(NodeDlg):
                               if self.shuffle else "false")
             elem.setAttribute(str("rate"), str(str(self.rate)))
 
-        self.replaceText(mindex, unicode(self.postrun))
+        self.replaceText(mindex, str(self.postrun))
 
         doc = self.node.firstChildElement(str("doc"))
         if not self.doc and doc and doc.nodeName() == "doc":

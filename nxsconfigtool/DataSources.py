@@ -27,7 +27,6 @@ from PyQt5.QtWidgets import (QMessageBox, QTableWidgetItem)
 from PyQt5.QtXml import (QDomDocument)
 from PyQt5 import uic
 import os
-import sys
 
 # from .ui.ui_clientdsdlg import Ui_ClientDsDlg
 # from .ui.ui_dbdsdlg import Ui_DBDsDlg
@@ -51,9 +50,6 @@ _tangoformclass, _tangobaseclass = uic.loadUiType(
 _pyevalformclass, _pyevalbaseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "pyevaldsdlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 class FormatRule(object):
@@ -237,7 +233,7 @@ class ClientSource(object):
 
     # calls updateUi when the name text is changing
     def __cRecNameLineEdit(self):
-        combo = unicode(self.main.ui.typeComboBox.currentText())
+        combo = str(self.main.ui.typeComboBox.currentText())
         self.main.updateUi(combo)
 
     # connects the dialog actions
@@ -279,14 +275,14 @@ class ClientSource(object):
                                 "Missing <record> tag")
         else:
             attributeMap = record.attributes()
-            datasource.var['CLIENT'].recordName = unicode(
+            datasource.var['CLIENT'].recordName = str(
                 attributeMap.namedItem("name").nodeValue()
                 if attributeMap.contains("name") else "")
 
     # copies parameters from form to datasource instance
     # \param datasource class
     def fromForm(self, datasource):
-        recName = unicode(self.ui.cRecNameLineEdit.text())
+        recName = str(self.ui.cRecNameLineEdit.text())
 
         if not recName:
             QMessageBox.warning(self.main, "Empty record name",
@@ -358,26 +354,26 @@ class DBSource(object):
 
     # calls updateUi when the name text is changing
     def __dQueryLineEdit(self):
-        combo = unicode(self.main.ui.typeComboBox.currentText())
+        combo = str(self.main.ui.typeComboBox.currentText())
         self.main.updateUi(combo)
 
     # calls updateUi when the name text is changing
     # \param text the edited text
     def __dParamComboBox(self, text):
-        param = unicode(text)
+        param = str(text)
         if param == 'DB password':
             QMessageBox.warning(
                 self, "Unprotected password",
                 "Please note that there is no support for "
                 "any password protection")
 
-        self.populateParameters(unicode(text))
+        self.populateParameters(str(text))
 
     # adds an parameter
     #  \brief It runs the Parameter Dialog and fetches parameter name
     #         and value
     def __addParameter(self):
-        name = unicode(self.ui.dParamComboBox.currentText())
+        name = str(self.ui.dParamComboBox.currentText())
         if name not in self.dbParam.keys():
             self.dbParam[name] = ""
         self.populateParameters(name)
@@ -399,12 +395,12 @@ class DBSource(object):
             return
         if QMessageBox.question(self, "Parameter - Remove",
                                 "Remove parameter: %s = \'%s\'".encode()
-                                % (param, self.dbParam[unicode(param)]),
+                                % (param, self.dbParam[str(param)]),
                                 QMessageBox.Yes | QMessageBox.No,
                                 QMessageBox.Yes) == QMessageBox.No:
             return
-        if unicode(param) in self.dbParam.keys():
-            self.dbParam.pop(unicode(param))
+        if str(param) in self.dbParam.keys():
+            self.dbParam.pop(str(param))
             self.populateParameters()
 
     # changes the current value of the parameter
@@ -412,11 +408,11 @@ class DBSource(object):
     #        the user that parameter names arenot editable
     def __tableItemChanged(self, item):
         param = self.__currentTableParameter()
-        if unicode(param) not in self.dbParam.keys():
+        if str(param) not in self.dbParam.keys():
             return
         column = self.ui.dParameterTableWidget.currentColumn()
         if column == 1:
-            self.dbParam[unicode(param)] = unicode(item.text())
+            self.dbParam[str(param)] = str(item.text())
         if column == 0:
             QMessageBox.warning(
                 self, "Parameter name is not editable",
@@ -541,14 +537,14 @@ class DBSource(object):
     def updateForm(self, datasource):
         if datasource.var['DB'].dbtype is not None:
             index = self.ui.dTypeComboBox.findText(
-                unicode(datasource.var['DB'].dbtype))
+                str(datasource.var['DB'].dbtype))
             if index > -1:
                 self.ui.dTypeComboBox.setCurrentIndex(index)
             else:
                 datasource.var['DB'].dbtype = 'MYSQL'
         if datasource.var['DB'].dataFormat is not None:
             index = self.ui.dFormatComboBox.findText(
-                unicode(datasource.var['DB'].dataFormat))
+                str(datasource.var['DB'].dataFormat))
             if index > -1:
                 self.ui.dFormatComboBox.setCurrentIndex(index)
             else:
@@ -559,16 +555,16 @@ class DBSource(object):
 
         self.dbParam = {}
         for par in datasource.var['DB'].parameters.keys():
-            index = self.ui.dParamComboBox.findText(unicode(par))
+            index = self.ui.dParamComboBox.findText(str(par))
             if index < 0:
                 QMessageBox.warning(
                     self.main, "Unregistered parameter",
                     "Unknown parameter %s = '%s' will be removed."
-                    % (par, datasource.var['DB'].parameters[unicode(par)]))
-                datasource.var['DB'].parameters.pop(unicode(par))
+                    % (par, datasource.var['DB'].parameters[str(par)]))
+                datasource.var['DB'].parameters.pop(str(par))
             else:
-                self.dbParam[unicode(par)] = datasource.var['DB'].parameters[
-                    (unicode(par))]
+                self.dbParam[str(par)] = datasource.var['DB'].parameters[
+                    (str(par))]
         self.populateParameters()
 
     # sets the form from the DOM node
@@ -582,22 +578,22 @@ class DBSource(object):
             attributeMap = database.attributes()
 
             for i in range(attributeMap.count()):
-                name = unicode(attributeMap.item(i).nodeName())
+                name = str(attributeMap.item(i).nodeName())
                 if name == 'dbtype':
-                    datasource.var['DB'].dbtype = unicode(
+                    datasource.var['DB'].dbtype = str(
                         attributeMap.item(i).nodeValue())
                 elif name in self.__dbmap:
                     datasource.var['DB'].parameters[self.__dbmap[name]] = \
-                        unicode(attributeMap.item(i).nodeValue())
-                    self.dbParam[self.__dbmap[name]] = unicode(
+                        str(attributeMap.item(i).nodeValue())
+                    self.dbParam[self.__dbmap[name]] = str(
                         attributeMap.item(i).nodeValue())
 
         if not datasource.var['DB'].dbtype:
             datasource.var['DB'].dbtype = 'MYSQL'
-        text = unicode(DomTools.getText(database))
-        datasource.var['DB'].parameters['Oracle DSN'] = unicode(text).strip() \
+        text = str(DomTools.getText(database))
+        datasource.var['DB'].parameters['Oracle DSN'] = str(text).strip() \
             if text else ""
-        self.dbParam['Oracle DSN'] = unicode(text).strip() \
+        self.dbParam['Oracle DSN'] = str(text).strip() \
             if text else ""
 
         query = self.main.node.firstChildElement(str("query"))
@@ -607,26 +603,26 @@ class DBSource(object):
         else:
             attributeMap = query.attributes()
 
-            datasource.var['DB'].dataFormat = unicode(
+            datasource.var['DB'].dataFormat = str(
                 attributeMap.namedItem("format").nodeValue()
                 if attributeMap.contains("format") else "SCALAR")
 
-        text = unicode(DomTools.getText(query))
-        datasource.var['DB'].query = unicode(text).strip() if text else ""
+        text = str(DomTools.getText(query))
+        datasource.var['DB'].query = str(text).strip() if text else ""
 
     # copies parameters from form to datasource instance
     # \param datasource class
     def fromForm(self, datasource):
-        query = unicode(self.ui.dQueryLineEdit.text()).strip()
+        query = str(self.ui.dQueryLineEdit.text()).strip()
         if not query:
             QMessageBox.warning(self.main, "Empty query",
                                 "Please define the DB query")
             self.ui.dQueryLineEdit.setFocus()
             return
         datasource.var['DB'].query = query
-        datasource.var['DB'].dbtype = unicode(
+        datasource.var['DB'].dbtype = str(
             self.ui.dTypeComboBox.currentText())
-        datasource.var['DB'].dataFormat = unicode(
+        datasource.var['DB'].dataFormat = str(
             self.ui.dFormatComboBox.currentText())
 
         datasource.var['DB'].parameters.clear()
@@ -729,7 +725,7 @@ class TangoSource(object):
                 datasource.var['TANGO'].memberName)
         if datasource.var['TANGO'].memberType is not None:
             index = self.ui.tMemberComboBox.findText(
-                unicode(datasource.var['TANGO'].memberType))
+                str(datasource.var['TANGO'].memberType))
             if index > -1:
                 self.ui.tMemberComboBox.setCurrentIndex(index)
             else:
@@ -745,12 +741,12 @@ class TangoSource(object):
 
     # calls updateUi when the name text is changing
     def __tDevNameLineEdit(self):
-        combo = unicode(self.main.ui.typeComboBox.currentText())
+        combo = str(self.main.ui.typeComboBox.currentText())
         self.main.updateUi(combo)
 
     # calls updateUi when the name text is changing
     def __tMemberNameLineEdit(self):
-        combo = unicode(self.main.ui.typeComboBox.currentText())
+        combo = str(self.main.ui.typeComboBox.currentText())
         self.main.updateUi(combo)
 
     # connects the dialog actions
@@ -792,7 +788,7 @@ class TangoSource(object):
                                 "Missing <record> tag")
         else:
             attributeMap = record.attributes()
-            datasource.var['TANGO'].memberName = unicode(
+            datasource.var['TANGO'].memberName = str(
                 attributeMap.namedItem("name").nodeValue()
                 if attributeMap.contains("name") else "")
 
@@ -802,30 +798,30 @@ class TangoSource(object):
                                 "Missing <device> tag")
         else:
             attributeMap = device.attributes()
-            datasource.var['TANGO'].deviceName = unicode(
+            datasource.var['TANGO'].deviceName = str(
                 attributeMap.namedItem("name").nodeValue()
                 if attributeMap.contains("name") else "")
-            datasource.var['TANGO'].memberType = unicode(
+            datasource.var['TANGO'].memberType = str(
                 attributeMap.namedItem("member").nodeValue()
                 if attributeMap.contains("member") else "attribute")
-            datasource.var['TANGO'].host = unicode(
+            datasource.var['TANGO'].host = str(
                 attributeMap.namedItem("hostname").nodeValue()
                 if attributeMap.contains("hostname") else "")
-            datasource.var['TANGO'].port = unicode(
+            datasource.var['TANGO'].port = str(
                 attributeMap.namedItem("port").nodeValue()
                 if attributeMap.contains("port") else "")
-            datasource.var['TANGO'].encoding = unicode(
+            datasource.var['TANGO'].encoding = str(
                 attributeMap.namedItem("encoding").nodeValue()
                 if attributeMap.contains("encoding") else "")
-            datasource.var['TANGO'].group = unicode(
+            datasource.var['TANGO'].group = str(
                 attributeMap.namedItem("group").nodeValue()
                 if attributeMap.contains("group") else "")
 
     # copies parameters from form to datasource instance
     # \param datasource class
     def fromForm(self, datasource):
-        devName = unicode(self.ui.tDevNameLineEdit.text())
-        memName = unicode(self.ui.tMemberNameLineEdit.text())
+        devName = str(self.ui.tDevNameLineEdit.text())
+        memName = str(self.ui.tMemberNameLineEdit.text())
         if not devName:
             QMessageBox.warning(self.main, "Empty device name",
                                 "Please define the device name")
@@ -838,13 +834,13 @@ class TangoSource(object):
             return
         datasource.var['TANGO'].deviceName = devName
         datasource.var['TANGO'].memberName = memName
-        datasource.var['TANGO'].memberType = unicode(
+        datasource.var['TANGO'].memberType = str(
             self.ui.tMemberComboBox.currentText())
-        datasource.var['TANGO'].host = unicode(self.ui.tHostLineEdit.text())
-        datasource.var['TANGO'].port = unicode(self.ui.tPortLineEdit.text())
-        datasource.var['TANGO'].encoding = unicode(
+        datasource.var['TANGO'].host = str(self.ui.tHostLineEdit.text())
+        datasource.var['TANGO'].port = str(self.ui.tPortLineEdit.text())
+        datasource.var['TANGO'].encoding = str(
             self.ui.tEncodingLineEdit.text())
-        datasource.var['TANGO'].group = unicode(self.ui.tGroupLineEdit.text())
+        datasource.var['TANGO'].group = str(self.ui.tGroupLineEdit.text())
 
     # creates datasource nodes
     # \param datasource class
@@ -950,22 +946,22 @@ class PyEvalSource(object):
         text = DomTools.getText(res)
         while len(text) > 0 and text[0] == '\n':
             text = text[1:]
-        datasource.var['PYEVAL'].script = unicode(text) if text else ""
+        datasource.var['PYEVAL'].script = str(text) if text else ""
         attributeMap = res.attributes()
-        datasource.var['PYEVAL'].result = unicode(
+        datasource.var['PYEVAL'].result = str(
             "ds." + attributeMap.namedItem("name").nodeValue()
             if attributeMap.contains("name") else "")
 
         ds = DomTools.getText(self.main.node)
-        dslist = unicode(ds).strip().split() \
-            if unicode(ds).strip() else []
+        dslist = str(ds).strip().split() \
+            if str(ds).strip() else []
         datasource.var['PYEVAL'].dataSources = {}
         child = self.main.node.firstChildElement(
             str("datasource"))
         while not child.isNull():
             if child.nodeName() == 'datasource':
                 attributeMap = child.attributes()
-                name = unicode(
+                name = str(
                     attributeMap.namedItem("name").nodeValue()
                     if attributeMap.contains("name") else "")
                 if name.strip():
@@ -973,7 +969,7 @@ class PyEvalSource(object):
                     doc = QDomDocument()
                     doc.appendChild(
                         doc.importNode(child, True))
-                    datasource.var['PYEVAL'].dataSources[name] = unicode(
+                    datasource.var['PYEVAL'].dataSources[name] = str(
                         doc.toString(0))
                     child = child.nextSiblingElement("datasource")
 
@@ -985,10 +981,10 @@ class PyEvalSource(object):
     # \param datasource class
     def fromForm(self, datasource):
         datasource.var['PYEVAL'].input = \
-            unicode(self.ui.peInputLineEdit.text()).strip()
+            str(self.ui.peInputLineEdit.text()).strip()
         datasource.var['PYEVAL'].result = \
-            unicode(self.ui.peResultLineEdit.text()).strip()
-        script = unicode(self.ui.peScriptTextEdit.toPlainText())
+            str(self.ui.peResultLineEdit.text()).strip()
+        script = str(self.ui.peScriptTextEdit.toPlainText())
         if not script:
             QMessageBox.warning(self.main, "Empty script",
                                 "Please define the PyEval script")
@@ -1020,7 +1016,7 @@ class PyEvalSource(object):
             res.appendChild(script)
         elem.appendChild(res)
         if datasource.var['PYEVAL'].input:
-            dslist = unicode(datasource.var['PYEVAL'].input).split()
+            dslist = str(datasource.var['PYEVAL'].input).split()
             newds = ""
             for d in dslist:
                 name = d[3:] if (len(d) > 3 and d[:3] == 'ds.') else d

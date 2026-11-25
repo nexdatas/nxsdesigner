@@ -23,7 +23,6 @@
 
 import copy
 import os
-import sys
 
 from PyQt5.QtCore import (Qt, QModelIndex)
 from PyQt5.QtWidgets import (QMessageBox, QTableWidgetItem, QCompleter)
@@ -41,9 +40,6 @@ logger = logging.getLogger("nxsdesigner")
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "groupdlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining a group tag
@@ -142,7 +138,7 @@ class GroupDlg(NodeDlg):
 
         self.__attributes.clear()
         for at in self.attributes.keys():
-            self.__attributes[unicode(at)] = self.attributes[(unicode(at))]
+            self.__attributes[str(at)] = self.attributes[(str(at))]
 
         self.populateAttributes()
 
@@ -200,10 +196,10 @@ class GroupDlg(NodeDlg):
             return
         attributeMap = self.node.attributes()
 
-        self.name = unicode(
+        self.name = str(
             attributeMap.namedItem("name").nodeValue()
             if attributeMap.contains("name") else "")
-        self.nexusType = unicode(
+        self.nexusType = str(
             attributeMap.namedItem("type").nodeValue()
             if attributeMap.contains("type") else "")
 
@@ -211,14 +207,14 @@ class GroupDlg(NodeDlg):
         self.__attributes.clear()
         for i in range(attributeMap.count()):
             attribute = attributeMap.item(i)
-            attrName = unicode(attribute.nodeName())
+            attrName = str(attribute.nodeName())
             if attrName != "name" and attrName != "type":
-                self.attributes[attrName] = unicode(attribute.nodeValue())
-                self.__attributes[attrName] = unicode(attribute.nodeValue())
+                self.attributes[attrName] = str(attribute.nodeValue())
+                self.__attributes[attrName] = str(attribute.nodeValue())
 
         doc = self.node.firstChildElement(str("doc"))
         text = DomTools.getText(doc)
-        self.doc = unicode(text).strip() if text else ""
+        self.doc = str(text).strip() if text else ""
 
     # adds an attribute
     #  \brief It runs the Group Dialog and fetches attribute name and value
@@ -249,8 +245,8 @@ class GroupDlg(NodeDlg):
         attr = self.__currentTableAttribute()
         if attr is None:
             return
-        if unicode(attr) in self.__attributes.keys():
-            self.__attributes.pop(unicode(attr))
+        if str(attr) in self.__attributes.keys():
+            self.__attributes.pop(str(attr))
             self.populateAttributes()
 
     # changes the current value of the attribute
@@ -258,11 +254,11 @@ class GroupDlg(NodeDlg):
     #        and informs the user that attribute names arenot editable
     def __tableItemChanged(self, item):
         attr = self.__currentTableAttribute()
-        if unicode(attr) not in self.__attributes.keys():
+        if str(attr) not in self.__attributes.keys():
             return
         column = self.ui.attributeTableWidget.currentColumn()
         if column == 1:
-            self.__attributes[unicode(attr)] = unicode(item.text())
+            self.__attributes[str(attr)] = str(item.text())
         if column == 0:
             QMessageBox.warning(
                 self, "Attribute name is not editable",
@@ -306,10 +302,10 @@ class GroupDlg(NodeDlg):
     # \brief It copies the group name and type from lineEdit widgets
     #        and apply the dialog
     def apply(self):
-        self.name = unicode(self.ui.nameLineEdit.text())
-        self.nexusType = unicode(self.ui.typeLineEdit.text())
+        self.name = str(self.ui.nameLineEdit.text())
+        self.nexusType = str(self.ui.typeLineEdit.text())
 
-        self.doc = unicode(self.ui.docTextEdit.toPlainText())
+        self.doc = str(self.ui.docTextEdit.toPlainText())
 
         index = self.view.currentIndex()
         finalIndex = self.view.model().createIndex(

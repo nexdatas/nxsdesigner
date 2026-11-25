@@ -39,10 +39,6 @@ app = None
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
 
-if sys.version_info > (3,):
-    unicode = str
-    long = int
-
 
 # test fixture
 class DimensionsDlgTest(unittest.TestCase):
@@ -61,9 +57,9 @@ class DimensionsDlgTest(unittest.TestCase):
         self.title = None
 
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
 
         self.__rnd = random.Random(self.__seed)
 
@@ -488,7 +484,7 @@ class DimensionsDlgTest(unittest.TestCase):
         for r in range(rank):
             form.ui.dimTableWidget.setCurrentCell(r, 0)
 #            QTest.keyClicks(form.ui.dimTableWidget, str(lengths[r]))
-            it = QTableWidgetItem(unicode(lengths[r]))
+            it = QTableWidgetItem(str(lengths[r]))
             form.ui.dimTableWidget.setItem(r, 0, it)
 
         cancelWidget = form.ui.buttonBox.button(form.ui.buttonBox.Cancel)
@@ -571,7 +567,7 @@ class DimensionsDlgTest(unittest.TestCase):
 
         for r in range(rank):
             form.ui.dimTableWidget.setCurrentCell(r, 0)
-            it = QTableWidgetItem(unicode(lengths[r]))
+            it = QTableWidgetItem(str(lengths[r]))
             form.ui.dimTableWidget.setItem(r, 0, it)
 
         for r in range(rank):

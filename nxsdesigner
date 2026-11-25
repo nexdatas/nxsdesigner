@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #   This file is part of nexdatas - Tango Server for NeXus data writer
 #
 #    Copyright (C) 2012-2016 DESY, Jan Kotanski <jkotan@mail.desy.de>
@@ -37,6 +37,7 @@ from nxsconfigtool.Logger import LogHandler, LogActions
 from nxsconfigtool import __version__
 # import nxsconfigtool.qrc as qrc
 
+
 def main():
     """ the main function """
 
@@ -52,7 +53,7 @@ def main():
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_X11InitThreads)
     QtCore.QResource.registerResource(
         os.path.join(nxsconfigtool.__path__[0], "qrc", "resources.rcc"))
-    
+
     parser = OptionParser(usage=usage)
 
     parser.add_option(

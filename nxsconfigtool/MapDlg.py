@@ -28,7 +28,6 @@ from PyQt5.QtCore import (Qt, QModelIndex)
 from PyQt5 import uic
 
 import os
-import sys
 
 try:
     from .AttributeDlg import AttributeDlg
@@ -59,9 +58,6 @@ logger = logging.getLogger("nxsdesigner")
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "mapdlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining a map tag
@@ -230,7 +226,7 @@ class MapDlg(NodeDlg):
 
         self.__attributes.clear()
         for at in self.attributes.keys():
-            self.__attributes[unicode(at)] = self.attributes[(unicode(at))]
+            self.__attributes[str(at)] = self.attributes[(str(at))]
 
         self.populateAttributes()
 
@@ -270,22 +266,22 @@ class MapDlg(NodeDlg):
             return
         attributeMap = self.node.attributes()
 
-        self.name = unicode(attributeMap.namedItem("name").nodeValue()
-                            if attributeMap.contains("name") else "")
-        self.target = unicode(attributeMap.namedItem("target").nodeValue()
-                              if attributeMap.contains("target") else "")
+        self.name = str(attributeMap.namedItem("name").nodeValue()
+                        if attributeMap.contains("name") else "")
+        self.target = str(attributeMap.namedItem("target").nodeValue()
+                          if attributeMap.contains("target") else "")
 
         text = DomTools.getText(self.node)
-        self.value = unicode(text).strip() if text else ""
+        self.value = str(text).strip() if text else ""
 
         self.attributes.clear()
         self.__attributes.clear()
         for i in range(attributeMap.count()):
             attribute = attributeMap.item(i)
-            attrName = unicode(attribute.nodeName())
+            attrName = str(attribute.nodeName())
             if attrName != "name" and attrName != "target":
-                self.attributes[attrName] = unicode(attribute.nodeValue())
-                self.__attributes[attrName] = unicode(attribute.nodeValue())
+                self.attributes[attrName] = str(attribute.nodeValue())
+                self.__attributes[attrName] = str(attribute.nodeValue())
 
         dimens = self.node.firstChildElement(str("dimensions"))
         attributeMap = dimens.attributes()
@@ -509,7 +505,7 @@ class MapDlg(NodeDlg):
 
         doc = self.node.firstChildElement(str("doc"))
         text = DomTools.getText(doc)
-        self.doc = unicode(text).strip() if text else ""
+        self.doc = str(text).strip() if text else ""
 
     # adds an attribute
     #  \brief It runs the Map Dialog and fetches attribute name and value
@@ -622,8 +618,8 @@ class MapDlg(NodeDlg):
         attr = self.__currentTableAttribute()
         if attr is None:
             return
-        if unicode(attr) in self.__attributes.keys():
-            self.__attributes.pop(unicode(attr))
+        if str(attr) in self.__attributes.keys():
+            self.__attributes.pop(str(attr))
             self.populateAttributes()
 
     # changes the current value of the attribute
@@ -631,11 +627,11 @@ class MapDlg(NodeDlg):
     #        the user that attribute names arenot editable
     def __tableItemChanged(self, item):
         attr = self.__currentTableAttribute()
-        if unicode(attr) not in self.__attributes.keys():
+        if str(attr) not in self.__attributes.keys():
             return
         column = self.ui.attributeTableWidget.currentColumn()
         if column == 1:
-            self.__attributes[unicode(attr)] = unicode(item.text())
+            self.__attributes[str(attr)] = str(item.text())
         if column == 0:
             QMessageBox.warning(
                 self, "Attribute name is not editable",
@@ -680,12 +676,12 @@ class MapDlg(NodeDlg):
     # \param parent parent DOM node
     def appendElement(self, newElement, parent):
         singles = {"datasource": "DataSource", "strategy": "Strategy"}
-        if unicode(newElement.nodeName()) in singles:
+        if str(newElement.nodeName()) in singles:
             if not self.node:
                 return
             child = self.node.firstChild()
             while not child.isNull():
-                if child.nodeName() == unicode(newElement.nodeName()):
+                if child.nodeName() == str(newElement.nodeName()):
                     QMessageBox.warning(
                         self,
                         "%s exists" % singles[str(newElement.nodeName())],
@@ -700,11 +696,11 @@ class MapDlg(NodeDlg):
     # \brief It copies the map name and type from lineEdit widgets
     #        and apply the dialog
     def apply(self):
-        self.name = unicode(self.ui.nameLineEdit.text())
-        self.target = unicode(self.ui.targetLineEdit.text())
-        self.value = unicode(self.ui.valueLineEdit.text())
+        self.name = str(self.ui.nameLineEdit.text())
+        self.target = str(self.ui.targetLineEdit.text())
+        self.value = str(self.ui.valueLineEdit.text())
 
-        self.doc = unicode(self.ui.docTextEdit.toPlainText())
+        self.doc = str(self.ui.docTextEdit.toPlainText())
 
         index = self.view.currentIndex()
         finalIndex = self.view.model().createIndex(
@@ -748,7 +744,7 @@ class MapDlg(NodeDlg):
         if self.target:
             elem.setAttribute(str("target"), str(self.target))
 
-        self.replaceText(mindex, unicode(self.value))
+        self.replaceText(mindex, str(self.value))
 
         for attr in self.attributes.keys():
             elem.setAttribute(str(attr), str(self.attributes[attr]))
@@ -772,7 +768,7 @@ class MapDlg(NodeDlg):
         elif self.dimensions:
             newDimens = self.root.createElement(str("dimensions"))
             newDimens.setAttribute(str("rank"),
-                                   str(unicode(self.rank)))
+                                   str(str(self.rank)))
             dimDefined = True
             for i in range(min(self.rank, len(self.dimensions))):
                 if self.dimensions[i] is None:
@@ -780,19 +776,19 @@ class MapDlg(NodeDlg):
             if dimDefined:
                 for i in range(min(self.rank, len(self.dimensions))):
                     dim = self.root.createElement(str("dim"))
-                    dim.setAttribute(str("index"), str(unicode(i + 1)))
-                    if "$datasources." not in unicode(self.dimensions[i]):
+                    dim.setAttribute(str("index"), str(str(i + 1)))
+                    if "$datasources." not in str(self.dimensions[i]):
 
                         dim.setAttribute(str("value"),
-                                         str(unicode(self.dimensions[i])))
+                                         str(str(self.dimensions[i])))
                     else:
                         dsText = self.root.createTextNode(
-                            str(unicode(self.dimensions[i])))
+                            str(str(self.dimensions[i])))
                         dstrategy = self.root.createElement(
                             str("strategy"))
                         dstrategy.setAttribute(
                             str("mode"),
-                            str(unicode("CONFIG")))
+                            str(str("CONFIG")))
                         dim.appendChild(dsText)
                         dim.appendChild(dstrategy)
 
@@ -810,7 +806,7 @@ class MapDlg(NodeDlg):
         elif self.selection:
             newDimens = self.root.createElement(str("selection"))
             newDimens.setAttribute(str("rank"),
-                                   str(unicode(self.rank)))
+                                   str(str(self.rank)))
             dimDefined = True
             for i in range(min(self.rank, len(self.selection))):
                 if self.selection[i] is None:
@@ -826,20 +822,20 @@ class MapDlg(NodeDlg):
                         elem = ["start", "stop", "step"]
                     else:
                         continue
-                    dim.setAttribute(str("index"), str(unicode(i + 1)))
+                    dim.setAttribute(str("index"), str(str(i + 1)))
                     for di, sel in enumerate(dm):
-                        if "$datasources." not in unicode(sel):
+                        if "$datasources." not in str(sel):
 
                             dim.setAttribute(str(elem[di]),
-                                             str(unicode(sel)))
+                                             str(str(sel)))
                         else:
                             dsText = self.root.createTextNode(
-                                str(unicode(sel)))
+                                str(str(sel)))
                             dstrategy = self.root.createElement(
                                 str("strategy"))
                             dstrategy.setAttribute(
                                 str("mode"),
-                                str(unicode("CONFIG")))
+                                str(str("CONFIG")))
                             dim.appendChild(dsText)
                             dim.appendChild(dstrategy)
 

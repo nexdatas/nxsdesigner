@@ -32,16 +32,12 @@ except Exception:
     from Errors import CharacterError
 
 import logging
-import sys
 # message logger
 logger = logging.getLogger("nxsdesigner")
 
 _formclass, _baseclass = uic.loadUiType(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
                  "ui", "attributedlg.ui"))
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # dialog defining a tag attribute
@@ -77,7 +73,7 @@ class AttributeDlg(QDialog):
     # \brief It copies the attribute name and value from lineEdit widgets
     #        and accept the dialog
     def accept(self):
-        name = unicode(self.ui.nameLineEdit.text())
+        name = str(self.ui.nameLineEdit.text())
 
         try:
             if 1 in [c in name for c in '!"#$%&\'()*+,/;<=>?@[\\]^`{|}~']:
@@ -89,10 +85,10 @@ class AttributeDlg(QDialog):
                 raise CharacterError("The first character of Name is '-'")
 
         except CharacterError as e:
-            QMessageBox.warning(self, "Character Error", unicode(e))
+            QMessageBox.warning(self, "Character Error", str(e))
             return
         self.name = name
-        self.value = unicode(self.ui.valueLineEdit.text())
+        self.value = str(self.ui.valueLineEdit.text())
 
         QDialog.accept(self)
 

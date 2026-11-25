@@ -23,7 +23,6 @@
 
 import os
 import copy
-import sys
 
 from PyQt5.QtCore import (QModelIndex, QFileInfo, QFile,
                           QIODevice, QTextStream)
@@ -39,9 +38,6 @@ from .DataSourceMethods import DataSourceMethods
 import logging
 # message logger
 logger = logging.getLogger("nxsdesigner")
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # class with datasource variables
@@ -171,7 +167,7 @@ class DataSource(CommonDataSource):
         if not hasattr(self, "document"):
             return
         if hasattr(self.document, "toString"):
-            xml = unicode(self.document.toString(0))
+            xml = str(self.document.toString(0))
             dss = set(DomTools.findElements(xml, "datasources"))
         self.datasources = list(dss)
 
@@ -205,27 +201,27 @@ class DataSource(CommonDataSource):
     # \returns xml string
     def get(self, indent=0):
         if hasattr(self.document, "toString"):
-            return unicode(self.document.toString(indent))
+            return str(self.document.toString(indent))
 
     # sets file name of the datasource and its directory
     # \param name name of the datasource
     # \param directory directory of the datasources
     def setName(self, name, directory):
-        self.name = unicode(name)
+        self.name = str(name)
         if not self.dataSourceName:
             # datasource name
             self.dataSourceName = self.name
             self.dialog.ui.nameLineEdit.setText(self.name)
             self.dialog.imp['CLIENT'].ui.cRecNameLineEdit.setText(self.name)
         if directory:
-            self.directory = unicode(directory)
+            self.directory = str(directory)
 
     # loads datasources from default file directory
     # \param fname optional file name
     def load(self, fname=None):
         if fname is None:
             if not self.name:
-                filename = unicode(QFileDialog.getOpenFileName(
+                filename = str(QFileDialog.getOpenFileName(
                     self.parent, "Open File", self.directory,
                     "XML files (*.xml);;HTML files (*.html);;"
                     "SVG files (*.svg);;User Interface files (*.ui)")[0])
@@ -272,7 +268,7 @@ class DataSource(CommonDataSource):
             except Exception as e:
                 QMessageBox.warning(self.parent, "dialog not created",
                                     "Problems in creating a dialog %s :\n\n%s"
-                                    % (self.name, unicode(e)))
+                                    % (self.name, str(e)))
 
         except (IOError, OSError, ValueError) as e:
             error = "Failed to load: %s" % e
@@ -344,7 +340,7 @@ class DataSource(CommonDataSource):
         except Exception as e:
             QMessageBox.warning(self, "dialog not created",
                                 "Problems in creating a dialog %s :\n\n%s"
-                                % (self.name, unicode(e)))
+                                % (self.name, str(e)))
         self.fetchElements()
 
     # accepts and save input text strings
@@ -358,7 +354,7 @@ class DataSource(CommonDataSource):
             try:
                 fh = QFile(filename)
                 if not fh.open(QIODevice.WriteOnly):
-                    raise IOError(unicode(fh.errorString()))
+                    raise IOError(str(fh.errorString()))
                 stream = QTextStream(fh)
                 self.createNodes()
 
@@ -383,7 +379,7 @@ class DataSource(CommonDataSource):
     # provides the datasource name with its path
     # \returns datasource name with its path
     def getNewName(self):
-        filename = unicode(
+        filename = str(
             QFileDialog.getSaveFileName(
                 self.parent, "Save DataSource As ...", self.directory,
                 "XML files (*.xml);;HTML files (*.html);;"

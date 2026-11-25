@@ -20,17 +20,12 @@
 # user pool commands of GUI application
 
 """ Windows slots """
-import sys
 
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtCore import (QSignalMapper, Qt)
 
 from .DataSourceDlg import CommonDataSourceDlg
 from .ComponentDlg import ComponentDlg
-
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # stack with the application commands
@@ -197,9 +192,9 @@ class WindowsSlots(object):
                 menu = menu.addMenu("&More")
             accel = ""
             if i < 10:
-                accel = "&%s " % unicode(i)
+                accel = "&%s " % str(i)
             elif i < 36:
-                accel = "&%s " % unicode(chr(i + ord("@") - 9))
+                accel = "&%s " % str(chr(i + ord("@") - 9))
             action = menu.addAction("%s%s" % (accel, title))
 
             # self.main.connect(action, SIGNAL("triggered()"),

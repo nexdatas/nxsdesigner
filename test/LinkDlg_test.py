@@ -45,9 +45,6 @@ from nxsconfigtool.DomTools import DomTools
 #  Qt-application
 app = None
 
-if sys.version_info > (3,):
-    unicode = str
-    long = int
 
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
@@ -97,9 +94,9 @@ class LinkDlgTest(unittest.TestCase):
         self.performed = False
 
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
 
         self.__seed = 309284324384944322060160783760382990541
 
@@ -165,7 +162,7 @@ class LinkDlgTest(unittest.TestCase):
 
         for r in range(len(self.dimensions)):
             mb.ui.dimTableWidget.setCurrentCell(r, 0)
-            it = QTableWidgetItem(unicode(self.dimensions[r]))
+            it = QTableWidgetItem(str(self.dimensions[r]))
             mb.ui.dimTableWidget.setItem(r, 0, it)
 
 #        QTest.keyClicks(mb.ui.nameLineEdit, self.aname)
@@ -1507,7 +1504,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -1529,7 +1526,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -1597,7 +1594,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -1619,10 +1616,10 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         tgtext = DomTools.getText(form.node)
-        self.assertEqual(target, unicode(tgtext).strip())
+        self.assertEqual(target, str(tgtext).strip())
         self.assertEqual(olddoc, mdoc)
 
     # constructor test
@@ -1674,7 +1671,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -1709,7 +1706,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -1764,11 +1761,11 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         tgtext = DomTools.getText(form.node)
-        self.assertEqual("$datasources.target%s" % nn, unicode(tgtext).strip())
+        self.assertEqual("$datasources.target%s" % nn, str(tgtext).strip())
 
         form.name = nname
         form.target = target
@@ -1802,12 +1799,12 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
         tgtext = DomTools.getText(form.node)
-        self.assertEqual(target, unicode(tgtext).strip())
+        self.assertEqual(target, str(tgtext).strip())
 
     # constructor test
     # \brief It tests default settings
@@ -1871,7 +1868,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -1912,7 +1909,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, mdoc)
 
         cnt = 0
@@ -1928,7 +1925,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
 
@@ -1996,7 +1993,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -2037,7 +2034,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, mdoc)
 
         cnt = 0
@@ -2053,11 +2050,11 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
 
         self.assertEqual(olddoc, mdoc)
         tgtext = DomTools.getText(form.node)
-        self.assertEqual(target, unicode(tgtext).strip())
+        self.assertEqual(target, str(tgtext).strip())
 
     # constructor test
     # \brief It tests default settings
@@ -2121,7 +2118,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -2165,7 +2162,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
@@ -2234,7 +2231,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -2278,13 +2275,13 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         tgtext = DomTools.getText(form.node)
-        self.assertEqual("$datasources.mytype%s" % nn, unicode(tgtext).strip())
+        self.assertEqual("$datasources.mytype%s" % nn, str(tgtext).strip())
 
     # constructor test
     # \brief It tests default settings
@@ -2348,7 +2345,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -2392,7 +2389,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
@@ -2461,7 +2458,7 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(olddoc, form.doc)
 
         form.name = nname
@@ -2506,13 +2503,13 @@ class LinkDlgTest(unittest.TestCase):
 
         mydoc = form.node.firstChildElement(str("doc"))
         text = DomTools.getText(mydoc)
-        olddoc = unicode(text).strip() if text else ""
+        olddoc = str(text).strip() if text else ""
         self.assertEqual(
             olddoc,
             "".join(["\nText\n %s\n" % n for n in range(ndcs)]).strip())
 
         tgtext = DomTools.getText(form.node)
-        self.assertEqual("$datasources.mytype%s" % nn, unicode(tgtext).strip())
+        self.assertEqual("$datasources.mytype%s" % nn, str(tgtext).strip())
 
     def myAction(self):
         self.performed = True

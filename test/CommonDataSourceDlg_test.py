@@ -53,10 +53,6 @@ app = None
 # if 64-bit machione
 IS64BIT = (struct.calcsize("P") == 8)
 
-if sys.version_info > (3,):
-    unicode = str
-    long = int
-
 
 class FocusedWidget():
 
@@ -112,9 +108,9 @@ class CommonDataSourceDlgTest(unittest.TestCase):
         self.performed = False
 
         try:
-            self.__seed = long(binascii.hexlify(os.urandom(16)), 16)
+            self.__seed = int(binascii.hexlify(os.urandom(16)), 16)
         except NotImplementedError:
-            self.__seed = long(time.time() * 256)
+            self.__seed = int(time.time() * 256)
 
         self.__rnd = random.Random(self.__seed)
 
@@ -775,7 +771,7 @@ class CommonDataSourceDlgTest(unittest.TestCase):
 
         pname = str(item.data(Qt.UserRole))
 
-        it = QTableWidgetItem(unicode(pname))
+        it = QTableWidgetItem(str(pname))
         it.setData(Qt.DisplayRole, ("Myname2"))
         it.setData(Qt.UserRole, (pname))
 
@@ -937,7 +933,7 @@ class CommonDataSourceDlgTest(unittest.TestCase):
 
         pname = str(item.data(Qt.UserRole))
 
-        it = QTableWidgetItem(unicode(pname))
+        it = QTableWidgetItem(str(pname))
         it.setData(Qt.DisplayRole, ("Myname2"))
         it.setData(Qt.UserRole, (pname))
 

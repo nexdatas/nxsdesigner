@@ -31,13 +31,9 @@ from .ComponentDlg import ComponentDlg
 from .Component import Component
 from .LabeledObject import LabeledObject
 
-import sys
 import logging
 # message logger
 logger = logging.getLogger("nxsdesigner")
-
-if sys.version_info > (3,):
-    unicode = str
 
 
 # Command which loads an existing component from the file
@@ -359,10 +355,10 @@ class ComponentSaveAs(QUndoCommand):
             if self._cp.instance is not None:
                 self._pathFile = self._cp.instance.getNewName()
                 fi = QFileInfo(self._pathFile)
-                self.name = unicode(fi.fileName())
+                self.name = str(fi.fileName())
                 if self.name[-4:] == '.xml':
                     self.name = self.name[:-4]
-                self.directory = unicode(fi.dir().path())
+                self.directory = str(fi.dir().path())
                 self._cp.instance.name = self.name
                 self._cp.instance.directory = self.directory
 
@@ -409,7 +405,7 @@ class ComponentChangeDirectory(QUndoCommand):
                 QMessageBox.Yes) == QMessageBox.No):
             return
 
-        path = unicode(QFileDialog.getExistingDirectory(
+        path = str(QFileDialog.getExistingDirectory(
             self.receiver, "Open Directory",
             self.receiver.componentList.directory,
             QFileDialog.ShowDirsOnly or QFileDialog.DontResolveSymlinks))
@@ -572,13 +568,13 @@ class DataSourceSaveAs(QUndoCommand):
             if self._ds.instance is not None:
                 self._pathFile = self._ds.instance.getNewName()
                 fi = QFileInfo(self._pathFile)
-                self.name = unicode(fi.fileName())
+                self.name = str(fi.fileName())
                 if self.name[-4:] == '.xml':
                     self.name = self.name[:-4]
                     if self.name[-3:] == '.ds':
                         self.name = self.name[:-3]
 
-                self.directory = unicode(fi.dir().path())
+                self.directory = str(fi.dir().path())
 
         logger.debug("EXEC dsourceSaveAs")
 
@@ -610,7 +606,7 @@ class DataSourceChangeDirectory(QUndoCommand):
                 QMessageBox.Yes) == QMessageBox.No):
             return
 
-        path = unicode(QFileDialog.getExistingDirectory(
+        path = str(QFileDialog.getExistingDirectory(
             self.receiver, "Open Directory",
             self.receiver.sourceList.directory,
             QFileDialog.ShowDirsOnly or QFileDialog.DontResolveSymlinks))
