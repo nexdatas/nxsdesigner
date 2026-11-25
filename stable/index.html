@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to nxsconfigtool’s documentation! &#8212; nxsconfigtool 2.2.2 documentation</title>
+    <title>Welcome to nxsconfigtool’s documentation! &#8212; nxsconfigtool 2.3.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css?v=4468db6d" />
-    <script src="_static/documentation_options.js?v=219dea72"></script>
+    <script src="_static/documentation_options.js?v=c3c8ae58"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -35,7 +35,7 @@
         </button>
         <a class="navbar-brand" href="#">
           nxsconfigtool</a>
-        <span class="navbar-text navbar-version pull-left"><b>2.2</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>2.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -127,6 +127,7 @@
       <li><a class="reference external" href="index/../../latest/index.html">v:latest</a></li>
       <li><a class="reference external" href="index/../../stable/index.html">v:stable</a></li>
       
+      <li><a class="reference external" href="index/../../v2.3.0/index.html">v2.3.0</a></li>
       <li><a class="reference external" href="index/../../v2.2.2/index.html">v2.2.2</a></li>
       <li><a class="reference external" href="index/../../v2.2.1/index.html">v2.2.1</a></li>
       
@@ -183,13 +184,13 @@ in the extended Nexus XML format in Configuration Tango Server or in disk files.
 <p>Debian Trixie, Bookworm, Bullseye or Ubuntu Stonking, Resolute, Noble packages can be found in the HDRI repository.</p>
 <p>To install the debian packages, add the PGP repository key</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>sudo<span class="w"> </span>su
-<span class="gp">$ </span>curl<span class="w"> </span>-s<span class="w"> </span>http://repos.pni-hdri.de/debian_repo.pub.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--no-default-keyring<span class="w"> </span>--keyring<span class="w"> </span>gnupg-ring:/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg<span class="w"> </span>--import
+<span class="gp">$ </span>curl<span class="w"> </span>-s<span class="w"> </span>https://repos.desy.de/pni-hdri/debian_repo.pub.gpg<span class="w"> </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--no-default-keyring<span class="w"> </span>--keyring<span class="w"> </span>gnupg-ring:/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg<span class="w"> </span>--import
 <span class="gp">$ </span>chmod<span class="w"> </span><span class="m">644</span><span class="w"> </span>/etc/apt/trusted.gpg.d/debian-hdri-repo.gpg
 </pre></div>
 </div>
 <p>and then download the corresponding source list</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>/etc/apt/sources.list.d
-<span class="gp">$ </span>wget<span class="w"> </span>http://repos.pni-hdri.de/trixie-pni-hdri.sources
+<span class="gp">$ </span>wget<span class="w"> </span>https://repos.desy.de/pni-hdri/trixie-pni-hdri.sources
 </pre></div>
 </div>
 <p>Finally,</p>
